@@ -18,6 +18,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:rdv_start_color="@android:color/darker_gray" />
 
+    <com.zh.cavas.sample.RotateDotView
+        android:id="@+id/rotate_dot_view_scale"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rotate_dot_view"
+        app:rdv_dot_mode="scale"
+        app:rdv_dot_radius="3.8dp"
+        app:rdv_start_color="@android:color/darker_gray" />
+
     <ImageView
         android:id="@+id/loading"
         android:layout_width="30dp"
@@ -26,7 +38,7 @@
         android:src="@drawable/ic_loading"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rotate_dot_view" />
+        app:layout_constraintTop_toBottomOf="@id/rotate_dot_view_scale" />
 
     <com.zh.cavas.sample.RingLoadingView
         android:id="@+id/loading_shape"
