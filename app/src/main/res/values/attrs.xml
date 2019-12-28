@@ -47,4 +47,11 @@
             <enum name="vertical" value="2" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="AndroidMenuView">
+        <!-- 线的颜色 -->
+        <attr name="amv_color" format="color" />
+        <!-- 线高 -->
+        <attr name="amv_line_height" format="integer|float|dimension" />
+    </declare-styleable>
 </resources>

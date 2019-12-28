@@ -75,6 +75,7 @@
         app:layout_constraintTop_toBottomOf="@id/path_measure_loading" />
 
     <com.zh.cavas.sample.widget.MoreActionView
+        android:id="@+id/more_action"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
@@ -84,4 +85,14 @@
         app:mav_color="@android:color/black"
         app:mav_dot_radius="1.5dp"
         app:mav_orientation="vertical" />
+
+    <com.zh.cavas.sample.widget.AndroidMenuView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        app:amv_color="@android:color/black"
+        app:amv_line_height="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/more_action" />
 </androidx.constraintlayout.widget.ConstraintLayout>
