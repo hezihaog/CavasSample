@@ -1,4 +1,4 @@
-package com.zh.cavas.sample;
+package com.zh.cavas.sample.widget;
 
 import android.animation.ArgbEvaluator;
 import android.content.Context;
@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+
+import com.zh.cavas.sample.R;
 
 import java.util.ArrayList;
 

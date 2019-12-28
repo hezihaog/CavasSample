@@ -1,4 +1,4 @@
-package com.zh.cavas.sample;
+package com.zh.cavas.sample.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,6 +11,8 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+
+import com.zh.cavas.sample.R;
 
 /**
  * <b>Package:</b> com.zh.cavas.sample <br>

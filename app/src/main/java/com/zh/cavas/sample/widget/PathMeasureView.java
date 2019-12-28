@@ -1,4 +1,4 @@
-package com.zh.cavas.sample;
+package com.zh.cavas.sample.widget;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
