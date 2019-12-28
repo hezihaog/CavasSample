@@ -73,4 +73,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/path_measure_loading" />
+
+    <com.zh.cavas.sample.MoreActionView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/back_arrow"
+        app:mav_color="@android:color/black"
+        app:mav_dot_radius="1.5dp"
+        app:mav_orientation="vertical" />
 </androidx.constraintlayout.widget.ConstraintLayout>
