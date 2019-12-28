@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,13 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         final ImageView loadingImage = findViewById(R.id.loading);
         final RingLoadingView loadingShape = findViewById(R.id.loading_shape);
+        BackArrowView backArrowView = findViewById(R.id.back_arrow);
+        backArrowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 //        Animation rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.app_loading_anim);
 //        loadingImage.startAnimation(rotateAnimation);

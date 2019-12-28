@@ -30,4 +30,9 @@
             <enum name="scale" value="2" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="BackArrowView">
+        <attr name="bav_color" format="color" />
+        <attr name="bav_stroke_width" format="integer|float|dimension" />
+    </declare-styleable>
 </resources>
