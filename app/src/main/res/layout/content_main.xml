@@ -87,6 +87,7 @@
         app:mav_orientation="vertical" />
 
     <com.zh.cavas.sample.widget.AndroidMenuView
+        android:id="@+id/menu_view"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
@@ -95,4 +96,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/more_action" />
+
+    <com.zh.cavas.sample.widget.CloseView
+        android:id="@+id/close_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        app:cv_color="@android:color/black"
+        app:cv_line_width="1.5dp"
+        app:cv_circle_color="@android:color/darker_gray"
+        app:cv_circle_line_width="1dp"
+        app:cv_mode="circle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menu_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>
