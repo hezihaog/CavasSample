@@ -1,27 +1,25 @@
 package com.zh.cavas.sample;
 
-import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
 import com.zh.cavas.sample.widget.BackArrowView;
-import com.zh.cavas.sample.widget.RingLoadingView;
+import com.zh.cavas.sample.widget.MoreActionView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        MoreActionView moreActionView = findViewById(R.id.more_action);
         setSupportActionBar(toolbar);
-        final ImageView loadingImage = findViewById(R.id.loading);
-        final RingLoadingView loadingShape = findViewById(R.id.loading_shape);
         BackArrowView backArrowView = findViewById(R.id.back_arrow);
         backArrowView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,21 +27,15 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-//        Animation rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.app_loading_anim);
-//        loadingImage.startAnimation(rotateAnimation);
-        ValueAnimator rotateAnimator = ValueAnimator.ofFloat(0, 360);
-        rotateAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        moreActionView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                Float cValue = (Float) animation.getAnimatedValue();
-                loadingImage.setRotation(cValue);
+            public void onClick(View v) {
+                ActionBar actionBar = getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.openOptionsMenu();
+                }
             }
         });
-        rotateAnimator.setDuration(800);
-        rotateAnimator.setRepeatCount(ValueAnimator.INFINITE);
-        rotateAnimator.setRepeatMode(ValueAnimator.RESTART);
-        rotateAnimator.start();
     }
 
     @Override
@@ -56,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            startActivity(new Intent(MainActivity.this, SettingActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -31,15 +31,8 @@
             app:rdv_dot_radius="3.8dp"
             app:rdv_start_color="@android:color/darker_gray" />
 
-        <ImageView
-            android:id="@+id/loading"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/ic_loading" />
-
         <com.zh.cavas.sample.widget.RingLoadingView
-            android:id="@+id/loading_shape"
+            android:id="@+id/ring_loading"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="20dp"
