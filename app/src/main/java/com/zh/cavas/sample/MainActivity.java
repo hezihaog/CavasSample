@@ -18,8 +18,8 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        MoreActionView moreActionView = findViewById(R.id.more_action);
         setSupportActionBar(toolbar);
+        MoreActionView moreActionView = findViewById(R.id.more_action);
         BackArrowView backArrowView = findViewById(R.id.back_arrow);
         backArrowView.setOnClickListener(new View.OnClickListener() {
             @Override

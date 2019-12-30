@@ -22,11 +22,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         mGestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                float difference = e1.getRawX() - e2.getRawX();
-                if (difference < 0) {
-                    //右滑返回
-                    finish();
-                    return true;
+                float differenceX = e1.getX() - e2.getX();
+                float differenceY = e2.getY() - e2.getY();
+                //左右滑才处理，上下滑不管
+                if (Math.abs(differenceX) > Math.abs(differenceY)) {
+                    if (differenceX < 0) {
+                        //右滑返回
+                        finish();
+                        return true;
+                    }
                 }
                 return super.onFling(e1, e2, velocityX, velocityY);
             }

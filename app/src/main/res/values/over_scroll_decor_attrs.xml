@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="OverScrollDecor">
+        <!-- 是否启用 -->
+        <attr name="osd_enable" format="boolean" />
+    </declare-styleable>
+</resources>
