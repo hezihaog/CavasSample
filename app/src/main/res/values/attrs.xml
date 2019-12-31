@@ -66,8 +66,15 @@
             <enum name="circle" value="2" />
         </attr>
         <!-- 圆的边颜色 -->
-        <attr name="cv_circle_color" format="color"/>
+        <attr name="cv_circle_color" format="color" />
         <!-- 圆的边线宽 -->
         <attr name="cv_circle_line_width" format="integer|float|dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="AndroidSearchView">
+        <!-- 线的颜色 -->
+        <attr name="asv_color" format="color" />
+        <!-- 线宽 -->
+        <attr name="asv_line_width" format="integer|float|dimension" />
     </declare-styleable>
 </resources>
