@@ -1,10 +1,12 @@
 package com.zh.cavas.sample;
 
-import android.os.Bundle;
-import android.view.GestureDetector;
+import android.app.Activity;
+import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
+import android.view.ViewConfiguration;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
@@ -14,31 +16,63 @@ import androidx.appcompat.app.AppCompatActivity;
  * <b>Description:</b>  <br>
  */
 public abstract class BaseActivity extends AppCompatActivity {
-    private GestureDetector mGestureDetector;
+    private MotionEvent mDownEvent;
+    private VelocityTracker mVelocityTracker;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mGestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                float differenceX = e1.getX() - e2.getX();
-                float differenceY = e2.getY() - e2.getY();
-                //左右滑才处理，上下滑不管
-                if (Math.abs(differenceX) > Math.abs(differenceY)) {
-                    if (differenceX < 0) {
-                        //右滑返回
-                        finish();
-                        return true;
-                    }
-                }
-                return super.onFling(e1, e2, velocityX, velocityY);
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (mVelocityTracker == null) {
+            mVelocityTracker = VelocityTracker.obtain();
+        }
+        mVelocityTracker.addMovement(ev);
+        if (ev.getActionMasked() == MotionEvent.ACTION_DOWN) {
+            if (mDownEvent != null) {
+                mDownEvent.recycle();
             }
-        });
+            //记录按下时的事件
+            mDownEvent = MotionEvent.obtain(ev);
+        } else if (ev.getActionMasked() == MotionEvent.ACTION_UP) {
+            //右滑返回手势检测
+            int pointerId = ev.getPointerId(0);
+            int maximumFlingVelocity = ViewConfiguration.get(this).getScaledMaximumFlingVelocity();
+            //最小Fling的速度
+            int minimumFlingVelocity = ViewConfiguration.get(this).getScaledMinimumFlingVelocity();
+            mVelocityTracker.computeCurrentVelocity(1000, maximumFlingVelocity);
+            final float velocityX = mVelocityTracker.getXVelocity(pointerId);
+            //左边缘检测，可根据需要调整，单位像素
+            boolean isEdgeDrag = mDownEvent.getX() <= dip2px(this, 50f);
+            //有效触发距离，可根据需要调整，单位像素
+            boolean isEffectiveRange = ev.getX() - mDownEvent.getX() <= getScreenWidth(this) / 2f;
+            //是Fling操作
+            boolean isFling = Math.abs(velocityX) >= minimumFlingVelocity;
+            if (
+//                    isEdgeDrag &&
+                    isEffectiveRange && isFling) {
+                onBackPressed();
+            }
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return mGestureDetector.onTouchEvent(event);
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mVelocityTracker != null) {
+            mVelocityTracker.recycle();
+        }
+    }
+
+    public static int dip2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+    }
+
+    /**
+     * 返回屏幕的宽度
+     */
+    public static int getScreenWidth(Activity activity) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getRealMetrics(displayMetrics);
+        return displayMetrics.widthPixels;
     }
 }
