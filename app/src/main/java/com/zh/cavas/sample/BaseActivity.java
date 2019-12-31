@@ -32,6 +32,16 @@ public abstract class BaseActivity extends AppCompatActivity {
             //记录按下时的事件
             mDownEvent = MotionEvent.obtain(ev);
         } else if (ev.getActionMasked() == MotionEvent.ACTION_UP) {
+            float downX = mDownEvent.getX();
+            float downY = mDownEvent.getY();
+            float upX = ev.getX();
+            float upY = ev.getY();
+            float distanceX = Math.abs(upX - downX);
+            float distanceY = Math.abs(upY - downY);
+            //上下滑和左滑，不算
+            if (distanceY > distanceX || downX > upX) {
+                return super.dispatchTouchEvent(ev);
+            }
             //右滑返回手势检测
             int pointerId = ev.getPointerId(0);
             int maximumFlingVelocity = ViewConfiguration.get(this).getScaledMaximumFlingVelocity();
