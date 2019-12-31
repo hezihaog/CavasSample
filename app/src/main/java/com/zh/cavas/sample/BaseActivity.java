@@ -21,6 +21,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (!isEnableRightSlideBack()) {
+            return super.dispatchTouchEvent(ev);
+        }
         if (mVelocityTracker == null) {
             mVelocityTracker = VelocityTracker.obtain();
         }
@@ -72,7 +75,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public static int dip2px(Context context, float dipValue) {
+    protected boolean isEnableRightSlideBack() {
+        return false;
+    }
+
+    private static int dip2px(Context context, float dipValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dipValue * scale + 0.5f);
     }
@@ -80,7 +87,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 返回屏幕的宽度
      */
-    public static int getScreenWidth(Activity activity) {
+    private static int getScreenWidth(Activity activity) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getRealMetrics(displayMetrics);
         return displayMetrics.widthPixels;

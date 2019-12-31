@@ -1,110 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.lzy.widget.OverScrollDecor xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:osd_enable="false">
+    android:fillViewport="true">
 
-    <com.lzy.widget.vertical.VerticalScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <com.zh.cavas.sample.widget.RotateDotView
+            android:id="@+id/rotate_dot_view"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="20dp"
+            app:rdv_start_color="@android:color/darker_gray" />
+
+        <com.zh.cavas.sample.widget.RotateDotView
+            android:id="@+id/rotate_dot_view_scale"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="20dp"
+            app:rdv_dot_mode="scale"
+            app:rdv_dot_radius="3.8dp"
+            app:rdv_start_color="@android:color/darker_gray" />
+
+        <com.zh.cavas.sample.widget.RingLoadingView
+            android:id="@+id/ring_loading"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            app:rlv_auto_start="true"
+            app:rlv_end_color="@color/white"
+            app:rlv_ring_width="2.3dp"
+            app:rlv_start_color="@color/dotColor" />
+
+        <com.zh.cavas.sample.widget.BackArrowView
+            android:id="@+id/back_arrow"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            app:bav_color="@android:color/black"
+            app:bav_stroke_width="1.5dp" />
+
+        <com.zh.cavas.sample.widget.MoreActionView
+            android:id="@+id/more_action"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            app:mav_color="@android:color/black"
+            app:mav_dot_radius="1.5dp"
+            app:mav_orientation="vertical" />
+
+        <com.zh.cavas.sample.widget.AndroidMenuView
+            android:id="@+id/menu_view"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            app:amv_color="@android:color/black"
+            app:amv_line_height="1dp" />
+
+        <com.zh.cavas.sample.widget.CloseView
+            android:id="@+id/close_view"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            app:cv_circle_color="@android:color/darker_gray"
+            app:cv_circle_line_width="1dp"
+            app:cv_color="@android:color/black"
+            app:cv_line_width="1.5dp"
+            app:cv_mode="normal" />
+
+        <com.zh.cavas.sample.widget.AndroidSearchView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            app:asv_color="@android:color/black"
+            app:asv_line_width="1.5dp" />
+
+        <SeekBar
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <com.zh.cavas.sample.widget.RotateDotView
-                android:id="@+id/rotate_dot_view"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="20dp"
-                app:rdv_start_color="@android:color/darker_gray" />
-
-            <com.zh.cavas.sample.widget.RotateDotView
-                android:id="@+id/rotate_dot_view_scale"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="20dp"
-                app:rdv_dot_mode="scale"
-                app:rdv_dot_radius="3.8dp"
-                app:rdv_start_color="@android:color/darker_gray" />
-
-            <com.zh.cavas.sample.widget.RingLoadingView
-                android:id="@+id/ring_loading"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="20dp"
-                app:rlv_auto_start="true"
-                app:rlv_end_color="@color/white"
-                app:rlv_ring_width="2.3dp"
-                app:rlv_start_color="@color/dotColor" />
-
-            <com.zh.cavas.sample.widget.BackArrowView
-                android:id="@+id/back_arrow"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                app:bav_color="@android:color/black"
-                app:bav_stroke_width="1.5dp" />
-
-            <com.zh.cavas.sample.widget.MoreActionView
-                android:id="@+id/more_action"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                app:mav_color="@android:color/black"
-                app:mav_dot_radius="1.5dp"
-                app:mav_orientation="vertical" />
-
-            <com.zh.cavas.sample.widget.AndroidMenuView
-                android:id="@+id/menu_view"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                app:amv_color="@android:color/black"
-                app:amv_line_height="1dp" />
-
-            <com.zh.cavas.sample.widget.CloseView
-                android:id="@+id/close_view"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                app:cv_circle_color="@android:color/darker_gray"
-                app:cv_circle_line_width="1dp"
-                app:cv_color="@android:color/black"
-                app:cv_line_width="1.5dp"
-                app:cv_mode="normal" />
-
-            <com.zh.cavas.sample.widget.AndroidSearchView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                app:asv_color="@android:color/black"
-                app:asv_line_width="1.5dp" />
-
-            <SeekBar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:duplicateParentState="true"
-                android:max="100"
-                android:maxHeight="2dp"
-                android:minHeight="2dp"
-                android:paddingStart="0dp"
-                android:paddingLeft="0dp"
-                android:paddingEnd="0dp"
-                android:paddingRight="0dp"
-                android:progress="0"
-                android:progressDrawable="@drawable/app_vivo_seek_bar_bg"
-                android:thumb="@drawable/app_vivo_seek_bar_thumb"
-                android:thumbOffset="0dp"
-                tools:progress="40" />
-        </LinearLayout>
-    </com.lzy.widget.vertical.VerticalScrollView>
-</com.lzy.widget.OverScrollDecor>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:duplicateParentState="true"
+            android:max="100"
+            android:maxHeight="2dp"
+            android:minHeight="2dp"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
+            android:paddingEnd="0dp"
+            android:paddingRight="0dp"
+            android:progress="0"
+            android:progressDrawable="@drawable/app_vivo_seek_bar_bg"
+            android:thumb="@drawable/app_vivo_seek_bar_thumb"
+            android:thumbOffset="0dp"
+            tools:progress="40" />
+    </LinearLayout>
+</ScrollView>
