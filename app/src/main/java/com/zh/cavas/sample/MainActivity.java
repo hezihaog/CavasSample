@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.SeekBar;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
 import com.zh.cavas.sample.widget.BackArrowView;
+import com.zh.cavas.sample.widget.DownloadProgressView;
 import com.zh.cavas.sample.widget.MoreActionView;
 
 public class MainActivity extends BaseActivity {
@@ -21,6 +23,8 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         MoreActionView moreActionView = findViewById(R.id.more_action);
         BackArrowView backArrowView = findViewById(R.id.back_arrow);
+        final DownloadProgressView downloadProgressView = findViewById(R.id.download_progress);
+        SeekBar vivoSeekBar = findViewById(R.id.vivo_seek_bar);
         backArrowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,6 +38,20 @@ public class MainActivity extends BaseActivity {
                 if (actionBar != null) {
                     actionBar.openOptionsMenu();
                 }
+            }
+        });
+        vivoSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                downloadProgressView.setProgress(progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
     }

@@ -81,12 +81,23 @@
             app:asv_color="@android:color/black"
             app:asv_line_width="1.5dp" />
 
+        <com.zh.cavas.sample.widget.DownloadProgressView
+            android:id="@+id/download_progress"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            tools:dpv_progress="40" />
+
         <SeekBar
+            android:id="@+id/vivo_seek_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
             android:duplicateParentState="true"
             android:max="100"
             android:maxHeight="2dp"
