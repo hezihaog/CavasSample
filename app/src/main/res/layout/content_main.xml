@@ -88,7 +88,13 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            tools:dpv_progress="40" />
+            app:dpv_bg="#E6EAFB"
+            app:dpv_max_progress="100"
+            app:dpv_percentage_text_color="#3548FE"
+            app:dpv_percentage_text_color2="@color/white"
+            app:dpv_progress="0"
+            app:dpv_progress_bg="#3548FE"
+            tools:dpv_progress="50" />
 
         <SeekBar
             android:id="@+id/vivo_seek_bar"

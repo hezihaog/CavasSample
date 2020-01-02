@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
@@ -108,7 +109,7 @@ public class DownloadProgressView extends View {
         //文字画笔
         mTextPaint = new Paint();
         mTextPaint.setAntiAlias(true);
-        mTextPaint.setTextSize(sp2px(getContext(), 18f));
+        mTextPaint.setTextSize(sp2px(getContext(), 15f));
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         //计算默认宽、高
         mDefaultMinWidth = dip2px(context, dip2px(context, 180f));
@@ -141,6 +142,8 @@ public class DownloadProgressView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        //裁剪圆角
+        clipRound(canvas);
         //画背景
         drawBg(canvas);
         //画进度条
@@ -150,18 +153,28 @@ public class DownloadProgressView extends View {
     }
 
     /**
+     * 裁剪圆角
+     */
+    private void clipRound(Canvas canvas) {
+        Path path = new Path();
+        RectF roundRect = new RectF(0, 0, mViewWidth, mViewHeight);
+        path.addRoundRect(roundRect, mRadius, mRadius, Path.Direction.CW);
+        canvas.clipPath(path);
+    }
+
+    /**
      * 画背景
      */
     private void drawBg(Canvas canvas) {
-        canvas.drawRoundRect(new RectF(0, 0, mViewWidth, mViewHeight), mRadius, mRadius, mBgPaint);
+        canvas.drawRect(new RectF(0, 0, mViewWidth, mViewHeight), mBgPaint);
     }
 
     /**
      * 画进度
      */
     private void drawProgress(Canvas canvas) {
-        RectF rect = new RectF(0, 0, mViewWidth * ((float) mProgress / mMaxProgress), mViewHeight);
-        canvas.drawRoundRect(rect, mRadius, mRadius, mProgressPaint);
+        RectF rect = new RectF(0, 0, mViewWidth * getProgressRatio(), mViewHeight);
+        canvas.drawRect(rect, mProgressPaint);
     }
 
     /**
@@ -172,14 +185,14 @@ public class DownloadProgressView extends View {
         //创建文字图层
         Bitmap textBitmap = Bitmap.createBitmap(mViewWidth, mViewHeight, Bitmap.Config.ARGB_8888);
         Canvas textCanvas = new Canvas(textBitmap);
-        String content = mProgress + "%";
+        String textContent = mProgress + "%";
         //计算文字Y轴坐标
         float textY = mViewHeight / 2.0f - (mTextPaint.getFontMetricsInt().descent / 2.0f + mTextPaint.getFontMetricsInt().ascent / 2.0f);
-        textCanvas.drawText(content, mViewWidth / 2.0f, textY, mTextPaint);
+        textCanvas.drawText(textContent, mViewWidth / 2.0f, textY, mTextPaint);
         //画最上层的白色图层，未相交时不会显示出来
         mTextPaint.setColor(mPercentageTextColor2);
         mTextPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
-        textCanvas.drawRoundRect(new RectF(0, 0, mViewWidth * ((float) mProgress / mMaxProgress), mViewHeight), mRadius, mRadius, mTextPaint);
+        textCanvas.drawRect(new RectF(0, 0, mViewWidth * getProgressRatio(), mViewHeight), mTextPaint);
         //画结合后的图层
         canvas.drawBitmap(textBitmap, 0, 0, mTextPaint);
         mTextPaint.setXfermode(null);
@@ -223,6 +236,20 @@ public class DownloadProgressView extends View {
             mProgress = progress;
             invalidate();
         }
+    }
+
+    /**
+     * 获取当前进度
+     */
+    public int getProgress() {
+        return mProgress;
+    }
+
+    /**
+     * 获取当前进度值比值
+     */
+    private float getProgressRatio() {
+        return (mProgress / (mMaxProgress * 1.0f));
     }
 
     public static int sp2px(Context context, float spValue) {
