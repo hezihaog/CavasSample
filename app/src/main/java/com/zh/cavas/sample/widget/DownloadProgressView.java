@@ -11,6 +11,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -24,6 +25,15 @@ import com.zh.cavas.sample.R;
  * <b>Description:</b> 下载进度View <br>
  */
 public class DownloadProgressView extends View {
+    /**
+     * 控制模式-普通
+     */
+    private static final int MODE_NORMAL = 1;
+    /**
+     * 控制模式-触摸
+     */
+    private static final int MODE_TOUCH = 2;
+
     /**
      * View默认最小宽度
      */
@@ -90,6 +100,14 @@ public class DownloadProgressView extends View {
      * 进度更新监听
      */
     private OnProgressUpdateListener mOnProgressUpdateListener;
+    /**
+     * 控制模式
+     */
+    private int mControlMode;
+    /**
+     * 按下时Down事件的x坐标
+     */
+    private float mTouchDownX;
 
     public DownloadProgressView(Context context) {
         this(context, null);
@@ -130,13 +148,16 @@ public class DownloadProgressView extends View {
         mProgressBgColor = array.getColor(R.styleable.DownloadProgressView_dpv_progress_bg, Color.GRAY);
         //进度百分比文字的颜色，默认和进度背景颜色一致
         mPercentageTextColor = array.getColor(R.styleable.DownloadProgressView_dpv_percentage_text_color, mProgressBgColor);
-        //第二层进度百分比文字的颜色
+        //第二层，进度百分比文字的颜色
         mPercentageTextColor2 = array.getColor(R.styleable.DownloadProgressView_dpv_percentage_text_color2, Color.WHITE);
+        //进度百分比文字的字体颜色
         mPercentageTextSize = array.getDimension(R.styleable.DownloadProgressView_dpv_percentage_text_size, sp2px(context, 15f));
         //当前进度值
         mProgress = array.getInt(R.styleable.DownloadProgressView_dpv_progress, 0);
         //最大进度值
         mMaxProgress = array.getInteger(R.styleable.DownloadProgressView_dpv_max_progress, 100);
+        //控制模式
+        mControlMode = array.getInt(R.styleable.DownloadProgressView_dpv_control_mode, MODE_NORMAL);
         array.recycle();
     }
 
@@ -228,6 +249,38 @@ public class DownloadProgressView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(handleMeasure(widthMeasureSpec, true), handleMeasure(heightMeasureSpec, false));
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        int action = event.getAction();
+        //拦截事件，然后让父类不进行拦截
+        if (mControlMode == MODE_TOUCH && action == MotionEvent.ACTION_DOWN) {
+            getParent().requestDisallowInterceptTouchEvent(true);
+            return true;
+        }
+        return super.dispatchTouchEvent(event);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (mControlMode == MODE_TOUCH) {
+            int action = event.getAction();
+            if (action == MotionEvent.ACTION_DOWN) {
+                mTouchDownX = event.getX();
+                return true;
+            } else if (action == MotionEvent.ACTION_MOVE || action == MotionEvent.ACTION_UP) {
+                float endX = event.getX();
+                float distanceX = Math.abs(endX - mTouchDownX);
+                float ratio = (distanceX * 1.0f) / (getFrameRight() - getFrameLeft());
+                float progress = mMaxProgress * ratio;
+                setProgress((int) progress);
+                return true;
+            }
+            return super.onTouchEvent(event);
+        } else {
+            return super.onTouchEvent(event);
+        }
     }
 
     /**

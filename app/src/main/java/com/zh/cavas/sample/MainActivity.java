@@ -75,6 +75,7 @@ public class MainActivity extends BaseActivity {
         vDownloadProgressView.setOnProgressUpdateListener(new DownloadProgressView.OnProgressUpdateListener() {
             @Override
             public void onProgressUpdate(int progress) {
+                vVivoSeekBar.setProgress(progress);
                 vProgressIndicator.setText("当前进度：" + progress);
             }
         });

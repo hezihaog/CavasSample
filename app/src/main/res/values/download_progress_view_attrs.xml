@@ -14,5 +14,10 @@
         <attr name="dpv_progress" format="integer" />
         <!-- 最大进度值 -->
         <attr name="dpv_max_progress" format="integer" />
+        <!-- 控制模式 -->
+        <attr name="dpv_control_mode" format="enum">
+            <enum name="normal" value="1" />
+            <enum name="touch" value="2" />
+        </attr>
     </declare-styleable>
 </resources>
