@@ -71,17 +71,25 @@ public class DownloadProgressView extends View {
      */
     private int mProgressBgColor;
     /**
-     * 进度百分比字体颜色
+     * 进度百分比文字的颜色
      */
     private int mPercentageTextColor;
     /**
-     * 进度百分比字体颜色，第二次
+     * 第二层进度百分比文字的颜色
      */
     private int mPercentageTextColor2;
+    /**
+     * 进度百分比文字的字体大小
+     */
+    private float mPercentageTextSize;
     /**
      * 最大进度值
      */
     private int mMaxProgress;
+    /**
+     * 进度更新监听
+     */
+    private OnProgressUpdateListener mOnProgressUpdateListener;
 
     public DownloadProgressView(Context context) {
         this(context, null);
@@ -109,7 +117,7 @@ public class DownloadProgressView extends View {
         //文字画笔
         mTextPaint = new Paint();
         mTextPaint.setAntiAlias(true);
-        mTextPaint.setTextSize(sp2px(getContext(), 15f));
+        mTextPaint.setTextSize(mPercentageTextSize);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         //计算默认宽、高
         mDefaultMinWidth = dip2px(context, dip2px(context, 180f));
@@ -124,6 +132,7 @@ public class DownloadProgressView extends View {
         mPercentageTextColor = array.getColor(R.styleable.DownloadProgressView_dpv_percentage_text_color, mProgressBgColor);
         //第二层进度百分比文字的颜色
         mPercentageTextColor2 = array.getColor(R.styleable.DownloadProgressView_dpv_percentage_text_color2, Color.WHITE);
+        mPercentageTextSize = array.getDimension(R.styleable.DownloadProgressView_dpv_percentage_text_size, sp2px(context, 15f));
         //当前进度值
         mProgress = array.getInt(R.styleable.DownloadProgressView_dpv_progress, 0);
         //最大进度值
@@ -152,12 +161,28 @@ public class DownloadProgressView extends View {
         drawText(canvas);
     }
 
+    private float getFrameLeft() {
+        return getPaddingStart();
+    }
+
+    private float getFrameRight() {
+        return mViewWidth - getPaddingEnd();
+    }
+
+    private float getFrameTop() {
+        return getPaddingTop();
+    }
+
+    private float getFrameBottom() {
+        return mViewHeight - getPaddingBottom();
+    }
+
     /**
      * 裁剪圆角
      */
     private void clipRound(Canvas canvas) {
         Path path = new Path();
-        RectF roundRect = new RectF(0, 0, mViewWidth, mViewHeight);
+        RectF roundRect = new RectF(getFrameLeft(), getFrameTop(), getFrameRight(), getFrameBottom());
         path.addRoundRect(roundRect, mRadius, mRadius, Path.Direction.CW);
         canvas.clipPath(path);
     }
@@ -166,14 +191,14 @@ public class DownloadProgressView extends View {
      * 画背景
      */
     private void drawBg(Canvas canvas) {
-        canvas.drawRect(new RectF(0, 0, mViewWidth, mViewHeight), mBgPaint);
+        canvas.drawRect(new RectF(getFrameLeft(), getPaddingTop(), getFrameRight(), getFrameBottom()), mBgPaint);
     }
 
     /**
      * 画进度
      */
     private void drawProgress(Canvas canvas) {
-        RectF rect = new RectF(0, 0, mViewWidth * getProgressRatio(), mViewHeight);
+        RectF rect = new RectF(getFrameLeft(), getFrameTop(), getFrameRight() * getProgressRatio(), getFrameBottom());
         canvas.drawRect(rect, mProgressPaint);
     }
 
@@ -192,9 +217,9 @@ public class DownloadProgressView extends View {
         //画最上层的白色图层，未相交时不会显示出来
         mTextPaint.setColor(mPercentageTextColor2);
         mTextPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
-        textCanvas.drawRect(new RectF(0, 0, mViewWidth * getProgressRatio(), mViewHeight), mTextPaint);
+        textCanvas.drawRect(new RectF(getFrameLeft(), getFrameTop(), getFrameRight() * getProgressRatio(), getFrameBottom()), mTextPaint);
         //画结合后的图层
-        canvas.drawBitmap(textBitmap, 0, 0, mTextPaint);
+        canvas.drawBitmap(textBitmap, getFrameLeft(), getFrameTop(), mTextPaint);
         mTextPaint.setXfermode(null);
         textBitmap.recycle();
     }
@@ -235,6 +260,9 @@ public class DownloadProgressView extends View {
         if (progress >= 0 && progress <= 100) {
             mProgress = progress;
             invalidate();
+            if (mOnProgressUpdateListener != null) {
+                mOnProgressUpdateListener.onProgressUpdate(progress);
+            }
         }
     }
 
@@ -243,6 +271,26 @@ public class DownloadProgressView extends View {
      */
     public int getProgress() {
         return mProgress;
+    }
+
+    /**
+     * 获取最大进度
+     */
+    public int getMaxProgress() {
+        return mMaxProgress;
+    }
+
+    public interface OnProgressUpdateListener {
+        /**
+         * 进度更新时回调
+         *
+         * @param progress 当前进度
+         */
+        void onProgressUpdate(int progress);
+    }
+
+    public void setOnProgressUpdateListener(OnProgressUpdateListener onProgressUpdateListener) {
+        mOnProgressUpdateListener = onProgressUpdateListener;
     }
 
     /**

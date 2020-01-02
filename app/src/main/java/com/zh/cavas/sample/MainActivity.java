@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
@@ -15,23 +16,40 @@ import com.zh.cavas.sample.widget.DownloadProgressView;
 import com.zh.cavas.sample.widget.MoreActionView;
 
 public class MainActivity extends BaseActivity {
+    private Toolbar vToolbar;
+    private MoreActionView vMoreActionView;
+    private DownloadProgressView vDownloadProgressView;
+    private BackArrowView vBackArrowView;
+    private SeekBar vVivoSeekBar;
+    private TextView vProgressIndicator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        MoreActionView moreActionView = findViewById(R.id.more_action);
-        BackArrowView backArrowView = findViewById(R.id.back_arrow);
-        final DownloadProgressView downloadProgressView = findViewById(R.id.download_progress);
-        SeekBar vivoSeekBar = findViewById(R.id.vivo_seek_bar);
-        backArrowView.setOnClickListener(new View.OnClickListener() {
+        View layout = findViewById(android.R.id.content);
+        findView(layout);
+        bindView();
+    }
+
+    private void findView(View view) {
+        vToolbar = view.findViewById(R.id.toolbar);
+        vMoreActionView = view.findViewById(R.id.more_action);
+        vBackArrowView = view.findViewById(R.id.back_arrow);
+        vDownloadProgressView = view.findViewById(R.id.download_progress);
+        vVivoSeekBar = view.findViewById(R.id.vivo_seek_bar);
+        vProgressIndicator = view.findViewById(R.id.progress_indicator);
+    }
+
+    private void bindView() {
+        setSupportActionBar(vToolbar);
+        vBackArrowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        moreActionView.setOnClickListener(new View.OnClickListener() {
+        vMoreActionView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ActionBar actionBar = getSupportActionBar();
@@ -40,10 +58,10 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
-        vivoSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        vVivoSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                downloadProgressView.setProgress(progress);
+                vDownloadProgressView.setProgress(progress);
             }
 
             @Override
@@ -54,6 +72,13 @@ public class MainActivity extends BaseActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
+        vDownloadProgressView.setOnProgressUpdateListener(new DownloadProgressView.OnProgressUpdateListener() {
+            @Override
+            public void onProgressUpdate(int progress) {
+                vProgressIndicator.setText("当前进度：" + progress);
+            }
+        });
+        vDownloadProgressView.setProgress(0);
     }
 
     @Override

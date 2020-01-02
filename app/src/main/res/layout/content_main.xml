@@ -81,17 +81,26 @@
             app:asv_color="@android:color/black"
             app:asv_line_width="1.5dp" />
 
+        <TextView
+            android:id="@+id/progress_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            tools:text="当前进度：13%" />
+
         <com.zh.cavas.sample.widget.DownloadProgressView
             android:id="@+id/download_progress"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             app:dpv_bg="#E6EAFB"
             app:dpv_max_progress="100"
-            app:dpv_percentage_text_color="#3548FE"
             app:dpv_percentage_text_color2="@color/white"
+            app:dpv_percentage_text_size="14sp"
             app:dpv_progress="0"
             app:dpv_progress_bg="#3548FE"
             tools:dpv_progress="50" />

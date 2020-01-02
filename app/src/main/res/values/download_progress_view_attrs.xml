@@ -9,6 +9,7 @@
         <attr name="dpv_percentage_text_color" format="color" />
         <!-- 上层百分比字体颜色 -->
         <attr name="dpv_percentage_text_color2" format="color" />
+        <attr name="dpv_percentage_text_size" format="integer|float|dimension|reference" />
         <!-- 当前进度值 -->
         <attr name="dpv_progress" format="integer" />
         <!-- 最大进度值 -->
