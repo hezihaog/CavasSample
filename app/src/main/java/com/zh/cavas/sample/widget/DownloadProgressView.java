@@ -124,6 +124,8 @@ public class DownloadProgressView extends View {
 
     private void init(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         initAttr(context, attrs, defStyleAttr);
+        //取消硬件加速
+        setLayerType(LAYER_TYPE_SOFTWARE, null);
         //背景画笔
         mBgPaint = new Paint();
         mBgPaint.setAntiAlias(true);
@@ -138,8 +140,8 @@ public class DownloadProgressView extends View {
         mTextPaint.setTextSize(mPercentageTextSize);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         //计算默认宽、高
-        mDefaultMinWidth = dip2px(context, dip2px(context, 180f));
-        mDefaultMinHeight = dip2px(context, dip2px(context, 25f));
+        mDefaultMinWidth = dip2px(context, 180f);
+        mDefaultMinHeight = dip2px(context, 40f);
     }
 
     private void initAttr(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -166,6 +168,7 @@ public class DownloadProgressView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         mViewWidth = w;
         mViewHeight = h;
+        //计算出圆角半径
         mRadius = Math.min(mViewWidth, mViewHeight) / 2f;
     }
 
@@ -182,6 +185,8 @@ public class DownloadProgressView extends View {
         drawText(canvas);
     }
 
+    //------------ getFrameXxx()方法都是处理padding ------------
+
     private float getFrameLeft() {
         return getPaddingStart();
     }
@@ -197,6 +202,8 @@ public class DownloadProgressView extends View {
     private float getFrameBottom() {
         return mViewHeight - getPaddingBottom();
     }
+
+    //------------ getFrameXxx()方法都是处理padding ------------
 
     /**
      * 裁剪圆角
@@ -264,15 +271,20 @@ public class DownloadProgressView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        //拽托模式下才起效果
         if (mControlMode == MODE_TOUCH) {
             int action = event.getAction();
+            //包裹Down事件时的x坐标
             if (action == MotionEvent.ACTION_DOWN) {
                 mTouchDownX = event.getX();
                 return true;
             } else if (action == MotionEvent.ACTION_MOVE || action == MotionEvent.ACTION_UP) {
+                //Move或Up的时候，计算拽托进度
                 float endX = event.getX();
+                //计算公式：百分比值 = 移动距离 / 总长度
                 float distanceX = Math.abs(endX - mTouchDownX);
                 float ratio = (distanceX * 1.0f) / (getFrameRight() - getFrameLeft());
+                //计算百分比应该有的进度：进度 = 总进度 * 进度百分比值
                 float progress = mMaxProgress * ratio;
                 setProgress((int) progress);
                 return true;
@@ -304,6 +316,15 @@ public class DownloadProgressView extends View {
             }
         }
         return result;
+    }
+
+    /**
+     * 设置进度最大值
+     */
+    public DownloadProgressView setMaxProgress(int maxProgress) {
+        mMaxProgress = maxProgress;
+        invalidate();
+        return this;
     }
 
     /**
