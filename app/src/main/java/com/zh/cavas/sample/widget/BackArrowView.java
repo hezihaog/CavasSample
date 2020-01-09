@@ -24,6 +24,14 @@ public class BackArrowView extends View {
      * View默认最小宽度
      */
     private static final int DEFAULT_MIN_WIDTH = 100;
+    /**
+     * Material Design风格
+     */
+    private static final int ARROW_STYLE_MATERIAL_DESIGN = 1;
+    /**
+     * 微信风格
+     */
+    private static final int ARROW_STYLE_WECHAT_DESIGN = 2;
 
     /**
      * 控件宽
@@ -36,7 +44,7 @@ public class BackArrowView extends View {
     /**
      * 箭头开始的距离
      */
-    private float mArrowStartLength;
+    private float mArrowStartDistance;
     /**
      * 箭头的2个边的长度
      */
@@ -49,6 +57,10 @@ public class BackArrowView extends View {
      * 箭头粗细
      */
     private float mArrowStrokeWidth;
+    /**
+     * 风格模式
+     */
+    private int mArrowStyle;
 
     /**
      * 画笔
@@ -88,6 +100,7 @@ public class BackArrowView extends View {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.BackArrowView, defStyleAttr, 0);
         mColor = array.getColor(R.styleable.BackArrowView_bav_color, Color.argb(255, 0, 0, 0));
         mArrowStrokeWidth = array.getDimension(R.styleable.BackArrowView_bav_stroke_width, dip2px(context, 2f));
+        mArrowStyle = array.getInt(R.styleable.BackArrowView_bav_arrow_style, ARROW_STYLE_MATERIAL_DESIGN);
         array.recycle();
     }
 
@@ -98,7 +111,13 @@ public class BackArrowView extends View {
         mViewHeight = h;
         //计算半径
         float radius = Math.min(mViewWidth, mViewHeight) / 2f;
-        mArrowStartLength = radius / 3f;
+        //计算箭头起始位置
+        if (mArrowStyle == ARROW_STYLE_MATERIAL_DESIGN) {
+            mArrowStartDistance = radius / 3f;
+        } else if (mArrowStyle == ARROW_STYLE_WECHAT_DESIGN) {
+            mArrowStartDistance = radius / 4f;
+        }
+        //计算箭头长度
         mArrowLineLength = radius * 0.63f;
     }
 
@@ -106,7 +125,7 @@ public class BackArrowView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         //将画布中心移动到中心点偏左位置
-        canvas.translate((mViewWidth / 2f) - mArrowStartLength, mViewHeight / 2);
+        canvas.translate((mViewWidth / 2f) - mArrowStartDistance, mViewHeight / 2);
         //将画布旋转45度，让后面画的直角旋转
         canvas.rotate(45);
         if (mArrowPath == null) {
@@ -118,9 +137,12 @@ public class BackArrowView extends View {
         //画第二条线
         mArrowPath.moveTo(0, 0);
         mArrowPath.lineTo(mArrowLineLength, 0);
-        //画中间的线
-        mArrowPath.moveTo(0, 0);
-        mArrowPath.lineTo(mArrowLineLength, -mArrowLineLength);
+        //Google Material Design风格才有中间的线
+        if (mArrowStyle == ARROW_STYLE_MATERIAL_DESIGN) {
+            //画中间的线
+            mArrowPath.moveTo(0, 0);
+            mArrowPath.lineTo(mArrowLineLength, -mArrowLineLength);
+        }
         //闭合路径
         mArrowPath.close();
         //画路径

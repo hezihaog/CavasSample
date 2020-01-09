@@ -43,6 +43,16 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
+            app:bav_arrow_style="wechat_design"
+            app:bav_color="@android:color/black"
+            app:bav_stroke_width="1.5dp" />
+
+        <com.zh.cavas.sample.widget.BackArrowView
+            android:id="@+id/back_arrow2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            app:bav_arrow_style="material_design"
             app:bav_color="@android:color/black"
             app:bav_stroke_width="1.5dp" />
 
