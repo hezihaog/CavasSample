@@ -65,6 +65,15 @@
             app:mav_dot_radius="1.5dp"
             app:mav_orientation="vertical" />
 
+        <com.zh.cavas.sample.widget.MoreActionView
+            android:id="@+id/more_action2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            app:mav_color="@android:color/black"
+            app:mav_dot_radius="1.5dp"
+            app:mav_orientation="horizontal" />
+
         <com.zh.cavas.sample.widget.AndroidMenuView
             android:id="@+id/menu_view"
             android:layout_width="40dp"
