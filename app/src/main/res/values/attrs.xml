@@ -86,4 +86,13 @@
         <!-- 线宽 -->
         <attr name="asv_line_width" format="integer|float|dimension" />
     </declare-styleable>
+
+    <declare-styleable name="CloudMusicLoadingView">
+        <!-- 音轨数量 -->
+        <attr name="cmlv_rail_count" format="integer" />
+        <!-- 音轨的颜色 -->
+        <attr name="cmlv_rail_color" format="color" />
+        <!-- 音轨线宽粗细 -->
+        <attr name="cmlv_line_width" format="integer|float|dimension" />
+    </declare-styleable>
 </resources>

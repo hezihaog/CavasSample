@@ -93,12 +93,46 @@
             app:cv_line_width="1.5dp"
             app:cv_mode="normal" />
 
+        <com.zh.cavas.sample.widget.CloseView
+            android:id="@+id/close_view2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            app:cv_circle_color="@android:color/darker_gray"
+            app:cv_circle_line_width="1dp"
+            app:cv_color="@android:color/darker_gray"
+            app:cv_line_width="1.5dp"
+            app:cv_mode="circle" />
+
         <com.zh.cavas.sample.widget.AndroidSearchView
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
             app:asv_color="@android:color/black"
             app:asv_line_width="1.5dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.zh.cavas.sample.widget.CloudMusicLoadingView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="20dp"
+                android:paddingBottom="2dp"
+                app:cmlv_rail_color="#FB0006" />
+
+            <com.zh.cavas.sample.widget.CloudMusicLoadingView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:background="#FB0006"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                app:cmlv_rail_color="#FFFFFF" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/progress_indicator"
