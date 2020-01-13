@@ -19,7 +19,7 @@ import java.util.Random;
  * <b>Package:</b> com.zh.cavas.sample.widget <br>
  * <b>Create Date:</b> 2020-01-13  11:08 <br>
  * <b>@author:</b> zihe <br>
- * <b>Description:</b> 仿网易云音频Loading <br>
+ * <b>Description:</b> 仿网易云音轨Loading <br>
  */
 public class CloudMusicLoadingView extends View implements Runnable {
     /**
@@ -30,7 +30,7 @@ public class CloudMusicLoadingView extends View implements Runnable {
     /**
      * View默认最小宽度
      */
-    private static final int DEFAULT_MIN_WIDTH = 100;
+    private static final int DEFAULT_MIN_WIDTH = 65;
 
     /**
      * 默认4条音轨
