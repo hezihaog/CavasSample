@@ -106,4 +106,13 @@
         <!-- 线的线宽粗细 -->
         <attr name="rtv_line_width" format="integer|float|dimension" />
     </declare-styleable>
+
+    <declare-styleable name="ShutdownView">
+        <!-- 背景的圆的颜色 -->
+        <attr name="sdv_bg_circle_color" format="color" />
+        <!-- 线的颜色 -->
+        <attr name="sdv_line_color" format="color" />
+        <!-- 线的线宽粗细 -->
+        <attr name="sdv_line_width" format="integer|float|dimension" />
+    </declare-styleable>
 </resources>

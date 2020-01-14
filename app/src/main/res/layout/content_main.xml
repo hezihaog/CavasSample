@@ -29,7 +29,7 @@
             android:layout_margin="10dp"
             app:rdv_dot_mode="scale"
             app:rdv_dot_radius="3.8dp"
-            app:rdv_start_color="@android:color/darker_gray" />
+            app:rdv_start_color="#488ED3" />
 
         <com.zh.cavas.sample.widget.RingLoadingView
             android:id="@+id/ring_loading"
@@ -125,28 +125,26 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_margin="10dp"
-            android:layout_marginStart="10dp"
             android:background="#FB0006"
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
             app:cmlv_rail_color="#FFFFFF" />
 
         <com.zh.cavas.sample.widget.RestartView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
             app:rtv_bg_circle_color="#286E91"
             app:rtv_line_color="#FFFFFF"
             app:rtv_line_count="8"
             app:rtv_line_width="1dp" />
 
-        <TextView
-            android:id="@+id/progress_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.zh.cavas.sample.widget.ShutdownView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_margin="10dp"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            tools:text="当前进度：13%" />
+            app:sdv_line_color="#FFFFFF"
+            app:sdv_line_width="1dp" />
 
         <com.zh.cavas.sample.widget.DownloadProgressView
             android:id="@+id/download_progress"

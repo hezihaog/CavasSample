@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
@@ -22,7 +21,6 @@ public class MainActivity extends BaseActivity {
     private BackArrowView vBackArrowView;
     private SeekBar vVivoSeekBar;
     private SeekBar vViveoSeekBarGray;
-    private TextView vProgressIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +38,6 @@ public class MainActivity extends BaseActivity {
         vDownloadProgressView = view.findViewById(R.id.download_progress);
         vVivoSeekBar = view.findViewById(R.id.vivo_seek_bar);
         vViveoSeekBarGray = view.findViewById(R.id.vivo_seek_bar_gray);
-        vProgressIndicator = view.findViewById(R.id.progress_indicator);
     }
 
     private void bindView() {
@@ -81,7 +78,6 @@ public class MainActivity extends BaseActivity {
             public void onProgressUpdate(int progress) {
                 vVivoSeekBar.setProgress(progress);
                 vViveoSeekBarGray.setProgress(progress);
-                vProgressIndicator.setText("当前进度：" + progress);
             }
         });
         vDownloadProgressView.setProgress(0);

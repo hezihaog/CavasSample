@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -14,11 +15,11 @@ import com.zh.cavas.sample.R;
 
 /**
  * <b>Package:</b> com.zh.cavas.sample.widget <br>
- * <b>Create Date:</b> 2019-12-31  15:21 <br>
+ * <b>Create Date:</b> 2020-01-14  14:06 <br>
  * <b>@author:</b> zihe <br>
- * <b>Description:</b> 重启View <br>
+ * <b>Description:</b>  <br>
  */
-public class RestartView extends View {
+public class ShutdownView extends View {
     /**
      * View默认最小宽度
      */
@@ -32,10 +33,6 @@ public class RestartView extends View {
      * 控件高
      */
     private int mViewHeight;
-    /**
-     * 线的数量
-     */
-    private int mLineCount;
 
     /**
      * 圆的画笔
@@ -65,16 +62,20 @@ public class RestartView extends View {
      * 线宽
      */
     private float mLineWidth;
+    /**
+     * 线的长度
+     */
+    private float mLineLength;
 
-    public RestartView(Context context) {
+    public ShutdownView(Context context) {
         this(context, null);
     }
 
-    public RestartView(Context context, @Nullable AttributeSet attrs) {
+    public ShutdownView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public RestartView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public ShutdownView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr);
     }
@@ -86,7 +87,7 @@ public class RestartView extends View {
         mCirclePaint.setColor(mBgCircleColor);
         mCirclePaint.setAntiAlias(true);
         mCirclePaint.setStyle(Paint.Style.FILL);
-        mCirclePaint.setStrokeWidth(dip2px(context, 1f));
+        mCirclePaint.setStrokeWidth(mLineWidth);
         //线的画笔
         mLinePaint = new Paint();
         mLinePaint.setColor(mLineColor);
@@ -98,19 +99,16 @@ public class RestartView extends View {
     }
 
     private void initAttr(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        int defaultLineCount = 8;
-        int defaultBgCircleColor = Color.argb(255, 40, 110, 145);
+        int defaultBgCircleColor = Color.argb(255, 137, 31, 37);
         int defaultLineColor = Color.argb(255, 255, 255, 255);
         int defaultLineWidth = dip2px(context, 1f);
         if (attrs != null) {
-            TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.RestartView, defStyleAttr, 0);
-            mLineCount = array.getInt(R.styleable.RestartView_rtv_line_count, defaultLineCount);
-            mBgCircleColor = array.getColor(R.styleable.RestartView_rtv_bg_circle_color, defaultBgCircleColor);
-            mLineColor = array.getColor(R.styleable.RestartView_rtv_line_color, defaultLineColor);
-            mLineWidth = array.getDimension(R.styleable.RestartView_rtv_line_width, defaultLineWidth);
+            TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ShutdownView, defStyleAttr, 0);
+            mBgCircleColor = array.getColor(R.styleable.ShutdownView_sdv_bg_circle_color, defaultBgCircleColor);
+            mLineColor = array.getColor(R.styleable.ShutdownView_sdv_line_color, defaultLineColor);
+            mLineWidth = array.getDimension(R.styleable.ShutdownView_sdv_line_width, defaultLineWidth);
             array.recycle();
         } else {
-            mLineCount = defaultLineCount;
             mBgCircleColor = defaultBgCircleColor;
             mLineColor = defaultLineColor;
             mLineWidth = defaultLineWidth;
@@ -125,7 +123,9 @@ public class RestartView extends View {
         //计算外圆半径
         mCircleRadius = (Math.min(mViewWidth, mViewHeight) / 2f) * 0.9f;
         //计算内圆半径
-        mInnerCircleRadius = (Math.min(mViewWidth, mViewHeight) / 2f) * 0.2f;
+        mInnerCircleRadius = (Math.min(mViewWidth, mViewHeight) / 2f) * 0.4f;
+        //计算线的长度
+        mLineLength = (Math.min(mViewWidth, mViewHeight) / 2f) * 0.45f;
     }
 
     @Override
@@ -135,8 +135,10 @@ public class RestartView extends View {
         canvas.translate(mViewWidth / 2f, mViewHeight / 2f);
         //画圆形背景
         drawCircleBg(canvas);
-        //画线
-        drawLine(canvas);
+        //画中心到顶部的竖线
+        drawVerticalLine(canvas);
+        //画圆弧
+        drawArc(canvas);
     }
 
     /**
@@ -146,15 +148,34 @@ public class RestartView extends View {
         canvas.drawCircle(0, 0, mCircleRadius, mCirclePaint);
     }
 
-    private void drawLine(Canvas canvas) {
-        //计算平均角度
-        float angle = 360f / mLineCount;
-        float lineLength = mCircleRadius * 0.2f;
+    /**
+     * 画中心到顶部的竖线
+     */
+    private void drawVerticalLine(Canvas canvas) {
+        canvas.drawLine(0, 0, 0, -mLineLength, mLinePaint);
+    }
+
+    /**
+     * 画圆弧
+     */
+    private void drawArc(Canvas canvas) {
         canvas.save();
-        for (int i = 1; i <= mLineCount; i++) {
-            canvas.rotate(angle);
-            canvas.drawLine(mInnerCircleRadius, 0, mInnerCircleRadius + lineLength, 0, mLinePaint);
-        }
+        //先旋转画布
+        canvas.rotate(-90);
+        //规定出内圆的区域
+        float left = -mInnerCircleRadius;
+        float top = -mInnerCircleRadius;
+        float right = mInnerCircleRadius;
+        float bottom = mInnerCircleRadius;
+        //抛弃的角度
+        int abandonAngle = 40;
+        //开始角度，为抛弃的角度的一半
+        int startAngle = abandonAngle / 2;
+        //总角度
+        int fullAngle = 360;
+        //扫过的角度，总角度 - 抛弃的角度
+        int sweepAngle = fullAngle - abandonAngle;
+        canvas.drawArc(new RectF(left, top, right, bottom), startAngle, sweepAngle, false, mLinePaint);
         canvas.restore();
     }
 
