@@ -146,6 +146,13 @@
             app:sdv_line_color="#FFFFFF"
             app:sdv_line_width="1dp" />
 
+        <com.zh.cavas.sample.widget.ShareView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:sv_color="@android:color/black"
+            app:sv_line_width="1dp"
+            app:sv_small_circle_solid_color="@android:color/white" />
+
         <com.zh.cavas.sample.widget.DownloadProgressView
             android:id="@+id/download_progress"
             android:layout_width="match_parent"

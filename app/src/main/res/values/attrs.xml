@@ -115,4 +115,13 @@
         <!-- 线的线宽粗细 -->
         <attr name="sdv_line_width" format="integer|float|dimension" />
     </declare-styleable>
+
+    <declare-styleable name="ShareView">
+        <!-- 颜色 -->
+        <attr name="sv_color" format="color" />
+        <!-- 小圆内部的填充颜色 -->
+        <attr name="sv_small_circle_solid_color" format="color" />
+        <!-- 线宽粗细 -->
+        <attr name="sv_line_width" format="integer|float|dimension" />
+    </declare-styleable>
 </resources>
