@@ -97,11 +97,19 @@ public class BackArrowView extends View {
     }
 
     private void initAttr(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.BackArrowView, defStyleAttr, 0);
-        mColor = array.getColor(R.styleable.BackArrowView_bav_color, Color.argb(255, 0, 0, 0));
-        mArrowStrokeWidth = array.getDimension(R.styleable.BackArrowView_bav_stroke_width, dip2px(context, 2f));
-        mArrowStyle = array.getInt(R.styleable.BackArrowView_bav_arrow_style, ARROW_STYLE_MATERIAL_DESIGN);
-        array.recycle();
+        int defaultColor = Color.argb(255, 0, 0, 0);
+        int defaultArrowStrokeWidth = dip2px(context, 2f);
+        if (attrs != null) {
+            TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.BackArrowView, defStyleAttr, 0);
+            mColor = array.getColor(R.styleable.BackArrowView_bav_color, defaultColor);
+            mArrowStrokeWidth = array.getDimension(R.styleable.BackArrowView_bav_stroke_width, defaultArrowStrokeWidth);
+            mArrowStyle = array.getInt(R.styleable.BackArrowView_bav_arrow_style, ARROW_STYLE_MATERIAL_DESIGN);
+            array.recycle();
+        } else {
+            mColor = defaultColor;
+            mArrowStrokeWidth = defaultArrowStrokeWidth;
+            mArrowStyle = ARROW_STYLE_MATERIAL_DESIGN;
+        }
     }
 
     @Override

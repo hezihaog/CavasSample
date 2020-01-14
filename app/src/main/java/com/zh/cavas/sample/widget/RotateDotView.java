@@ -45,6 +45,11 @@ public class RotateDotView extends View implements Runnable {
     private static final int DEFAULT_MIN_WIDTH = 70;
 
     /**
+     * 是否默认开始
+     */
+    private boolean mDefaultIsAutoStart = true;
+
+    /**
      * 控件宽
      */
     private int mViewWidth;
@@ -125,19 +130,35 @@ public class RotateDotView extends View implements Runnable {
     }
 
     private void initAttr(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.RotateDotView, defStyleAttr, 0);
-        mStartColor = array.getColor(R.styleable.RotateDotView_rdv_start_color, Color.argb(255, 180, 180, 180));
-        //如果不设置endColor，默认取startColor的30%透明度作为endColor
-        mEndColor = array.getColor(R.styleable.RotateDotView_rdv_end_color, Color.argb(76, Color.red(mStartColor), Color.green(mStartColor), Color.blue(mStartColor)));
-        mDotCount = array.getInt(R.styleable.RotateDotView_rdv_dot_count, 8);
-        mDotRadius = array.getDimension(R.styleable.RotateDotView_rdv_dot_radius, dip2px(context, 2.6f));
-        isAutoStart = array.getBoolean(R.styleable.RotateDotView_rdv_auto_start, true);
-        //计算平均角度，默认是360 / 点的数量，例如8个点，算出来的平均角度就是45度
-        mAngle = TOTAL_ROTATION_ANGLE / mDotCount;
-        mRotateAngle = array.getInt(R.styleable.RotateDotView_rdv_rotate_angle, mAngle);
-        //获取模式
-        mDotMode = array.getInt(R.styleable.RotateDotView_rdv_dot_mode, MODE_NORMAL);
-        array.recycle();
+        int defaultStartColor = Color.argb(255, 180, 180, 180);
+        int defaultEndColor = Color.argb(76, Color.red(defaultStartColor), Color.green(defaultStartColor), Color.blue(defaultStartColor));
+        int defaultDotCount = 8;
+        int defaultDotRadius = dip2px(context, 2.6f);
+        if (attrs != null) {
+            TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.RotateDotView, defStyleAttr, 0);
+            mStartColor = array.getColor(R.styleable.RotateDotView_rdv_start_color, defaultStartColor);
+            //如果不设置endColor，默认取startColor的30%透明度作为endColor
+            mEndColor = array.getColor(R.styleable.RotateDotView_rdv_end_color, Color.argb(76, Color.red(mStartColor), Color.green(mStartColor), Color.blue(mStartColor)));
+            mDotCount = array.getInt(R.styleable.RotateDotView_rdv_dot_count, defaultDotCount);
+            mDotRadius = array.getDimension(R.styleable.RotateDotView_rdv_dot_radius, defaultDotRadius);
+            isAutoStart = array.getBoolean(R.styleable.RotateDotView_rdv_auto_start, mDefaultIsAutoStart);
+            //计算平均角度，默认是360 / 点的数量，例如8个点，算出来的平均角度就是45度
+            mAngle = TOTAL_ROTATION_ANGLE / mDotCount;
+            mRotateAngle = array.getInt(R.styleable.RotateDotView_rdv_rotate_angle, mAngle);
+            //获取模式
+            mDotMode = array.getInt(R.styleable.RotateDotView_rdv_dot_mode, MODE_NORMAL);
+            array.recycle();
+        } else {
+            mStartColor = defaultStartColor;
+            mEndColor = defaultEndColor;
+            mDotCount = defaultDotCount;
+            mDotRadius = defaultDotRadius;
+            isAutoStart = mDefaultIsAutoStart;
+            //计算平均角度，默认是360 / 点的数量，例如8个点，算出来的平均角度就是45度
+            mAngle = TOTAL_ROTATION_ANGLE / mDotCount;
+            mRotateAngle = mAngle;
+            mDotMode = MODE_NORMAL;
+        }
     }
 
     @Override

@@ -86,11 +86,19 @@ public class MoreActionView extends View {
     }
 
     private void initAttr(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.MoreActionView, defStyleAttr, 0);
-        mColor = array.getColor(R.styleable.MoreActionView_mav_color, Color.argb(255, 0, 0, 0));
-        mOrientation = array.getInt(R.styleable.MoreActionView_mav_orientation, ORIENTATION_HORIZONTAL);
-        mDotRadius = array.getDimension(R.styleable.MoreActionView_mav_dot_radius, dip2px(context, 2f));
-        array.recycle();
+        int defaultColor = Color.argb(255, 0, 0, 0);
+        int defaultDotRadius = dip2px(context, 2f);
+        if (attrs != null) {
+            TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.MoreActionView, defStyleAttr, 0);
+            mColor = array.getColor(R.styleable.MoreActionView_mav_color, defaultColor);
+            mOrientation = array.getInt(R.styleable.MoreActionView_mav_orientation, ORIENTATION_HORIZONTAL);
+            mDotRadius = array.getDimension(R.styleable.MoreActionView_mav_dot_radius, defaultDotRadius);
+            array.recycle();
+        } else {
+            mColor = defaultColor;
+            mOrientation = ORIENTATION_HORIZONTAL;
+            mDotRadius = defaultDotRadius;
+        }
     }
 
     @Override

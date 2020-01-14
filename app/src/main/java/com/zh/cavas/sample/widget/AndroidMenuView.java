@@ -80,10 +80,17 @@ public class AndroidMenuView extends View {
     }
 
     private void initAttr(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.AndroidMenuView, defStyleAttr, 0);
-        mColor = array.getColor(R.styleable.AndroidMenuView_amv_color, Color.argb(255, 0, 0, 0));
-        mLineHeight = array.getDimension(R.styleable.AndroidMenuView_amv_line_height, dip2px(context, 2f));
-        array.recycle();
+        int defaultColor = Color.argb(255, 0, 0, 0);
+        int defaultLineHeight = dip2px(context, 2f);
+        if (attrs != null) {
+            TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.AndroidMenuView, defStyleAttr, 0);
+            mColor = array.getColor(R.styleable.AndroidMenuView_amv_color, defaultColor);
+            mLineHeight = array.getDimension(R.styleable.AndroidMenuView_amv_line_height, defaultLineHeight);
+            array.recycle();
+        } else {
+            mColor = defaultColor;
+            mLineHeight = defaultLineHeight;
+        }
     }
 
     @Override

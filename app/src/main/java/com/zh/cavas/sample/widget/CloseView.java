@@ -8,9 +8,9 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.zh.cavas.sample.R;
-
 import androidx.annotation.Nullable;
+
+import com.zh.cavas.sample.R;
 
 public class CloseView extends View {
     /**
@@ -87,15 +87,25 @@ public class CloseView extends View {
     }
 
     private void initAttr(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CloseView, defStyleAttr, 0);
-        mColor = array.getColor(R.styleable.CloseView_cv_color, Color.argb(255, 0, 0, 0));
-        mLineWidth = array.getDimension(R.styleable.CloseView_cv_line_width, dip2px(context, 1.5f));
-        mMode = array.getInt(R.styleable.CloseView_cv_mode, MODE_NORMAL);
-        //如果不指定圆的颜色，颜色和线的颜色一致
-        mCircleColor = array.getColor(R.styleable.CloseView_cv_circle_color, mColor);
-        //如果不指定圆的线宽，则和线的线宽的一致
-        mCircleLineWidth = array.getDimension(R.styleable.CloseView_cv_circle_line_width, mLineWidth);
-        array.recycle();
+        int defaultColor = Color.argb(255, 0, 0, 0);
+        int defaultLineWidth = dip2px(context, 1.5f);
+        if (attrs != null) {
+            TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CloseView, defStyleAttr, 0);
+            mColor = array.getColor(R.styleable.CloseView_cv_color, defaultColor);
+            mLineWidth = array.getDimension(R.styleable.CloseView_cv_line_width, defaultLineWidth);
+            mMode = array.getInt(R.styleable.CloseView_cv_mode, MODE_NORMAL);
+            //如果不指定圆的颜色，颜色和线的颜色一致
+            mCircleColor = array.getColor(R.styleable.CloseView_cv_circle_color, mColor);
+            //如果不指定圆的线宽，则和线的线宽的一致
+            mCircleLineWidth = array.getDimension(R.styleable.CloseView_cv_circle_line_width, mLineWidth);
+            array.recycle();
+        } else {
+            mColor = defaultColor;
+            mLineWidth = defaultLineWidth;
+            mMode = MODE_NORMAL;
+            mCircleColor = mColor;
+            mCircleLineWidth = mLineWidth;
+        }
     }
 
     @Override

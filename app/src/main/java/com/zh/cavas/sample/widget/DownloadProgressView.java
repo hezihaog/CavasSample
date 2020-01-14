@@ -145,22 +145,39 @@ public class DownloadProgressView extends View {
     }
 
     private void initAttr(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.DownloadProgressView, defStyleAttr, 0);
-        mBgColor = array.getColor(R.styleable.DownloadProgressView_dpv_bg, Color.argb(100, 169, 169, 169));
-        mProgressBgColor = array.getColor(R.styleable.DownloadProgressView_dpv_progress_bg, Color.GRAY);
-        //进度百分比文字的颜色，默认和进度背景颜色一致
-        mPercentageTextColor = array.getColor(R.styleable.DownloadProgressView_dpv_percentage_text_color, mProgressBgColor);
-        //第二层，进度百分比文字的颜色
-        mPercentageTextColor2 = array.getColor(R.styleable.DownloadProgressView_dpv_percentage_text_color2, Color.WHITE);
-        //进度百分比文字的字体颜色
-        mPercentageTextSize = array.getDimension(R.styleable.DownloadProgressView_dpv_percentage_text_size, sp2px(context, 15f));
-        //当前进度值
-        mProgress = array.getInt(R.styleable.DownloadProgressView_dpv_progress, 0);
-        //最大进度值
-        mMaxProgress = array.getInteger(R.styleable.DownloadProgressView_dpv_max_progress, 100);
-        //控制模式
-        mControlMode = array.getInt(R.styleable.DownloadProgressView_dpv_control_mode, MODE_NORMAL);
-        array.recycle();
+        int defaultBgColor = Color.argb(100, 169, 169, 169);
+        int defaultProgressBgColor = Color.GRAY;
+        int defaultProgressBgColor2 = Color.WHITE;
+        int defaultPercentageTextSize = sp2px(context, 15f);
+        int defaultProgress = 0;
+        int defaultMaxProgress = 100;
+        if (attrs != null) {
+            TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.DownloadProgressView, defStyleAttr, 0);
+            mBgColor = array.getColor(R.styleable.DownloadProgressView_dpv_bg, defaultBgColor);
+            mProgressBgColor = array.getColor(R.styleable.DownloadProgressView_dpv_progress_bg, defaultProgressBgColor);
+            //进度百分比文字的颜色，默认和进度背景颜色一致
+            mPercentageTextColor = array.getColor(R.styleable.DownloadProgressView_dpv_percentage_text_color, mProgressBgColor);
+            //第二层，进度百分比文字的颜色
+            mPercentageTextColor2 = array.getColor(R.styleable.DownloadProgressView_dpv_percentage_text_color2, defaultProgressBgColor2);
+            //进度百分比文字的字体颜色
+            mPercentageTextSize = array.getDimension(R.styleable.DownloadProgressView_dpv_percentage_text_size, defaultPercentageTextSize);
+            //当前进度值
+            mProgress = array.getInt(R.styleable.DownloadProgressView_dpv_progress, defaultProgress);
+            //最大进度值
+            mMaxProgress = array.getInteger(R.styleable.DownloadProgressView_dpv_max_progress, defaultMaxProgress);
+            //控制模式
+            mControlMode = array.getInt(R.styleable.DownloadProgressView_dpv_control_mode, MODE_NORMAL);
+            array.recycle();
+        } else {
+            mBgColor = defaultBgColor;
+            mProgressBgColor = defaultProgressBgColor;
+            mPercentageTextColor = mProgressBgColor;
+            mPercentageTextColor2 = defaultProgressBgColor2;
+            mPercentageTextSize = defaultPercentageTextSize;
+            mProgress = defaultProgress;
+            mMaxProgress = defaultMaxProgress;
+            mControlMode = MODE_NORMAL;
+        }
     }
 
     @Override

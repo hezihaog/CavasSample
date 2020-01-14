@@ -92,11 +92,19 @@ public class CloudMusicLoadingView extends View implements Runnable {
     }
 
     private void initAttr(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CloudMusicLoadingView, defStyleAttr, 0);
-        mRailCount = array.getInt(R.styleable.CloudMusicLoadingView_cmlv_rail_count, DEFAULT_RAIL_COUNT);
-        mRailColor = array.getColor(R.styleable.CloudMusicLoadingView_cmlv_rail_color, Color.argb(255, 255, 255, 255));
-        mRailLineWidth = array.getDimension(R.styleable.CloudMusicLoadingView_cmlv_line_width, dip2px(context, 1f));
-        array.recycle();
+        int defaultRailColor = Color.argb(255, 255, 255, 255);
+        int defaultRailLineWidth = dip2px(context, 1f);
+        if (attrs != null) {
+            TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CloudMusicLoadingView, defStyleAttr, 0);
+            mRailCount = array.getInt(R.styleable.CloudMusicLoadingView_cmlv_rail_count, DEFAULT_RAIL_COUNT);
+            mRailColor = array.getColor(R.styleable.CloudMusicLoadingView_cmlv_rail_color, defaultRailColor);
+            mRailLineWidth = array.getDimension(R.styleable.CloudMusicLoadingView_cmlv_line_width, defaultRailLineWidth);
+            array.recycle();
+        } else {
+            mRailCount = DEFAULT_RAIL_COUNT;
+            mRailColor = defaultRailColor;
+            mRailLineWidth = defaultRailLineWidth;
+        }
     }
 
     @Override

@@ -29,6 +29,10 @@ public class RingLoadingView extends View implements Runnable {
      * 默认结束颜色，白色
      */
     private final int mDefaultEndColor = Color.argb(255, 255, 255, 255);
+    /**
+     * 是否默认开始
+     */
+    private boolean mDefaultIsAutoStart = true;
 
     /**
      * 圆环的开始、结束颜色
@@ -108,13 +112,20 @@ public class RingLoadingView extends View implements Runnable {
      * 初始化自定义属性
      */
     private void initAttr(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.RingLoadingView, defStyleAttr, 0);
-        int startColor = array.getColor(R.styleable.RingLoadingView_rlv_start_color, mDefaultStartColor);
-        int endColor = array.getColor(R.styleable.RingLoadingView_rlv_end_color, mDefaultEndColor);
-        mColors = new int[]{startColor, endColor};
-        mRingWidth = array.getDimensionPixelSize(R.styleable.RingLoadingView_rlv_ring_width, dip2px(context, 2f));
-        isAutoStart = array.getBoolean(R.styleable.RingLoadingView_rlv_auto_start, true);
-        array.recycle();
+        int defaultRingWidth = dip2px(context, 2f);
+        if (attrs != null) {
+            TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.RingLoadingView, defStyleAttr, 0);
+            int startColor = array.getColor(R.styleable.RingLoadingView_rlv_start_color, mDefaultStartColor);
+            int endColor = array.getColor(R.styleable.RingLoadingView_rlv_end_color, mDefaultEndColor);
+            mColors = new int[]{startColor, endColor};
+            mRingWidth = array.getDimensionPixelSize(R.styleable.RingLoadingView_rlv_ring_width, defaultRingWidth);
+            isAutoStart = array.getBoolean(R.styleable.RingLoadingView_rlv_auto_start, mDefaultIsAutoStart);
+            array.recycle();
+        } else {
+            mColors = new int[]{mDefaultStartColor, mDefaultEndColor};
+            mRingWidth = defaultRingWidth;
+            isAutoStart = mDefaultIsAutoStart;
+        }
     }
 
     @Override

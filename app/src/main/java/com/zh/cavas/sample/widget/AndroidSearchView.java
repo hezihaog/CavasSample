@@ -77,10 +77,17 @@ public class AndroidSearchView extends View {
     }
 
     private void initAttr(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.AndroidSearchView, defStyleAttr, 0);
-        mColor = array.getColor(R.styleable.AndroidSearchView_asv_color, Color.argb(255, 0, 0, 0));
-        mLineWidth = array.getDimension(R.styleable.AndroidSearchView_asv_line_width, dip2px(context, 1.5f));
-        array.recycle();
+        int defaultColor = Color.argb(255, 0, 0, 0);
+        int defaultLineWidth = dip2px(context, 1.5f);
+        if (attrs != null) {
+            TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.AndroidSearchView, defStyleAttr, 0);
+            mColor = array.getColor(R.styleable.AndroidSearchView_asv_color, defaultColor);
+            mLineWidth = array.getDimension(R.styleable.AndroidSearchView_asv_line_width, defaultLineWidth);
+            array.recycle();
+        } else {
+            mColor = defaultColor;
+            mLineWidth = defaultLineWidth;
+        }
     }
 
     @Override
