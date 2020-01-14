@@ -6,24 +6,27 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <LinearLayout
+    <com.google.android.flexbox.FlexboxLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        app:alignContent="center"
+        app:alignItems="center"
+        app:flexDirection="row"
+        app:flexWrap="wrap"
+        app:justifyContent="center">
 
         <com.zh.cavas.sample.widget.RotateDotView
             android:id="@+id/rotate_dot_view"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:layout_marginTop="20dp"
+            android:layout_margin="10dp"
             app:rdv_start_color="@android:color/darker_gray" />
 
         <com.zh.cavas.sample.widget.RotateDotView
             android:id="@+id/rotate_dot_view_scale"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:layout_marginTop="20dp"
+            android:layout_margin="10dp"
             app:rdv_dot_mode="scale"
             app:rdv_dot_radius="3.8dp"
             app:rdv_start_color="@android:color/darker_gray" />
@@ -32,7 +35,7 @@
             android:id="@+id/ring_loading"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_margin="10dp"
             app:rlv_auto_start="true"
             app:rlv_end_color="@color/white"
             app:rlv_ring_width="2.3dp"
@@ -42,7 +45,7 @@
             android:id="@+id/back_arrow"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_margin="10dp"
             app:bav_arrow_style="wechat_design"
             app:bav_color="@android:color/black"
             app:bav_stroke_width="1.5dp" />
@@ -51,7 +54,7 @@
             android:id="@+id/back_arrow2"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_margin="10dp"
             app:bav_arrow_style="material_design"
             app:bav_color="@android:color/black"
             app:bav_stroke_width="1.5dp" />
@@ -60,7 +63,7 @@
             android:id="@+id/more_action"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_margin="10dp"
             app:mav_color="@android:color/black"
             app:mav_dot_radius="1.5dp"
             app:mav_orientation="vertical" />
@@ -69,7 +72,7 @@
             android:id="@+id/more_action2"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_margin="10dp"
             app:mav_color="@android:color/black"
             app:mav_dot_radius="1.5dp"
             app:mav_orientation="horizontal" />
@@ -78,7 +81,7 @@
             android:id="@+id/menu_view"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_margin="10dp"
             app:amv_color="@android:color/black"
             app:amv_line_height="1dp" />
 
@@ -86,7 +89,7 @@
             android:id="@+id/close_view"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_margin="10dp"
             app:cv_circle_color="@android:color/darker_gray"
             app:cv_circle_line_width="1dp"
             app:cv_color="@android:color/black"
@@ -97,7 +100,7 @@
             android:id="@+id/close_view2"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_margin="10dp"
             app:cv_circle_color="@android:color/darker_gray"
             app:cv_circle_line_width="1dp"
             app:cv_color="@android:color/darker_gray"
@@ -107,38 +110,40 @@
         <com.zh.cavas.sample.widget.AndroidSearchView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_margin="10dp"
             app:asv_color="@android:color/black"
             app:asv_line_width="1.5dp" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <com.zh.cavas.sample.widget.CloudMusicLoadingView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="10dp"
+            android:paddingBottom="2dp"
+            app:cmlv_rail_color="#FB0006" />
 
-            <com.zh.cavas.sample.widget.CloudMusicLoadingView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginTop="20dp"
-                android:paddingBottom="2dp"
-                app:cmlv_rail_color="#FB0006" />
+        <com.zh.cavas.sample.widget.CloudMusicLoadingView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:background="#FB0006"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            app:cmlv_rail_color="#FFFFFF" />
 
-            <com.zh.cavas.sample.widget.CloudMusicLoadingView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:background="#FB0006"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                app:cmlv_rail_color="#FFFFFF" />
-        </LinearLayout>
+        <com.zh.cavas.sample.widget.RestartView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:rtv_bg_circle_color="#286E91"
+            app:rtv_line_color="#FFFFFF"
+            app:rtv_line_count="8"
+            app:rtv_line_width="1dp" />
 
         <TextView
             android:id="@+id/progress_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_margin="10dp"
             android:textColor="@android:color/black"
             android:textSize="14sp"
             tools:text="当前进度：13%" />
@@ -147,9 +152,7 @@
             android:id="@+id/download_progress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_margin="10dp"
             app:dpv_bg="#E6EAFB"
             app:dpv_max_progress="100"
             app:dpv_percentage_text_color2="@color/white"
@@ -160,24 +163,22 @@
 
         <SeekBar
             android:id="@+id/vivo_seek_bar"
+            style="@style/BaseSeekBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:duplicateParentState="true"
-            android:max="100"
-            android:maxHeight="2dp"
-            android:minHeight="2dp"
-            android:paddingStart="0dp"
-            android:paddingLeft="0dp"
-            android:paddingEnd="0dp"
-            android:paddingRight="0dp"
-            android:progress="0"
-            android:progressDrawable="@drawable/app_vivo_seek_bar_bg"
-            android:thumb="@drawable/app_vivo_seek_bar_thumb"
-            android:thumbOffset="0dp"
             tools:progress="40" />
-    </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#AAA">
+
+            <SeekBar
+                android:id="@+id/vivo_seek_bar_gray"
+                style="@style/BaseSeekBar.Gray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:progress="40" />
+        </FrameLayout>
+    </com.google.android.flexbox.FlexboxLayout>
 </ScrollView>

@@ -16,4 +16,24 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="BaseSeekBar">
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:duplicateParentState">true</item>
+        <item name="android:max">100</item>
+        <item name="android:maxHeight">2dp</item>
+        <item name="android:minHeight">2dp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:progress">0</item>
+        <item name="android:progressDrawable">@drawable/app_vivo_seek_bar_bg</item>
+        <item name="android:thumb">@drawable/app_vivo_seek_bar_thumb</item>
+        <item name="android:thumbOffset">0dp</item>
+    </style>
+
+    <style name="BaseSeekBar.Gray" parent="BaseSeekBar">
+        <item name="android:progressDrawable">@drawable/app_vivo_seek_bar_bg_gray</item>
+    </style>
 </resources>

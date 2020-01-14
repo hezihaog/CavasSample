@@ -21,6 +21,7 @@ public class MainActivity extends BaseActivity {
     private DownloadProgressView vDownloadProgressView;
     private BackArrowView vBackArrowView;
     private SeekBar vVivoSeekBar;
+    private SeekBar vViveoSeekBarGray;
     private TextView vProgressIndicator;
 
     @Override
@@ -38,6 +39,7 @@ public class MainActivity extends BaseActivity {
         vBackArrowView = view.findViewById(R.id.back_arrow);
         vDownloadProgressView = view.findViewById(R.id.download_progress);
         vVivoSeekBar = view.findViewById(R.id.vivo_seek_bar);
+        vViveoSeekBarGray = view.findViewById(R.id.vivo_seek_bar_gray);
         vProgressIndicator = view.findViewById(R.id.progress_indicator);
     }
 
@@ -58,7 +60,7 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
-        vVivoSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 vDownloadProgressView.setProgress(progress);
@@ -71,11 +73,14 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
-        });
+        };
+        vVivoSeekBar.setOnSeekBarChangeListener(seekBarChangeListener);
+        vViveoSeekBarGray.setOnSeekBarChangeListener(seekBarChangeListener);
         vDownloadProgressView.setOnProgressUpdateListener(new DownloadProgressView.OnProgressUpdateListener() {
             @Override
             public void onProgressUpdate(int progress) {
                 vVivoSeekBar.setProgress(progress);
+                vViveoSeekBarGray.setProgress(progress);
                 vProgressIndicator.setText("当前进度：" + progress);
             }
         });
