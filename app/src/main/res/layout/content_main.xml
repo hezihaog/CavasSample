@@ -162,6 +162,11 @@
             app:plv_num="6"
             app:plv_start_color="#33FF0000" />
 
+        <com.zh.cavas.sample.widget.AlipayRingLoadingView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:arlv_arc_color="#FF0000" />
+
         <com.zh.cavas.sample.widget.DownloadProgressView
             android:id="@+id/download_progress"
             android:layout_width="match_parent"

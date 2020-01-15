@@ -135,4 +135,11 @@
         <!-- 多边形有多少层 -->
         <attr name="plv_layer_count" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="AlipayRingLoadingView">
+        <!-- 圆弧的颜色 -->
+        <attr name="arlv_arc_color" format="color" />
+        <!-- 背景圆的颜色 -->
+        <attr name="arlv_bg_circle_color" format="color" />
+    </declare-styleable>
 </resources>
