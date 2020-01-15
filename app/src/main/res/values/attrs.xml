@@ -124,4 +124,15 @@
         <!-- 线宽粗细 -->
         <attr name="sv_line_width" format="integer|float|dimension" />
     </declare-styleable>
+
+    <declare-styleable name="PolygonLoadingView">
+        <!-- 圆环开始颜色 -->
+        <attr name="plv_start_color" format="color|reference" />
+        <!-- 圆环结束颜色 -->
+        <attr name="plv_end_color" format="color|reference" />
+        <!-- 多边形多少条边，至少3条边，如果小于3条，会强制3条 -->
+        <attr name="plv_num" format="integer" />
+        <!-- 多边形有多少层 -->
+        <attr name="plv_layer_count" format="integer" />
+    </declare-styleable>
 </resources>

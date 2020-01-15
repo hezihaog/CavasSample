@@ -45,11 +45,6 @@ public class RotateDotView extends View implements Runnable {
     private static final int DEFAULT_MIN_WIDTH = 70;
 
     /**
-     * 是否默认开始
-     */
-    private boolean mDefaultIsAutoStart = true;
-
-    /**
      * 控件宽
      */
     private int mViewWidth;
@@ -141,7 +136,7 @@ public class RotateDotView extends View implements Runnable {
             mEndColor = array.getColor(R.styleable.RotateDotView_rdv_end_color, Color.argb(76, Color.red(mStartColor), Color.green(mStartColor), Color.blue(mStartColor)));
             mDotCount = array.getInt(R.styleable.RotateDotView_rdv_dot_count, defaultDotCount);
             mDotRadius = array.getDimension(R.styleable.RotateDotView_rdv_dot_radius, defaultDotRadius);
-            isAutoStart = array.getBoolean(R.styleable.RotateDotView_rdv_auto_start, mDefaultIsAutoStart);
+            isAutoStart = array.getBoolean(R.styleable.RotateDotView_rdv_auto_start, true);
             //计算平均角度，默认是360 / 点的数量，例如8个点，算出来的平均角度就是45度
             mAngle = TOTAL_ROTATION_ANGLE / mDotCount;
             mRotateAngle = array.getInt(R.styleable.RotateDotView_rdv_rotate_angle, mAngle);
@@ -153,7 +148,7 @@ public class RotateDotView extends View implements Runnable {
             mEndColor = defaultEndColor;
             mDotCount = defaultDotCount;
             mDotRadius = defaultDotRadius;
-            isAutoStart = mDefaultIsAutoStart;
+            isAutoStart = true;
             //计算平均角度，默认是360 / 点的数量，例如8个点，算出来的平均角度就是45度
             mAngle = TOTAL_ROTATION_ANGLE / mDotCount;
             mRotateAngle = mAngle;

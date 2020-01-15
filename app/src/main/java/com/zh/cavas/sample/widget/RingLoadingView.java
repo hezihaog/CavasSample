@@ -29,10 +29,6 @@ public class RingLoadingView extends View implements Runnable {
      * 默认结束颜色，白色
      */
     private final int mDefaultEndColor = Color.argb(255, 255, 255, 255);
-    /**
-     * 是否默认开始
-     */
-    private boolean mDefaultIsAutoStart = true;
 
     /**
      * 圆环的开始、结束颜色
@@ -119,12 +115,12 @@ public class RingLoadingView extends View implements Runnable {
             int endColor = array.getColor(R.styleable.RingLoadingView_rlv_end_color, mDefaultEndColor);
             mColors = new int[]{startColor, endColor};
             mRingWidth = array.getDimensionPixelSize(R.styleable.RingLoadingView_rlv_ring_width, defaultRingWidth);
-            isAutoStart = array.getBoolean(R.styleable.RingLoadingView_rlv_auto_start, mDefaultIsAutoStart);
+            isAutoStart = array.getBoolean(R.styleable.RingLoadingView_rlv_auto_start, true);
             array.recycle();
         } else {
             mColors = new int[]{mDefaultStartColor, mDefaultEndColor};
             mRingWidth = defaultRingWidth;
-            isAutoStart = mDefaultIsAutoStart;
+            isAutoStart = true;
         }
     }
 

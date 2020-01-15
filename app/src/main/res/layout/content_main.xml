@@ -153,6 +153,15 @@
             app:sv_line_width="1dp"
             app:sv_small_circle_solid_color="@android:color/white" />
 
+        <com.zh.cavas.sample.widget.PolygonLoadingView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            app:plv_end_color="#FF0000"
+            app:plv_layer_count="3"
+            app:plv_num="6"
+            app:plv_start_color="#33FF0000" />
+
         <com.zh.cavas.sample.widget.DownloadProgressView
             android:id="@+id/download_progress"
             android:layout_width="match_parent"
