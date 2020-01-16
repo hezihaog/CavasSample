@@ -158,4 +158,11 @@
             <enum name="stroke" value="2" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="DownloadEntryView">
+        <!-- 颜色 -->
+        <attr name="dev_color" format="color" />
+        <!-- 线宽 -->
+        <attr name="dev_line_width" format="float|dimension|reference" />
+    </declare-styleable>
 </resources>

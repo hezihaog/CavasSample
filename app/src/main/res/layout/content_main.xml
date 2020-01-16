@@ -114,6 +114,13 @@
             app:asv_color="@android:color/black"
             app:asv_line_width="1.5dp" />
 
+        <com.zh.cavas.sample.widget.DownloadEntryView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            app:dev_color="@android:color/black"
+            app:dev_line_width="1.5dp" />
+
         <com.zh.cavas.sample.widget.CloudMusicLoadingView
             android:layout_width="25dp"
             android:layout_height="25dp"
@@ -172,6 +179,7 @@
             android:id="@+id/stars"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_margin="10dp"
             app:stv_color="#0000FF"
             app:stv_edge_line_width="1dp"
             app:stv_num="5"
@@ -181,6 +189,7 @@
             android:id="@+id/stars2"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_margin="10dp"
             app:stv_color="#0000FF"
             app:stv_edge_line_width="1dp"
             app:stv_num="5"
