@@ -24,11 +24,11 @@
 
         <com.zh.cavas.sample.widget.RotateDotView
             android:id="@+id/rotate_dot_view_scale"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_margin="10dp"
             app:rdv_dot_mode="scale"
-            app:rdv_dot_radius="3.8dp"
+            app:rdv_dot_radius="2.3dp"
             app:rdv_start_color="#488ED3" />
 
         <com.zh.cavas.sample.widget.RingLoadingView
@@ -157,15 +157,34 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="10dp"
-            app:plv_end_color="#FF0000"
+            app:plv_end_color="#4361EF"
             app:plv_layer_count="3"
             app:plv_num="6"
-            app:plv_start_color="#33FF0000" />
+            app:plv_start_color="#FFFFFF" />
 
         <com.zh.cavas.sample.widget.AlipayRingLoadingView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            app:arlv_arc_color="#FF0000" />
+            android:layout_margin="10dp"
+            app:arlv_arc_color="#196CC7" />
+
+        <com.zh.cavas.sample.widget.StarsView
+            android:id="@+id/stars"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:stv_color="#0000FF"
+            app:stv_edge_line_width="1dp"
+            app:stv_num="5"
+            app:stv_style="stroke" />
+
+        <com.zh.cavas.sample.widget.StarsView
+            android:id="@+id/stars2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:stv_color="#0000FF"
+            app:stv_edge_line_width="1dp"
+            app:stv_num="5"
+            app:stv_style="fill" />
 
         <com.zh.cavas.sample.widget.DownloadProgressView
             android:id="@+id/download_progress"

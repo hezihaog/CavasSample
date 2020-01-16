@@ -111,7 +111,7 @@ public class PolygonLoadingView extends View implements Runnable {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setColor(mDefaultStartColor);
+        mPaint.setColor(mColors[0]);
         mPaint.setStrokeWidth(dip2px(context, 1f));
         //连接的外边缘以圆弧的方式相交
         mPaint.setStrokeJoin(Paint.Join.ROUND);
