@@ -153,8 +153,10 @@ public class PolygonSettingView extends View {
         float pointY;
         //总的圆的半径，就是全部多边形的半径之和
         Path path = new Path();
+        //固定只有1层多边形
+        int count = 1;
         //循环画出每个多边形
-        for (int j = 1; j <= 1; j++) {
+        for (int j = 1; j <= count; j++) {
             //多边形属性图，就是多少层的多边形的半径叠加，循环多遍就能组成多层
             float radius = j * mRadius;
             //画前先重置路径
