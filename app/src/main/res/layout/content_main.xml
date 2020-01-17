@@ -203,6 +203,18 @@
             app:psv_line_width="1.5dp"
             app:psv_num="6" />
 
+        <com.zh.cavas.sample.widget.HookCheckBox
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            app:hcb_is_check="false" />
+
+        <com.zh.cavas.sample.widget.HookCheckBox
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            app:hcb_is_check="true" />
+
         <com.zh.cavas.sample.widget.DownloadProgressView
             android:id="@+id/download_progress"
             android:layout_width="match_parent"
