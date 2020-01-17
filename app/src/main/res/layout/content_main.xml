@@ -195,6 +195,14 @@
             app:stv_num="5"
             app:stv_style="fill" />
 
+        <com.zh.cavas.sample.widget.PolygonSettingView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            app:psv_color="@android:color/black"
+            app:psv_line_width="1.5dp"
+            app:psv_num="6" />
+
         <com.zh.cavas.sample.widget.DownloadProgressView
             android:id="@+id/download_progress"
             android:layout_width="match_parent"
