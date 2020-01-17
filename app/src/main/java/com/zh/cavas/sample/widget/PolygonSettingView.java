@@ -153,30 +153,23 @@ public class PolygonSettingView extends View {
         float pointY;
         //总的圆的半径，就是全部多边形的半径之和
         Path path = new Path();
-        //固定只有1层多边形
-        int count = 1;
-        //循环画出每个多边形
-        for (int j = 1; j <= count; j++) {
-            //多边形属性图，就是多少层的多边形的半径叠加，循环多遍就能组成多层
-            float radius = j * mRadius;
-            //画前先重置路径
-            path.reset();
-            for (int i = 1; i <= mNum; i++) {
-                //cos三角函数，中心角的邻边 / 斜边，斜边的值刚好就是半径，cos值乘以斜边，就能求出邻边，而这个邻边的长度，就是点的x坐标
-                pointX = (float) (Math.cos(i * mCenterAngle) * radius);
-                //sin三角函数，中心角的对边 / 斜边，斜边的值刚好就是半径，sin值乘以斜边，就能求出对边，而这个对边的长度，就是点的y坐标
-                pointY = (float) (Math.sin(i * mCenterAngle) * radius);
-                //如果是一个点，则移动到这个点，作为起点
-                if (i == 1) {
-                    path.moveTo(pointX, pointY);
-                } else {
-                    //其他的点，就可以连线了
-                    path.lineTo(pointX, pointY);
-                }
+        //画前先重置路径
+        path.reset();
+        for (int i = 1; i <= mNum; i++) {
+            //cos三角函数，中心角的邻边 / 斜边，斜边的值刚好就是半径，cos值乘以斜边，就能求出邻边，而这个邻边的长度，就是点的x坐标
+            pointX = (float) (Math.cos(i * mCenterAngle) * mRadius);
+            //sin三角函数，中心角的对边 / 斜边，斜边的值刚好就是半径，sin值乘以斜边，就能求出对边，而这个对边的长度，就是点的y坐标
+            pointY = (float) (Math.sin(i * mCenterAngle) * mRadius);
+            //如果是一个点，则移动到这个点，作为起点
+            if (i == 1) {
+                path.moveTo(pointX, pointY);
+            } else {
+                //其他的点，就可以连线了
+                path.lineTo(pointX, pointY);
             }
-            path.close();
-            canvas.drawPath(path, mPaint);
         }
+        path.close();
+        canvas.drawPath(path, mPaint);
     }
 
     @Override
