@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -24,6 +26,15 @@ public class HookCheckBox extends View {
      * View默认最小宽度
      */
     private static final int DEFAULT_MIN_WIDTH = 80;
+
+    /**
+     * 普通风格
+     */
+    private static final int STYLE_NORMAL = 1;
+    /**
+     * 镂空风格
+     */
+    private static final int STYLE_HOLLOW_OUT = 2;
 
     /**
      * 控件宽
@@ -58,9 +69,25 @@ public class HookCheckBox extends View {
      */
     private int mUncheckCircleColor;
     /**
-     * 钩子的颜色
+     * 选中时，钩子的颜色
      */
-    private int mHookColor;
+    private int mCheckHookColor;
+    /**
+     * 未选中时，钩子的颜色
+     */
+    private int mUncheckHookColor;
+    /**
+     * 混合模式
+     */
+    private PorterDuffXfermode mPorterDuffXfermode;
+    /**
+     * 风格
+     */
+    private int mStyle;
+    /**
+     * 线宽
+     */
+    private float mLineWidth;
 
     public HookCheckBox(Context context) {
         this(context, null);
@@ -80,9 +107,9 @@ public class HookCheckBox extends View {
         //画笔
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(mUncheckCircleColor);
-        mPaint.setStrokeWidth(dip2px(context, 1.5f));
+        mPaint.setStrokeWidth(mLineWidth);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         setOnClickListener(new OnClickListener() {
@@ -94,24 +121,39 @@ public class HookCheckBox extends View {
         });
         //View禁用掉GPU硬件加速，切换到软件渲染模式
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        mPorterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.XOR);
     }
 
     private void initAttr(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         //默认的选中颜色
-        int defaultCheckCircleColor = Color.argb(255, 101, 118, 213);
+        int defaultCheckCircleColor = Color.argb(255, 254, 201, 77);
         //默认的未选中颜色
-        int defaultUncheckCircleColor = Color.argb(255, 126, 127, 126);
+        int defaultUncheckCircleColor = Color.argb(255, 234, 234, 234);
+        //默认选中的钩子颜色
+        int defaultCheckHookColor = Color.argb(255, 53, 40, 33);
+        //默认未选中的钩子颜色
+        int defaultUncheckHookColor = Color.argb(255, 255, 255, 255);
+        //默认风格
+        int defaultStyle = STYLE_NORMAL;
+        //线宽
+        float defaultLineWidth = dip2px(context, 1.5f);
         if (attrs != null) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.HookCheckBox, defStyleAttr, 0);
             mCheckCircleColor = array.getColor(R.styleable.HookCheckBox_hcb_check_circle_color, defaultCheckCircleColor);
             mUncheckCircleColor = array.getColor(R.styleable.HookCheckBox_hcb_uncheck_circle_color, defaultUncheckCircleColor);
-            mHookColor = array.getColor(R.styleable.HookCheckBox_hcb_hook_color, mCheckCircleColor);
+            mCheckHookColor = array.getColor(R.styleable.HookCheckBox_hcb_check_hook_color, defaultCheckHookColor);
+            mUncheckHookColor = array.getColor(R.styleable.HookCheckBox_hcb_uncheck_hook_color, defaultUncheckHookColor);
+            mStyle = array.getInt(R.styleable.HookCheckBox_hcb_style, defaultStyle);
             isCheck = array.getBoolean(R.styleable.HookCheckBox_hcb_is_check, false);
+            mLineWidth = array.getDimension(R.styleable.HookCheckBox_hcb_line_width, defaultLineWidth);
             array.recycle();
         } else {
             mCheckCircleColor = defaultCheckCircleColor;
             mUncheckCircleColor = defaultUncheckCircleColor;
-            mHookColor = defaultCheckCircleColor;
+            mCheckHookColor = defaultCheckHookColor;
+            mUncheckHookColor = defaultUncheckHookColor;
+            mStyle = defaultStyle;
+            mLineWidth = defaultLineWidth;
             isCheck = false;
         }
     }
@@ -138,8 +180,13 @@ public class HookCheckBox extends View {
         canvas.translate(mViewWidth / 2, mViewHeight / 2);
         //画圆形背景
         drawCircleBg(canvas);
-        //勾选状态时，才画钩子
-        if (isCheck) {
+        //镂空风格，选中时，才画钩子
+        if (mStyle == STYLE_HOLLOW_OUT) {
+            if (isCheck) {
+                //画钩子
+                drawHook(canvas);
+            }
+        } else {
             //画钩子
             drawHook(canvas);
         }
@@ -157,6 +204,18 @@ public class HookCheckBox extends View {
         } else {
             mPaint.setColor(mUncheckCircleColor);
         }
+        if (mStyle == STYLE_HOLLOW_OUT) {
+            if (isCheck) {
+                //镂空风格，选中时用填充
+                mPaint.setStyle(Paint.Style.FILL);
+            } else {
+                //镂空风格，未选中时用描边
+                mPaint.setStyle(Paint.Style.STROKE);
+            }
+        } else {
+            //普通风格用填充风格
+            mPaint.setStyle(Paint.Style.FILL);
+        }
         canvas.drawCircle(0, 0, mRadius, mPaint);
     }
 
@@ -164,9 +223,19 @@ public class HookCheckBox extends View {
      * 画钩子
      */
     private void drawHook(Canvas canvas) {
-        canvas.save();
+        if (mStyle == STYLE_HOLLOW_OUT && isCheck) {
+            //设置混合模式
+            mPaint.setXfermode(mPorterDuffXfermode);
+        }
         //设置钩子的颜色
-        mPaint.setColor(mHookColor);
+        if (isCheck) {
+            mPaint.setColor(mCheckHookColor);
+        } else {
+            mPaint.setColor(mUncheckHookColor);
+        }
+        //画钩子要用描边风格
+        mPaint.setStyle(Paint.Style.STROKE);
+        canvas.save();
         //画布向下平移一半的半径长度
         canvas.translate(-(mRadius / 8f), mRadius / 3f);
         //旋转画布45度
@@ -183,6 +252,10 @@ public class HookCheckBox extends View {
         //画路径
         canvas.drawPath(path, mPaint);
         canvas.restore();
+        if (mStyle == STYLE_HOLLOW_OUT && isCheck) {
+            //去除混合模式
+            mPaint.setXfermode(null);
+        }
     }
 
     @Override

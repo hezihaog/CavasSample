@@ -180,9 +180,20 @@
         <attr name="hcb_check_circle_color" format="color" />
         <!-- 未选中时圆的颜色 -->
         <attr name="hcb_uncheck_circle_color" format="color" />
-        <!-- 钩子的颜色 -->
-        <attr name="hcb_hook_color" format="color" />
+        <!-- 选中时的钩子的颜色 -->
+        <attr name="hcb_check_hook_color" format="color" />
+        <!-- 未选中时的钩子的颜色 -->
+        <attr name="hcb_uncheck_hook_color" format="color" />
         <!-- 是否选中 -->
         <attr name="hcb_is_check" format="boolean" />
+        <!-- 风格 -->
+        <attr name="hcb_style" format="enum">
+            <!-- 普通，对勾是有颜色的 -->
+            <enum name="normal" value="1" />
+            <!-- 镂空，就是对勾是透明的 -->
+            <enum name="hollow_out" value="2" />
+        </attr>
+        <!-- 线宽 -->
+        <attr name="hcb_line_width" format="float|dimension|reference" />
     </declare-styleable>
 </resources>
