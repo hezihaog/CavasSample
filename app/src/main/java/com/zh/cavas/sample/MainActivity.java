@@ -6,12 +6,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
 import com.zh.cavas.sample.widget.BackArrowView;
 import com.zh.cavas.sample.widget.DownloadProgressView;
+import com.zh.cavas.sample.widget.HookCheckBox;
 import com.zh.cavas.sample.widget.MoreActionView;
 
 public class MainActivity extends BaseActivity {
@@ -21,6 +23,7 @@ public class MainActivity extends BaseActivity {
     private BackArrowView vBackArrowView;
     private SeekBar vVivoSeekBar;
     private SeekBar vViveoSeekBarGray;
+    private HookCheckBox vHookCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class MainActivity extends BaseActivity {
         vDownloadProgressView = view.findViewById(R.id.download_progress);
         vVivoSeekBar = view.findViewById(R.id.vivo_seek_bar);
         vViveoSeekBarGray = view.findViewById(R.id.vivo_seek_bar_gray);
+        vHookCheckBox = view.findViewById(R.id.hook_checkbox);
     }
 
     private void bindView() {
@@ -81,6 +85,18 @@ public class MainActivity extends BaseActivity {
             }
         });
         vDownloadProgressView.setProgress(0);
+        vHookCheckBox.setOnCheckChangeListener(new HookCheckBox.OnCheckChangeListener() {
+            @Override
+            public void onCheckChange(boolean isCheck) {
+                String msg;
+                if (isCheck) {
+                    msg = "开";
+                } else {
+                    msg = "关";
+                }
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

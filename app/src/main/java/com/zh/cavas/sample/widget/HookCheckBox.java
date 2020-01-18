@@ -88,6 +88,10 @@ public class HookCheckBox extends View {
      * 风格策略
      */
     private BaseStyleStrategy mStyleStrategy;
+    /**
+     * 切换改变回调
+     */
+    private OnCheckChangeListener mCheckListener;
 
     public HookCheckBox(Context context) {
         this(context, null);
@@ -112,16 +116,15 @@ public class HookCheckBox extends View {
         mPaint.setStrokeWidth(mLineWidth);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isCheck = !isCheck;
-                invalidate();
-            }
-        });
         //View禁用掉GPU硬件加速，切换到软件渲染模式
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         mPorterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.XOR);
+        //设置点击事件
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
     }
 
     private void initAttr(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -306,12 +309,59 @@ public class HookCheckBox extends View {
         return (int) (dipValue * scale + 0.5f);
     }
 
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        super.setOnClickListener(new OnClickWrapper(l));
+    }
+
+    /**
+     * 点击事件包裹，避免外部设置点击事件将内部的切换事件替换
+     */
+    private class OnClickWrapper implements OnClickListener {
+        private OnClickListener mOriginListener;
+
+        OnClickWrapper() {
+        }
+
+        OnClickWrapper(OnClickListener originListener) {
+            mOriginListener = originListener;
+        }
+
+        @Override
+        public void onClick(View view) {
+            isCheck = !isCheck;
+            invalidate();
+            if (mCheckListener != null) {
+                mCheckListener.onCheckChange(isCheck);
+            }
+            if (mOriginListener != null) {
+                mOriginListener.onClick(view);
+            }
+        }
+    }
+
     public boolean isCheck() {
         return isCheck;
     }
 
     public HookCheckBox setCheck(boolean check) {
         isCheck = check;
+        if (mCheckListener != null) {
+            mCheckListener.onCheckChange(check);
+        }
         return this;
+    }
+
+    public interface OnCheckChangeListener {
+        /**
+         * 切换时回调
+         *
+         * @param isCheck 是否选中
+         */
+        void onCheckChange(boolean isCheck);
+    }
+
+    public void setOnCheckChangeListener(OnCheckChangeListener listener) {
+        mCheckListener = listener;
     }
 }

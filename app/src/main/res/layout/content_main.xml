@@ -204,6 +204,7 @@
             app:psv_num="6" />
 
         <com.zh.cavas.sample.widget.HookCheckBox
+            android:id="@+id/hook_checkbox"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_margin="10dp"
@@ -231,8 +232,8 @@
             android:layout_margin="10dp"
             app:hcb_check_circle_color="#6576D5"
             app:hcb_is_check="true"
-            app:hcb_style="hollow_out"
             app:hcb_line_width="1dp"
+            app:hcb_style="hollow_out"
             app:hcb_uncheck_circle_color="#818181" />
 
         <com.zh.cavas.sample.widget.DownloadProgressView
