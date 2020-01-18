@@ -81,13 +81,13 @@ public class HookCheckBox extends View {
      */
     private PorterDuffXfermode mPorterDuffXfermode;
     /**
-     * 风格
-     */
-    private int mStyle;
-    /**
      * 线宽
      */
     private float mLineWidth;
+    /**
+     * 风格策略
+     */
+    private BaseStyleStrategy mStyleStrategy;
 
     public HookCheckBox(Context context) {
         this(context, null);
@@ -137,13 +137,15 @@ public class HookCheckBox extends View {
         int defaultStyle = STYLE_NORMAL;
         //线宽
         float defaultLineWidth = dip2px(context, 1.5f);
+        //风格
+        int style;
         if (attrs != null) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.HookCheckBox, defStyleAttr, 0);
             mCheckCircleColor = array.getColor(R.styleable.HookCheckBox_hcb_check_circle_color, defaultCheckCircleColor);
             mUncheckCircleColor = array.getColor(R.styleable.HookCheckBox_hcb_uncheck_circle_color, defaultUncheckCircleColor);
             mCheckHookColor = array.getColor(R.styleable.HookCheckBox_hcb_check_hook_color, defaultCheckHookColor);
             mUncheckHookColor = array.getColor(R.styleable.HookCheckBox_hcb_uncheck_hook_color, defaultUncheckHookColor);
-            mStyle = array.getInt(R.styleable.HookCheckBox_hcb_style, defaultStyle);
+            style = array.getInt(R.styleable.HookCheckBox_hcb_style, defaultStyle);
             isCheck = array.getBoolean(R.styleable.HookCheckBox_hcb_is_check, false);
             mLineWidth = array.getDimension(R.styleable.HookCheckBox_hcb_line_width, defaultLineWidth);
             array.recycle();
@@ -152,9 +154,14 @@ public class HookCheckBox extends View {
             mUncheckCircleColor = defaultUncheckCircleColor;
             mCheckHookColor = defaultCheckHookColor;
             mUncheckHookColor = defaultUncheckHookColor;
-            mStyle = defaultStyle;
+            style = defaultStyle;
             mLineWidth = defaultLineWidth;
             isCheck = false;
+        }
+        if (style == STYLE_HOLLOW_OUT) {
+            mStyleStrategy = new HollowOutStyleStrategy();
+        } else if (style == STYLE_NORMAL) {
+            mStyleStrategy = new NormalStyleStrategy();
         }
     }
 
@@ -179,32 +186,74 @@ public class HookCheckBox extends View {
         //将画布中心移动到中心点
         canvas.translate(mViewWidth / 2, mViewHeight / 2);
         //画圆形背景
-        drawCircleBg(canvas);
-        //镂空风格，选中时，才画钩子
-        if (mStyle == STYLE_HOLLOW_OUT) {
-            if (isCheck) {
-                //画钩子
-                drawHook(canvas);
-            }
-        } else {
-            //画钩子
-            drawHook(canvas);
-        }
+        mStyleStrategy.drawCircleBg(canvas);
+        //画钩子
+        mStyleStrategy.drawHook(canvas);
         //恢复图层
         canvas.restoreToCount(layerId);
     }
 
-    /**
-     * 画圆形背景
-     */
-    private void drawCircleBg(Canvas canvas) {
-        //设置背景圆的颜色
-        if (isCheck) {
-            mPaint.setColor(mCheckCircleColor);
-        } else {
-            mPaint.setColor(mUncheckCircleColor);
+    private class BaseStyleStrategy {
+        /**
+         * 画圆形背景
+         */
+        protected void drawCircleBg(Canvas canvas) {
+            //设置背景圆的颜色
+            if (isCheck) {
+                mPaint.setColor(mCheckCircleColor);
+            } else {
+                mPaint.setColor(mUncheckCircleColor);
+            }
+            canvas.drawCircle(0, 0, mRadius, mPaint);
         }
-        if (mStyle == STYLE_HOLLOW_OUT) {
+
+        /**
+         * 画钩子
+         */
+        protected void drawHook(Canvas canvas) {
+            //设置钩子的颜色
+            if (isCheck) {
+                mPaint.setColor(mCheckHookColor);
+            } else {
+                mPaint.setColor(mUncheckHookColor);
+            }
+            //画钩子要用描边风格
+            mPaint.setStyle(Paint.Style.STROKE);
+            canvas.save();
+            //画布向下平移一半的半径长度
+            canvas.translate(-(mRadius / 8f), mRadius / 3f);
+            //旋转画布45度
+            canvas.rotate(-45);
+            Path path = new Path();
+            path.reset();
+            path.moveTo(0, 0);
+            //向右画一条线
+            path.lineTo(mHookLineLength, 0);
+            //回到中心点
+            path.moveTo(0, 0);
+            //向上画一条线
+            path.lineTo(0, -mHookLineLength / 2f);
+            //画路径
+            canvas.drawPath(path, mPaint);
+            canvas.restore();
+        }
+    }
+
+    private class NormalStyleStrategy extends BaseStyleStrategy {
+        @Override
+        protected void drawCircleBg(Canvas canvas) {
+            //普通风格用填充风格
+            mPaint.setStyle(Paint.Style.FILL);
+            super.drawCircleBg(canvas);
+        }
+    }
+
+    /**
+     * 镂空风格
+     */
+    private class HollowOutStyleStrategy extends BaseStyleStrategy {
+        @Override
+        protected void drawCircleBg(Canvas canvas) {
             if (isCheck) {
                 //镂空风格，选中时用填充
                 mPaint.setStyle(Paint.Style.FILL);
@@ -212,49 +261,19 @@ public class HookCheckBox extends View {
                 //镂空风格，未选中时用描边
                 mPaint.setStyle(Paint.Style.STROKE);
             }
-        } else {
-            //普通风格用填充风格
-            mPaint.setStyle(Paint.Style.FILL);
+            super.drawCircleBg(canvas);
         }
-        canvas.drawCircle(0, 0, mRadius, mPaint);
-    }
 
-    /**
-     * 画钩子
-     */
-    private void drawHook(Canvas canvas) {
-        if (mStyle == STYLE_HOLLOW_OUT && isCheck) {
-            //设置混合模式
-            mPaint.setXfermode(mPorterDuffXfermode);
-        }
-        //设置钩子的颜色
-        if (isCheck) {
-            mPaint.setColor(mCheckHookColor);
-        } else {
-            mPaint.setColor(mUncheckHookColor);
-        }
-        //画钩子要用描边风格
-        mPaint.setStyle(Paint.Style.STROKE);
-        canvas.save();
-        //画布向下平移一半的半径长度
-        canvas.translate(-(mRadius / 8f), mRadius / 3f);
-        //旋转画布45度
-        canvas.rotate(-45);
-        Path path = new Path();
-        path.reset();
-        path.moveTo(0, 0);
-        //向右画一条线
-        path.lineTo(mHookLineLength, 0);
-        //回到中心点
-        path.moveTo(0, 0);
-        //向上画一条线
-        path.lineTo(0, -mHookLineLength / 2f);
-        //画路径
-        canvas.drawPath(path, mPaint);
-        canvas.restore();
-        if (mStyle == STYLE_HOLLOW_OUT && isCheck) {
-            //去除混合模式
-            mPaint.setXfermode(null);
+        @Override
+        protected void drawHook(Canvas canvas) {
+            //镂空风格，选中时，才画钩子
+            if (isCheck) {
+                //设置混合模式
+                mPaint.setXfermode(mPorterDuffXfermode);
+                super.drawHook(canvas);
+                //去除混合模式
+                mPaint.setXfermode(null);
+            }
         }
     }
 
