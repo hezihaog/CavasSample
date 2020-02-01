@@ -1,10 +1,12 @@
 package com.zh.cavas.sample;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -22,8 +24,9 @@ public class MainActivity extends BaseActivity {
     private DownloadProgressView vDownloadProgressView;
     private BackArrowView vBackArrowView;
     private SeekBar vVivoSeekBar;
-    private SeekBar vViveoSeekBarGray;
+    private SeekBar vVivoSeekBarGray;
     private HookCheckBox vHookCheckBox;
+    private ImageView vVivoLoadingProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +43,9 @@ public class MainActivity extends BaseActivity {
         vBackArrowView = view.findViewById(R.id.back_arrow);
         vDownloadProgressView = view.findViewById(R.id.download_progress);
         vVivoSeekBar = view.findViewById(R.id.vivo_seek_bar);
-        vViveoSeekBarGray = view.findViewById(R.id.vivo_seek_bar_gray);
+        vVivoSeekBarGray = view.findViewById(R.id.vivo_seek_bar_gray);
         vHookCheckBox = view.findViewById(R.id.hook_checkbox);
+        vVivoLoadingProgress = view.findViewById(R.id.vivo_loading_progress);
     }
 
     private void bindView() {
@@ -76,12 +80,12 @@ public class MainActivity extends BaseActivity {
             }
         };
         vVivoSeekBar.setOnSeekBarChangeListener(seekBarChangeListener);
-        vViveoSeekBarGray.setOnSeekBarChangeListener(seekBarChangeListener);
+        vVivoSeekBarGray.setOnSeekBarChangeListener(seekBarChangeListener);
         vDownloadProgressView.setOnProgressUpdateListener(new DownloadProgressView.OnProgressUpdateListener() {
             @Override
             public void onProgressUpdate(int progress) {
                 vVivoSeekBar.setProgress(progress);
-                vViveoSeekBarGray.setProgress(progress);
+                vVivoSeekBarGray.setProgress(progress);
             }
         });
         vDownloadProgressView.setProgress(0);
@@ -97,6 +101,10 @@ public class MainActivity extends BaseActivity {
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
             }
         });
+        AnimationDrawable animationDrawable = (AnimationDrawable) vVivoLoadingProgress.getBackground();
+        if (animationDrawable != null && !animationDrawable.isRunning()) {
+            animationDrawable.start();
+        }
     }
 
     @Override

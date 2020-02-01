@@ -236,6 +236,13 @@
             app:hcb_style="hollow_out"
             app:hcb_uncheck_circle_color="#818181" />
 
+        <ImageView
+            android:id="@+id/vivo_loading_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/vigour_progress_anim" />
+
         <com.zh.cavas.sample.widget.DownloadProgressView
             android:id="@+id/download_progress"
             android:layout_width="match_parent"
