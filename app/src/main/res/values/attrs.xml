@@ -196,4 +196,11 @@
         <!-- 线宽 -->
         <attr name="hcb_line_width" format="float|dimension|reference" />
     </declare-styleable>
+
+    <declare-styleable name="TIMServiceNoView">
+        <!-- 背景圆的颜色 -->
+        <attr name="tim_snv_bg_circle_color" format="color" />
+        <!-- 圆角矩形图标的颜色 -->
+        <attr name="tim_snv_round_rect_icon_color" format="color" />
+    </declare-styleable>
 </resources>

@@ -250,6 +250,10 @@
             android:layout_margin="10dp"
             tools:src="@drawable/vivo_polygon_loading" />
 
+        <com.zh.cavas.sample.widget.TIMServiceNoView
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
         <com.zh.cavas.sample.widget.DownloadProgressView
             android:id="@+id/download_progress"
             android:layout_width="match_parent"
