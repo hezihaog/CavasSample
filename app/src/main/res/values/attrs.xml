@@ -80,6 +80,22 @@
         <attr name="cv_circle_line_width" format="integer|float|dimension" />
     </declare-styleable>
 
+    <declare-styleable name="AddView">
+        <!-- 线的颜色 -->
+        <attr name="av_color" format="color" />
+        <!-- 线高 -->
+        <attr name="av_line_width" format="integer|float|dimension" />
+        <!-- 模式，普通模式、圆边模式 -->
+        <attr name="av_mode" format="enum">
+            <enum name="normal" value="1" />
+            <enum name="circle" value="2" />
+        </attr>
+        <!-- 圆的边颜色 -->
+        <attr name="av_circle_color" format="color" />
+        <!-- 圆的边线宽 -->
+        <attr name="av_circle_line_width" format="integer|float|dimension" />
+    </declare-styleable>
+
     <declare-styleable name="AndroidSearchView">
         <!-- 线的颜色 -->
         <attr name="asv_color" format="color" />

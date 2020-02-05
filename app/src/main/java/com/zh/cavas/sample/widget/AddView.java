@@ -16,9 +16,9 @@ import com.zh.cavas.sample.R;
  * <b>Package:</b> com.zh.cavas.sample.widget <br>
  * <b>Create Date:</b> 2020-01-15  14:13 <br>
  * <b>@author:</b> zihe <br>
- * <b>Description:</b> 关闭View <br>
+ * <b>Description:</b> 加号View <br>
  */
-public class CloseView extends View {
+public class AddView extends View {
     /**
      * 普通模式
      */
@@ -70,15 +70,15 @@ public class CloseView extends View {
      */
     private float mCircleLineWidth;
 
-    public CloseView(Context context) {
+    public AddView(Context context) {
         this(context, null);
     }
 
-    public CloseView(Context context, @Nullable AttributeSet attrs) {
+    public AddView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CloseView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public AddView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr);
     }
@@ -96,14 +96,14 @@ public class CloseView extends View {
         int defaultColor = Color.argb(255, 0, 0, 0);
         int defaultLineWidth = dip2px(context, 1.5f);
         if (attrs != null) {
-            TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CloseView, defStyleAttr, 0);
-            mColor = array.getColor(R.styleable.CloseView_cv_color, defaultColor);
-            mLineWidth = array.getDimension(R.styleable.CloseView_cv_line_width, defaultLineWidth);
-            mMode = array.getInt(R.styleable.CloseView_cv_mode, MODE_NORMAL);
+            TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.AddView, defStyleAttr, 0);
+            mColor = array.getColor(R.styleable.AddView_av_color, defaultColor);
+            mLineWidth = array.getDimension(R.styleable.AddView_av_line_width, defaultLineWidth);
+            mMode = array.getInt(R.styleable.AddView_av_mode, MODE_NORMAL);
             //如果不指定圆的颜色，颜色和线的颜色一致
-            mCircleColor = array.getColor(R.styleable.CloseView_cv_circle_color, mColor);
+            mCircleColor = array.getColor(R.styleable.AddView_av_circle_color, mColor);
             //如果不指定圆的线宽，则和线的线宽的一致
-            mCircleLineWidth = array.getDimension(R.styleable.CloseView_cv_circle_line_width, mLineWidth);
+            mCircleLineWidth = array.getDimension(R.styleable.AddView_av_circle_line_width, mLineWidth);
             array.recycle();
         } else {
             mColor = defaultColor;
@@ -119,7 +119,7 @@ public class CloseView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         mViewWidth = w;
         mViewHeight = h;
-        mLineLength = (Math.min(mViewWidth, mViewHeight) * 0.65f) / 2f;
+        mLineLength = (Math.min(mViewWidth, mViewHeight) * 0.50f) / 2f;
     }
 
     @Override
@@ -127,8 +127,6 @@ public class CloseView extends View {
         super.onDraw(canvas);
         //将画布中心移动到中心点
         canvas.translate(mViewWidth / 2, mViewHeight / 2);
-        //线旋转45，将十字旋转
-        canvas.rotate(45);
         //画交叉线
         drawCrossLine(canvas);
         //画圆模式

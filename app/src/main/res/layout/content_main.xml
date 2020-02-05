@@ -107,6 +107,28 @@
             app:cv_line_width="1.5dp"
             app:cv_mode="circle" />
 
+        <com.zh.cavas.sample.widget.AddView
+            android:id="@+id/add_view"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            app:av_circle_color="@android:color/black"
+            app:av_circle_line_width="1dp"
+            app:av_color="@android:color/black"
+            app:av_line_width="0.8dp"
+            app:av_mode="circle" />
+
+        <com.zh.cavas.sample.widget.AddView
+            android:id="@+id/add_view2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            app:av_circle_color="@android:color/black"
+            app:av_circle_line_width="1dp"
+            app:av_color="@android:color/black"
+            app:av_line_width="0.8dp"
+            app:av_mode="normal" />
+
         <com.zh.cavas.sample.widget.AndroidSearchView
             android:layout_width="40dp"
             android:layout_height="40dp"
