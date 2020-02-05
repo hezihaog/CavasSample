@@ -105,7 +105,9 @@ public class TIMServiceNoView extends View {
         mHookPaint.setAntiAlias(true);
         mHookPaint.setStyle(Paint.Style.STROKE);
         mHookPaint.setColor(mBgCircleColor);
-        mHookPaint.setStrokeJoin(Paint.Join.ROUND);
+        //设置连接处为直角
+        mHookPaint.setStrokeJoin(Paint.Join.MITER);
+        //设置笔触为圆形
         mHookPaint.setStrokeCap(Paint.Cap.ROUND);
     }
 
@@ -132,13 +134,13 @@ public class TIMServiceNoView extends View {
         //计算背景圆的半径
         mBgCircleRadius = (Math.min(mViewWidth, mViewHeight) / 2f) * 0.95f;
         //计算图标圆角矩形的半径
-        mRoundRectIconRadius = (Math.min(mViewWidth, mViewHeight) / 2f) * 0.5f;
+        mRoundRectIconRadius = (Math.min(mViewWidth, mViewHeight) / 2f) * 0.45f;
         //计算图标的圆角矩形的边圆角半径
         mRoundRectIconEdgeRoundRadius = (Math.min(mViewWidth, mViewHeight) / 2f) * 0.1f;
         //计算对勾的长度
-        mHookLineLength = mRoundRectIconRadius * 0.7f;
+        mHookLineLength = mRoundRectIconRadius * 0.5f;
         //设置对勾的线宽
-        mHookPaint.setStrokeWidth(mRoundRectIconRadius * 0.15f);
+        mHookPaint.setStrokeWidth(mRoundRectIconRadius * 0.13f);
     }
 
     @Override
@@ -182,7 +184,7 @@ public class TIMServiceNoView extends View {
         float edgeLength = mRoundRectIconRadius / 3f;
         canvas.save();
         //画布向下平移一半的半径长度
-        canvas.translate(-(mRoundRectIconRadius / 8f), mRoundRectIconRadius / 2f);
+        canvas.translate(-(mRoundRectIconRadius / 10f), mRoundRectIconRadius / 3.5f);
         //旋转画布45度
         canvas.rotate(-45);
         Path path = new Path();
