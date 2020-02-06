@@ -219,4 +219,18 @@
         <!-- 圆角矩形图标的颜色 -->
         <attr name="tim_snv_round_rect_icon_color" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="ParallelogramView">
+        <!-- 颜色 -->
+        <attr name="pallv_color" format="color" />
+        <!-- 风格 -->
+        <attr name="pallv_style" format="enum">
+            <!-- 填满 -->
+            <enum name="fill" value="1" />
+            <!-- 描边 -->
+            <enum name="stroke" value="2" />
+        </attr>
+        <!-- 线宽 -->
+        <attr name="pallv_line_width" format="integer|float|dimension" />
+    </declare-styleable>
 </resources>

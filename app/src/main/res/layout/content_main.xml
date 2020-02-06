@@ -274,7 +274,16 @@
 
         <com.zh.cavas.sample.widget.TIMServiceNoView
             android:layout_width="50dp"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            android:layout_margin="10dp" />
+
+        <com.zh.cavas.sample.widget.ParallelogramView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            app:pallv_color="#196CC7"
+            app:pallv_line_width="1.5dp"
+            app:pallv_style="fill" />
 
         <com.zh.cavas.sample.widget.DownloadProgressView
             android:id="@+id/download_progress"
