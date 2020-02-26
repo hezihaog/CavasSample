@@ -104,7 +104,7 @@ public class AndroidSearchView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.translate(mViewWidth / 2, mViewHeight / 2);
+        canvas.translate(mViewWidth / 2f, mViewHeight / 2f);
         canvas.rotate(45f);
         canvas.drawCircle(0, 0, mCircleRadius, mPaint);
         canvas.drawLine(mCircleRadius, 0, mLineLength, 0, mPaint);

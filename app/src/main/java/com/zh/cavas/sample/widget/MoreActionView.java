@@ -115,7 +115,7 @@ public class MoreActionView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.translate(mViewWidth / 2, mViewHeight / 2);
+        canvas.translate(mViewWidth / 2f, mViewHeight / 2f);
         //垂直排列
         if (mOrientation == ORIENTATION_VERTICAL) {
             canvas.rotate(90);

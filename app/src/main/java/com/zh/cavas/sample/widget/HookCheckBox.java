@@ -187,7 +187,7 @@ public class HookCheckBox extends View {
         //保存图层
         int layerId = canvas.saveLayer(left, top, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
         //将画布中心移动到中心点
-        canvas.translate(mViewWidth / 2, mViewHeight / 2);
+        canvas.translate(mViewWidth / 2f, mViewHeight / 2f);
         //画圆形背景
         mStyleStrategy.drawCircleBg(canvas);
         //画钩子

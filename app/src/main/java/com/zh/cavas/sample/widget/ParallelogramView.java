@@ -136,7 +136,7 @@ public class ParallelogramView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         //将画布中心移动到中心点
-        canvas.translate(mViewWidth / 2, mViewHeight / 2);
+        canvas.translate(mViewWidth / 2f, mViewHeight / 2f);
         //画平行四边形
         drawParallelogram(canvas);
     }

@@ -169,7 +169,7 @@ public class RotateDotView extends View implements Runnable {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         //将坐标系原点移动到画布正中心
-        canvas.translate(mViewWidth / 2, mViewHeight / 2);
+        canvas.translate(mViewWidth / 2f, mViewHeight / 2f);
         canvas.rotate(mCurrentAngle);
         for (Dot dot : mDots) {
             mPaint.setColor(dot.color);

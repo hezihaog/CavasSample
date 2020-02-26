@@ -165,7 +165,7 @@ public class PolygonLoadingView extends View implements Runnable {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         //将画布中心移动到中心点
-        canvas.translate(mViewWidth / 2, mViewHeight / 2);
+        canvas.translate(mViewWidth / 2f, mViewHeight / 2f);
         //默认0度在x轴水平线，逆时针为负角度，顺时针为正角度，旋转-90则0度转到顶部的y轴开始
         canvas.rotate(-90);
         //不断旋转画布
