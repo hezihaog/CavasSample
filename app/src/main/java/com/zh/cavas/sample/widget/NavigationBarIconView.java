@@ -88,7 +88,7 @@ public class NavigationBarIconView extends View {
         //设置拐角形状为圆形
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setColor(mColor);
-        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStyle(Paint.Style.FILL);
         mPaint.setAntiAlias(true);
         mPaint.setStrokeWidth(mLineWidth);
     }
@@ -320,7 +320,7 @@ public class NavigationBarIconView extends View {
         @Override
         public void onSizeChanged(int w, int h, int oldw, int oldh) {
             super.onSizeChanged(w, h, oldw, oldh);
-            mRadius = (Math.min(mViewWidth, mViewHeight) * 0.90f) / 2f;
+            mRadius = (Math.min(mViewWidth, mViewHeight) * 0.85f) / 2f;
             mRoundRectCircle = (Math.min(mViewWidth, mViewHeight) * 0.1f) / 2f;
             if (mRectF == null) {
                 mRectF = new RectF(-mRadius, -mRadius, mRadius, mRadius);

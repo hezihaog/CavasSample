@@ -302,6 +302,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 app:dpv_bg="#E6EAFB"
+                app:dpv_control_mode="touch"
                 app:dpv_max_progress="100"
                 app:dpv_percentage_text_color2="@color/white"
                 app:dpv_percentage_text_size="14sp"
