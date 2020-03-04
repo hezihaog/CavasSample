@@ -233,4 +233,20 @@
         <!-- 线宽 -->
         <attr name="pallv_line_width" format="integer|float|dimension" />
     </declare-styleable>
+
+    <declare-styleable name="NavigationBarIconView">
+        <!-- 图形 -->
+        <attr name="naviv_shape" format="enum">
+            <!-- 三角形 -->
+            <enum name="triangle" value="1" />
+            <!-- 圆形 -->
+            <enum name="circle" value="2" />
+            <!-- 正方形 -->
+            <enum name="square" value="3" />
+        </attr>
+        <!-- 颜色 -->
+        <attr name="naviv_color" format="color" />
+        <!-- 线宽 -->
+        <attr name="naviv_line_width" format="integer|float|dimension" />
+    </declare-styleable>
 </resources>
