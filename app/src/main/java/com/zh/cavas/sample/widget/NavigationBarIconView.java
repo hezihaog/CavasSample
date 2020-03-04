@@ -35,9 +35,13 @@ public class NavigationBarIconView extends View {
      */
     private static final int SHAPE_CIRCLE = 2;
     /**
+     * 图形：内嵌圆
+     */
+    private static final int SHAPE_NESTED_CIRCLE = 3;
+    /**
      * 图形：正方形
      */
-    private static final int SHAPE_SQUARE = 3;
+    private static final int SHAPE_SQUARE = 4;
 
     /**
      * 控件宽
@@ -109,6 +113,8 @@ public class NavigationBarIconView extends View {
             mShapeStrategy = new TriangleStrategy();
         } else if (shape == SHAPE_CIRCLE) {
             mShapeStrategy = new CircleStrategy();
+        } else if (shape == SHAPE_NESTED_CIRCLE) {
+            mShapeStrategy = new NestedCircleStrategy();
         } else if (shape == SHAPE_SQUARE) {
             mShapeStrategy = new SquareStrategy();
         }
@@ -153,11 +159,6 @@ public class NavigationBarIconView extends View {
             }
         }
         return result;
-    }
-
-    public static int dip2px(Context context, float dipValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dipValue * scale + 0.5f);
     }
 
     /**
@@ -266,7 +267,7 @@ public class NavigationBarIconView extends View {
         /**
          * 圆形半径s
          */
-        private float mRadius;
+        protected float mRadius;
 
         @Override
         public void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -277,6 +278,25 @@ public class NavigationBarIconView extends View {
         @Override
         public void onDraw(Canvas canvas) {
             canvas.drawCircle(0, 0, mRadius, mPaint);
+        }
+    }
+
+    /**
+     * 内嵌圆形
+     */
+    public class NestedCircleStrategy extends CircleStrategy {
+        @Override
+        public void onDraw(Canvas canvas) {
+            canvas.save();
+            //画外边圆，描边风格
+            mPaint.setStyle(Paint.Style.STROKE);
+            super.onDraw(canvas);
+            //画内圆，填充风格
+            mPaint.setStyle(Paint.Style.FILL);
+            float scaleValue = 0.75f;
+            canvas.scale(scaleValue, scaleValue);
+            canvas.drawCircle(0, 0, mRadius, mPaint);
+            canvas.restore();
         }
     }
 
@@ -313,5 +333,10 @@ public class NavigationBarIconView extends View {
         public void onDraw(Canvas canvas) {
             canvas.drawRoundRect(mRectF, mRoundRectCircle, mRoundRectCircle, mPaint);
         }
+    }
+
+    public static int dip2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
     }
 }

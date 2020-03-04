@@ -241,8 +241,10 @@
             <enum name="triangle" value="1" />
             <!-- 圆形 -->
             <enum name="circle" value="2" />
+            <!-- 内嵌圆形 -->
+            <enum name="nested_circle" value="3" />
             <!-- 正方形 -->
-            <enum name="square" value="3" />
+            <enum name="square" value="4" />
         </attr>
         <!-- 颜色 -->
         <attr name="naviv_color" format="color" />

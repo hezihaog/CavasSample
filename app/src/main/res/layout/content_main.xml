@@ -346,7 +346,7 @@
         <com.zh.cavas.sample.widget.NavigationBarIconView
             style="@style/canvas_navigation_icon"
             app:naviv_color="@color/white"
-            app:naviv_shape="circle" />
+            app:naviv_shape="nested_circle" />
 
         <com.zh.cavas.sample.widget.NavigationBarIconView
             style="@style/canvas_navigation_icon"
