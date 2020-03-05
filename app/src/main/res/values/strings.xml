@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">CanvasSample</string>
     <string name="action_settings">设置</string>
+
+    <string name="accessibility_desc">开启导航栏辅助功能</string>
 </resources>

@@ -3,6 +3,7 @@ package com.zh.cavas.sample;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,10 +22,13 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.zh.cavas.sample.service.CoreAccessibilityService;
+import com.zh.cavas.sample.util.AppBroadcastManager;
 import com.zh.cavas.sample.widget.BackArrowView;
 import com.zh.cavas.sample.widget.DownloadProgressView;
 import com.zh.cavas.sample.widget.HookCheckBox;
 import com.zh.cavas.sample.widget.MoreActionView;
+import com.zh.cavas.sample.widget.NavigationBarIconView;
 
 public class MainActivity extends BaseActivity {
     private Toolbar vToolbar;
@@ -36,6 +40,9 @@ public class MainActivity extends BaseActivity {
     private HookCheckBox vHookCheckBox;
     private ImageView vVivoLoadingProgress;
     private ImageView vVivoPolygonLoading;
+    private NavigationBarIconView vNavBack;
+    private NavigationBarIconView vNavHome;
+    private NavigationBarIconView vNavTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +51,15 @@ public class MainActivity extends BaseActivity {
         View layout = findViewById(android.R.id.content);
         findView(layout);
         bindView();
+        //开启辅助服务
+        CoreAccessibilityService.startSelf(this.getApplicationContext());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //隐藏虚拟键
+        hideNavigationBar();
     }
 
     private void findView(View view) {
@@ -56,6 +72,9 @@ public class MainActivity extends BaseActivity {
         vHookCheckBox = view.findViewById(R.id.hook_checkbox);
         vVivoLoadingProgress = view.findViewById(R.id.vivo_loading_progress);
         vVivoPolygonLoading = view.findViewById(R.id.vivo_polygon_loading);
+        vNavBack = view.findViewById(R.id.nav_back);
+        vNavHome = view.findViewById(R.id.nav_home);
+        vNavTask = view.findViewById(R.id.nav_task);
     }
 
     private void bindView() {
@@ -130,6 +149,32 @@ public class MainActivity extends BaseActivity {
                 return false;
             }
         }).into(vVivoPolygonLoading);
+        //设置导航栏图标
+        setupNavigationIcon();
+    }
+
+    private void setupNavigationIcon() {
+        vNavBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppBroadcastManager
+                        .sendBroadcast(getApplication(), Constant.Action.ACTION_DO_BACK);
+            }
+        });
+        vNavHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppBroadcastManager
+                        .sendBroadcast(getApplication(), Constant.Action.ACTION_DO_GO_HOME);
+            }
+        });
+        vNavTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppBroadcastManager
+                        .sendBroadcast(getApplication(), Constant.Action.ACTION_DO_GO_TASK);
+            }
+        });
     }
 
     @Override
@@ -146,5 +191,22 @@ public class MainActivity extends BaseActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * 隐藏虚拟键
+     */
+    private void hideNavigationBar() {
+        //隐藏虚拟按键
+        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) {
+            View v = this.getWindow().getDecorView();
+            v.setSystemUiVisibility(View.GONE);
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            //for new api versions.
+            View decorView = getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
     }
 }

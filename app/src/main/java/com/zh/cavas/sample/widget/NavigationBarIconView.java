@@ -10,9 +10,9 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.zh.cavas.sample.R;
-
 import androidx.annotation.Nullable;
+
+import com.zh.cavas.sample.R;
 
 /**
  * <b>Package:</b> com.zh.cavas.sample <br>
@@ -44,6 +44,15 @@ public class NavigationBarIconView extends View {
     private static final int SHAPE_SQUARE = 4;
 
     /**
+     * 风格，填满
+     */
+    private static final int STYLE_FILL = 1;
+    /**
+     * 风格，描边
+     */
+    private static int STYLE_STROKE = 2;
+
+    /**
      * 控件宽
      */
     private int mViewWidth;
@@ -56,6 +65,10 @@ public class NavigationBarIconView extends View {
      * 画笔
      */
     private Paint mPaint;
+    /**
+     * 风格
+     */
+    private Paint.Style mStyle;
     /**
      * 线颜色
      */
@@ -88,7 +101,7 @@ public class NavigationBarIconView extends View {
         //设置拐角形状为圆形
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setColor(mColor);
-        mPaint.setStyle(Paint.Style.FILL);
+        mPaint.setStyle(mStyle);
         mPaint.setAntiAlias(true);
         mPaint.setStrokeWidth(mLineWidth);
     }
@@ -96,6 +109,7 @@ public class NavigationBarIconView extends View {
     private void initAttr(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         int defaultColor = Color.argb(255, 0, 0, 0);
         int defaultLineWidth = dip2px(context, 1.5f);
+        int style;
         //图形
         int shape;
         if (attrs != null) {
@@ -103,12 +117,23 @@ public class NavigationBarIconView extends View {
             mColor = array.getColor(R.styleable.NavigationBarIconView_naviv_color, defaultColor);
             mLineWidth = array.getDimension(R.styleable.NavigationBarIconView_naviv_line_width, defaultLineWidth);
             shape = array.getInt(R.styleable.NavigationBarIconView_naviv_shape, SHAPE_TRIANGLE);
+            style = array.getInt(R.styleable.NavigationBarIconView_navic_style, STYLE_FILL);
             array.recycle();
         } else {
             mColor = defaultColor;
             mLineWidth = defaultLineWidth;
+            style = STYLE_FILL;
             shape = SHAPE_TRIANGLE;
         }
+        //画笔风格
+        if (style == STYLE_FILL) {
+            mStyle = Paint.Style.FILL;
+        } else if (style == STYLE_STROKE) {
+            mStyle = Paint.Style.STROKE;
+        } else {
+            mStyle = Paint.Style.FILL;
+        }
+        //图形类型
         if (shape == SHAPE_TRIANGLE) {
             mShapeStrategy = new TriangleStrategy();
         } else if (shape == SHAPE_CIRCLE) {
@@ -134,7 +159,7 @@ public class NavigationBarIconView extends View {
         //将画布中心移动到中心点
         canvas.translate(mViewWidth / 2f, mViewHeight / 2f);
         //让策略
-        mShapeStrategy.onDraw(canvas);
+        mShapeStrategy.onDraw(canvas, mStyle);
     }
 
     @Override
@@ -167,13 +192,21 @@ public class NavigationBarIconView extends View {
     public interface ShapeStrategy {
         /**
          * 大小改变回调
+         *
+         * @param w    新宽度
+         * @param h    新高度
+         * @param oldh 旧高度
+         * @param oldw 旧宽度
          */
         void onSizeChanged(int w, int h, int oldw, int oldh);
 
         /**
          * 绘制回调
+         *
+         * @param canvas 画布
+         * @param style  画笔风格
          */
-        void onDraw(Canvas canvas);
+        void onDraw(Canvas canvas, Paint.Style style);
     }
 
     /**
@@ -229,7 +262,8 @@ public class NavigationBarIconView extends View {
         }
 
         @Override
-        public void onDraw(Canvas canvas) {
+        public void onDraw(Canvas canvas, Paint.Style style) {
+            mPaint.setStyle(style);
             //将三角形的方向向左
             canvas.rotate(180);
             //多边形边角顶点的x坐标
@@ -265,9 +299,9 @@ public class NavigationBarIconView extends View {
      */
     public class CircleStrategy extends BaseShapeStrategy {
         /**
-         * 圆形半径s
+         * 圆形半径
          */
-        protected float mRadius;
+        float mRadius;
 
         @Override
         public void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -276,7 +310,8 @@ public class NavigationBarIconView extends View {
         }
 
         @Override
-        public void onDraw(Canvas canvas) {
+        public void onDraw(Canvas canvas, Paint.Style style) {
+            mPaint.setStyle(style);
             canvas.drawCircle(0, 0, mRadius, mPaint);
         }
     }
@@ -284,15 +319,27 @@ public class NavigationBarIconView extends View {
     /**
      * 内嵌圆形
      */
-    public class NestedCircleStrategy extends CircleStrategy {
+    public class NestedCircleStrategy extends BaseShapeStrategy {
+        /**
+         * 圆形半径
+         */
+        float mRadius;
+
         @Override
-        public void onDraw(Canvas canvas) {
+        public void onSizeChanged(int w, int h, int oldw, int oldh) {
+            super.onSizeChanged(w, h, oldw, oldh);
+            mRadius = (Math.min(mViewWidth, mViewHeight) * 0.90f) / 2f;
+        }
+
+        @Override
+        public void onDraw(Canvas canvas, Paint.Style style) {
             canvas.save();
             //画外边圆，描边风格
             mPaint.setStyle(Paint.Style.STROKE);
-            super.onDraw(canvas);
+            canvas.drawCircle(0, 0, mRadius, mPaint);
             //画内圆，填充风格
             mPaint.setStyle(Paint.Style.FILL);
+            //内圆相比外圆要小点，缩放画布来画
             float scaleValue = 0.75f;
             canvas.scale(scaleValue, scaleValue);
             canvas.drawCircle(0, 0, mRadius, mPaint);
@@ -305,10 +352,6 @@ public class NavigationBarIconView extends View {
      */
     public class SquareStrategy extends BaseShapeStrategy {
         /**
-         * 圆形半径s
-         */
-        private float mRadius;
-        /**
          * 圆角矩形的圆角半径
          */
         private float mRoundRectCircle;
@@ -320,17 +363,19 @@ public class NavigationBarIconView extends View {
         @Override
         public void onSizeChanged(int w, int h, int oldw, int oldh) {
             super.onSizeChanged(w, h, oldw, oldh);
-            mRadius = (Math.min(mViewWidth, mViewHeight) * 0.85f) / 2f;
+            //计算出范围
+            float radius = (Math.min(mViewWidth, mViewHeight) * 0.85f) / 2f;
             mRoundRectCircle = (Math.min(mViewWidth, mViewHeight) * 0.1f) / 2f;
             if (mRectF == null) {
-                mRectF = new RectF(-mRadius, -mRadius, mRadius, mRadius);
+                mRectF = new RectF(-radius, -radius, radius, radius);
             } else {
-                mRectF.set(-mRadius, -mRadius, mRadius, mRadius);
+                mRectF.set(-radius, -radius, radius, radius);
             }
         }
 
         @Override
-        public void onDraw(Canvas canvas) {
+        public void onDraw(Canvas canvas, Paint.Style style) {
+            mPaint.setStyle(style);
             canvas.drawRoundRect(mRectF, mRoundRectCircle, mRoundRectCircle, mPaint);
         }
     }

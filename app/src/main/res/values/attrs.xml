@@ -246,6 +246,13 @@
             <!-- 正方形 -->
             <enum name="square" value="4" />
         </attr>
+        <!-- 画笔风格 -->
+        <attr name="navic_style" format="enum">
+            <!-- 填满 -->
+            <enum name="fill" value="1" />
+            <!-- 描边 -->
+            <enum name="stroke" value="2" />
+        </attr>
         <!-- 颜色 -->
         <attr name="naviv_color" format="color" />
         <!-- 线宽 -->

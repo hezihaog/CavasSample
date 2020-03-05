@@ -335,6 +335,58 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+            style="@style/canvas_navigation_icon"
+            app:navic_style="stroke"
+            app:naviv_color="@color/gray"
+            app:naviv_shape="triangle" />
+
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+            style="@style/canvas_navigation_icon"
+            app:navic_style="stroke"
+            app:naviv_color="@color/gray"
+            app:naviv_shape="circle" />
+
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+            style="@style/canvas_navigation_icon"
+            app:navic_style="stroke"
+            app:naviv_color="@color/gray"
+            app:naviv_shape="square" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/black"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+            style="@style/canvas_navigation_icon"
+            app:navic_style="stroke"
+            app:naviv_color="@color/white"
+            app:naviv_shape="triangle" />
+
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+            style="@style/canvas_navigation_icon"
+            app:navic_style="stroke"
+            app:naviv_color="@color/white"
+            app:naviv_shape="circle" />
+
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+            style="@style/canvas_navigation_icon"
+            app:navic_style="stroke"
+            app:naviv_color="@color/white"
+            app:naviv_shape="square" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
         android:background="@color/black"
         android:gravity="center"
         android:orientation="horizontal">
@@ -347,9 +399,35 @@
         <com.zh.cavas.sample.widget.NavigationBarIconView
             style="@style/canvas_navigation_icon"
             app:naviv_color="@color/white"
+            app:naviv_shape="circle" />
+
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+            style="@style/canvas_navigation_icon"
+            app:naviv_color="@color/white"
+            app:naviv_shape="square" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/black"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+            android:id="@+id/nav_back"
+            style="@style/canvas_navigation_icon"
+            app:naviv_color="@color/white"
+            app:naviv_shape="triangle" />
+
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+            android:id="@+id/nav_home"
+            style="@style/canvas_navigation_icon"
+            app:naviv_color="@color/white"
             app:naviv_shape="nested_circle" />
 
         <com.zh.cavas.sample.widget.NavigationBarIconView
+            android:id="@+id/nav_task"
             style="@style/canvas_navigation_icon"
             app:naviv_color="@color/white"
             app:naviv_shape="square" />
