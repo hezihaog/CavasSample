@@ -55,12 +55,12 @@ public class MainActivity extends BaseActivity {
         CoreAccessibilityService.startSelf(this.getApplicationContext());
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //隐藏虚拟键
-        hideNavigationBar();
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        //隐藏虚拟键
+//        hideNavigationBar();
+//    }
 
     private void findView(View view) {
         vToolbar = view.findViewById(R.id.toolbar);
