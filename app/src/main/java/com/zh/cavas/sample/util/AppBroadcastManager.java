@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 /**
  * <b>Package:</b> com.zh.cavas.sample.util <br>
@@ -30,18 +29,14 @@ public class AppBroadcastManager {
         if (args != null) {
             intent.putExtras(args);
         }
-        LocalBroadcastManager
-                .getInstance(context)
-                .sendBroadcast(intent);
+        context.sendBroadcast(intent);
     }
 
     /**
      * 注册
      */
     public static void registerReceiver(Context context, BroadcastReceiver receiver, IntentFilter filter) {
-        LocalBroadcastManager
-                .getInstance(context)
-                .registerReceiver(receiver, filter);
+        context.registerReceiver(receiver, filter);
     }
 
     public static void registerReceiver(Context context, BroadcastReceiver receiver, String... actions) {
@@ -60,8 +55,6 @@ public class AppBroadcastManager {
      * 注销
      */
     public static void unregisterReceiver(Context context, BroadcastReceiver receiver) {
-        LocalBroadcastManager
-                .getInstance(context)
-                .unregisterReceiver(receiver);
+        context.unregisterReceiver(receiver);
     }
 }
