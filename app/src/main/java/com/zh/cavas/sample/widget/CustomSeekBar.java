@@ -58,6 +58,10 @@ public class CustomSeekBar extends View {
    */
   private float mProgress;
   /**
+   * 最小进度值
+   */
+  private float mMin;
+  /**
    * 最大进度值
    */
   private float mMax;
@@ -127,7 +131,9 @@ public class CustomSeekBar extends View {
     int defaultThumbColor = Color.WHITE;
     int defaultThumbRadius = dip2px(context, 7f);
     float defaultProgress = 0;
+    float defaultMinProgress = 0f;
     float defaultMaxProgress = 100f;
+
     if (attrs != null) {
       TypedArray array =
           context.obtainStyledAttributes(attrs, R.styleable.CustomSeekBar, defStyleAttr, 0);
@@ -150,6 +156,8 @@ public class CustomSeekBar extends View {
           array.getDimensionPixelSize(R.styleable.CustomSeekBar_csb_thumb_offset, mThumbRadius);
       //当前进度值
       mProgress = array.getFloat(R.styleable.CustomSeekBar_csb_progress, defaultProgress);
+      //最小进度值
+      mMin = array.getFloat(R.styleable.CustomSeekBar_csb_min_progress, defaultMinProgress);
       //最大进度值
       mMax = array.getFloat(R.styleable.CustomSeekBar_csb_max_progress, defaultMaxProgress);
       array.recycle();
@@ -161,6 +169,7 @@ public class CustomSeekBar extends View {
       mThumbRadius = defaultThumbRadius;
       mThumbOffset = mThumbRadius;
       mProgress = defaultProgress;
+      mMin = defaultMinProgress;
       mMax = defaultMaxProgress;
     }
   }
@@ -310,7 +319,7 @@ public class CustomSeekBar extends View {
    * 设置进度
    */
   public void setProgress(int progress) {
-    if (progress >= 0 && progress <= mMax) {
+    if (progress >= mMin && progress <= mMax) {
       mProgress = progress;
       invalidate();
       if (mOnProgressUpdateListener != null) {
@@ -327,10 +336,26 @@ public class CustomSeekBar extends View {
   }
 
   /**
+   * 设置进度最小值
+   */
+  public CustomSeekBar setMin(float min) {
+    this.mMin = min;
+    invalidate();
+    return this;
+  }
+
+  /**
+   * 获取最小进度
+   */
+  public float getMin() {
+    return mMin;
+  }
+
+  /**
    * 设置进度最大值
    */
-  public CustomSeekBar setMax(int maxProgress) {
-    mMax = maxProgress;
+  public CustomSeekBar setMax(float max) {
+    this.mMax = max;
     invalidate();
     return this;
   }

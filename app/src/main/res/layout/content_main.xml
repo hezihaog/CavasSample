@@ -332,6 +332,7 @@
           android:layout_width="match_parent"
           app:csb_bg="#242227"
           app:csb_max_progress="100"
+          app:csb_min_progress="0"
           app:csb_progress_bg="#FFFFFF"
           app:csb_progress_height="2dp"
           app:csb_thumb_color="#FFFFFF"
