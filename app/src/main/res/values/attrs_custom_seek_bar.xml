@@ -13,11 +13,15 @@
     <attr name="csb_thumb_radius" format="integer|float|dimension" />
     <!-- 滑块的偏移量 -->
     <attr name="csb_thumb_offset" format="integer|float|dimension" />
+    <!-- 进度的文字颜色 -->
+    <attr name="csb_progress_text_color" format="color" />
+    <!-- 进度的文字大小 -->
+    <attr name="csb_progress_text_size" format="integer|float|dimension|reference" />
     <!-- 当前进度值 -->
-    <attr name="csb_progress" format="float" />
+    <attr name="csb_progress" format="integer" />
     <!-- 最小进度值 -->
-    <attr name="csb_min_progress" format="float" />
+    <attr name="csb_min_progress" format="integer" />
     <!-- 最大进度值 -->
-    <attr name="csb_max_progress" format="float" />
+    <attr name="csb_max_progress" format="integer" />
   </declare-styleable>
 </resources>

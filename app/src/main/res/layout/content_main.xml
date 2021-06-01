@@ -311,33 +311,26 @@
         tools:dpv_progress="50" />
 
       <LinearLayout
-        android:background="#18181C"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="vertical">
 
-        <TextView
-          android:id="@+id/custom_seek_bar_progress"
-          android:layout_gravity="center"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="10dp"
-          android:layout_width="wrap_content"
-          android:textColor="@color/white"
-          tools:text="40%" />
-
         <com.zh.cavas.sample.widget.CustomSeekBar
           android:id="@+id/custom_seek_bar"
           android:layout_height="wrap_content"
-          android:layout_margin="10dp"
           android:layout_width="match_parent"
-          app:csb_bg="#242227"
+          android:layout_marginStart="20dp"
+          android:layout_marginEnd="20dp"
+          app:csb_bg="#33242227"
           app:csb_max_progress="100"
           app:csb_min_progress="0"
-          app:csb_progress_bg="#FFFFFF"
+          app:csb_progress_bg="#161731"
           app:csb_progress_height="2dp"
-          app:csb_thumb_color="#FFFFFF"
+          app:csb_progress_text_color="#161731"
+          app:csb_progress_text_size="12sp"
+          app:csb_thumb_color="#161731"
           app:csb_thumb_radius="8dp"
-          tools:csb_progress="40" />
+          tools:csb_progress="10" />
       </LinearLayout>
 
       <SeekBar
