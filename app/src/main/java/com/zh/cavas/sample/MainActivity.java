@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -25,6 +26,7 @@ import com.bumptech.glide.request.target.Target;
 import com.zh.cavas.sample.service.CoreAccessibilityService;
 import com.zh.cavas.sample.util.AppBroadcastManager;
 import com.zh.cavas.sample.widget.BackArrowView;
+import com.zh.cavas.sample.widget.CustomSeekBar;
 import com.zh.cavas.sample.widget.DownloadProgressView;
 import com.zh.cavas.sample.widget.HookCheckBox;
 import com.zh.cavas.sample.widget.MoreActionView;
@@ -35,6 +37,8 @@ public class MainActivity extends BaseActivity {
     private MoreActionView vMoreActionView;
     private DownloadProgressView vDownloadProgressView;
     private BackArrowView vBackArrowView;
+    private TextView vCustomSeekBarProgress;
+    private CustomSeekBar vCustomSeekBar;
     private SeekBar vVivoSeekBar;
     private SeekBar vVivoSeekBarGray;
     private HookCheckBox vHookCheckBox;
@@ -66,6 +70,8 @@ public class MainActivity extends BaseActivity {
         vToolbar = view.findViewById(R.id.toolbar);
         vMoreActionView = view.findViewById(R.id.more_action);
         vBackArrowView = view.findViewById(R.id.back_arrow);
+        vCustomSeekBarProgress = view.findViewById(R.id.custom_seek_bar_progress);
+        vCustomSeekBar = view.findViewById(R.id.custom_seek_bar);
         vDownloadProgressView = view.findViewById(R.id.download_progress);
         vVivoSeekBar = view.findViewById(R.id.vivo_seek_bar);
         vVivoSeekBarGray = view.findViewById(R.id.vivo_seek_bar_gray);
@@ -108,6 +114,12 @@ public class MainActivity extends BaseActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         };
+        vCustomSeekBar.setOnProgressUpdateListener(new CustomSeekBar.OnProgressUpdateListener() {
+            @Override public void onProgressUpdate(int progress) {
+                vCustomSeekBarProgress.setText(progress + "%");
+            }
+        });
+        vCustomSeekBar.setProgress(0);
         vVivoSeekBar.setOnSeekBarChangeListener(seekBarChangeListener);
         vVivoSeekBarGray.setOnSeekBarChangeListener(seekBarChangeListener);
         vDownloadProgressView.setOnProgressUpdateListener(new DownloadProgressView.OnProgressUpdateListener() {

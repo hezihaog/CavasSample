@@ -1,435 +1,464 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_height="match_parent"
+  android:layout_width="match_parent"
+  android:orientation="vertical">
 
-    <ScrollView
+  <ScrollView
+    android:fillViewport="true"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:layout_width="match_parent">
+
+    <com.google.android.flexbox.FlexboxLayout
+      android:layout_height="wrap_content"
+      android:layout_width="match_parent"
+      app:alignContent="center"
+      app:alignItems="center"
+      app:flexDirection="row"
+      app:flexWrap="wrap"
+      app:justifyContent="center">
+
+      <com.zh.cavas.sample.widget.RotateDotView
+        android:id="@+id/rotate_dot_view"
+        android:layout_height="28dp"
+        android:layout_margin="10dp"
+        android:layout_width="28dp"
+        app:rdv_start_color="@android:color/darker_gray" />
+
+      <com.zh.cavas.sample.widget.RotateDotView
+        android:id="@+id/rotate_dot_view_scale"
+        android:layout_height="15dp"
+        android:layout_margin="10dp"
+        android:layout_width="15dp"
+        app:rdv_dot_mode="scale"
+        app:rdv_dot_radius="2.3dp"
+        app:rdv_start_color="#488ED3" />
+
+      <com.zh.cavas.sample.widget.RingLoadingView
+        android:id="@+id/ring_loading"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:layout_width="30dp"
+        app:rlv_auto_start="true"
+        app:rlv_end_color="@color/white"
+        app:rlv_ring_width="2.3dp"
+        app:rlv_start_color="@color/dotColor" />
+
+      <com.zh.cavas.sample.widget.BackArrowView
+        android:id="@+id/back_arrow"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:layout_width="40dp"
+        app:bav_arrow_style="wechat_design"
+        app:bav_color="@android:color/black"
+        app:bav_stroke_width="1.5dp" />
+
+      <com.zh.cavas.sample.widget.BackArrowView
+        android:id="@+id/back_arrow2"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:layout_width="40dp"
+        app:bav_arrow_style="material_design"
+        app:bav_color="@android:color/black"
+        app:bav_stroke_width="1.5dp" />
+
+      <com.zh.cavas.sample.widget.MoreActionView
+        android:id="@+id/more_action"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:layout_width="40dp"
+        app:mav_color="@android:color/black"
+        app:mav_dot_radius="1.5dp"
+        app:mav_orientation="vertical" />
+
+      <com.zh.cavas.sample.widget.MoreActionView
+        android:id="@+id/more_action2"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:layout_width="40dp"
+        app:mav_color="@android:color/black"
+        app:mav_dot_radius="1.5dp"
+        app:mav_orientation="horizontal" />
+
+      <com.zh.cavas.sample.widget.AndroidMenuView
+        android:id="@+id/menu_view"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:layout_width="40dp"
+        app:amv_color="@android:color/black"
+        app:amv_line_height="1dp" />
+
+      <com.zh.cavas.sample.widget.CloseView
+        android:id="@+id/close_view"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:layout_width="40dp"
+        app:cv_circle_color="@android:color/darker_gray"
+        app:cv_circle_line_width="1dp"
+        app:cv_color="@android:color/black"
+        app:cv_line_width="1.5dp"
+        app:cv_mode="normal" />
+
+      <com.zh.cavas.sample.widget.CloseView
+        android:id="@+id/close_view2"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:layout_width="40dp"
+        app:cv_circle_color="@android:color/darker_gray"
+        app:cv_circle_line_width="1dp"
+        app:cv_color="@android:color/darker_gray"
+        app:cv_line_width="1.5dp"
+        app:cv_mode="circle" />
+
+      <com.zh.cavas.sample.widget.AddView
+        android:id="@+id/add_view"
+        android:layout_height="20dp"
+        android:layout_margin="10dp"
+        android:layout_width="20dp"
+        app:av_circle_color="@android:color/black"
+        app:av_circle_line_width="1dp"
+        app:av_color="@android:color/black"
+        app:av_line_width="0.8dp"
+        app:av_mode="circle" />
+
+      <com.zh.cavas.sample.widget.AddView
+        android:id="@+id/add_view2"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:layout_width="30dp"
+        app:av_circle_color="@android:color/black"
+        app:av_circle_line_width="1dp"
+        app:av_color="@android:color/black"
+        app:av_line_width="0.8dp"
+        app:av_mode="normal" />
+
+      <com.zh.cavas.sample.widget.AndroidSearchView
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:layout_width="40dp"
+        app:asv_color="@android:color/black"
+        app:asv_line_width="1.5dp" />
+
+      <com.zh.cavas.sample.widget.DownloadEntryView
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:layout_width="40dp"
+        app:dev_color="@android:color/black"
+        app:dev_line_width="1.5dp" />
+
+      <com.zh.cavas.sample.widget.CloudMusicLoadingView
+        android:layout_height="25dp"
+        android:layout_margin="10dp"
+        android:layout_width="25dp"
+        android:paddingBottom="2dp"
+        app:cmlv_rail_color="#FB0006" />
+
+      <com.zh.cavas.sample.widget.CloudMusicLoadingView
+        android:background="#FB0006"
+        android:layout_height="25dp"
+        android:layout_margin="10dp"
+        android:layout_width="25dp"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp"
+        app:cmlv_rail_color="#FFFFFF" />
+
+      <com.zh.cavas.sample.widget.RestartView
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:layout_width="40dp"
+        app:rtv_bg_circle_color="#286E91"
+        app:rtv_line_color="#FFFFFF"
+        app:rtv_line_count="8"
+        app:rtv_line_width="1dp" />
+
+      <com.zh.cavas.sample.widget.ShutdownView
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:layout_width="40dp"
+        app:sdv_line_color="#FFFFFF"
+        app:sdv_line_width="1dp" />
+
+      <com.zh.cavas.sample.widget.ShareView
+        android:layout_height="40dp"
+        android:layout_width="40dp"
+        app:sv_color="@android:color/black"
+        app:sv_line_width="1dp"
+        app:sv_small_circle_solid_color="@android:color/white" />
+
+      <com.zh.cavas.sample.widget.PolygonLoadingView
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:layout_width="40dp"
+        app:plv_end_color="#4361EF"
+        app:plv_layer_count="3"
+        app:plv_num="6"
+        app:plv_start_color="#FFFFFF" />
+
+      <com.zh.cavas.sample.widget.AlipayRingLoadingView
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:layout_width="30dp"
+        app:arlv_arc_color="#196CC7" />
+
+      <com.zh.cavas.sample.widget.StarsView
+        android:id="@+id/stars"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:layout_width="30dp"
+        app:stv_color="#0000FF"
+        app:stv_edge_line_width="1dp"
+        app:stv_num="5"
+        app:stv_style="stroke" />
+
+      <com.zh.cavas.sample.widget.StarsView
+        android:id="@+id/stars2"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:layout_width="30dp"
+        app:stv_color="#0000FF"
+        app:stv_edge_line_width="1dp"
+        app:stv_num="5"
+        app:stv_style="fill" />
+
+      <com.zh.cavas.sample.widget.PolygonSettingView
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:layout_width="30dp"
+        app:psv_color="@android:color/black"
+        app:psv_line_width="1.5dp"
+        app:psv_num="6" />
+
+      <com.zh.cavas.sample.widget.HookCheckBox
+        android:id="@+id/hook_checkbox"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:layout_width="30dp"
+        app:hcb_is_check="false" />
+
+      <com.zh.cavas.sample.widget.HookCheckBox
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:layout_width="30dp"
+        app:hcb_is_check="true" />
+
+      <com.zh.cavas.sample.widget.HookCheckBox
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:layout_width="30dp"
+        app:hcb_check_circle_color="#6576D5"
+        app:hcb_is_check="false"
+        app:hcb_line_width="1dp"
+        app:hcb_style="hollow_out"
+        app:hcb_uncheck_circle_color="#818181" />
+
+      <com.zh.cavas.sample.widget.HookCheckBox
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:layout_width="30dp"
+        app:hcb_check_circle_color="#6576D5"
+        app:hcb_is_check="true"
+        app:hcb_line_width="1dp"
+        app:hcb_style="hollow_out"
+        app:hcb_uncheck_circle_color="#818181" />
+
+      <ImageView
+        android:id="@+id/vivo_loading_progress"
+        android:background="@drawable/vigour_progress_anim"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:layout_width="30dp" />
+
+      <ImageView
+        android:id="@+id/vivo_polygon_loading"
+        android:layout_height="35dp"
+        android:layout_margin="10dp"
+        android:layout_width="30dp"
+        tools:src="@drawable/vivo_polygon_loading" />
+
+      <com.zh.cavas.sample.widget.TIMServiceNoView
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:layout_width="50dp" />
+
+      <com.zh.cavas.sample.widget.ParallelogramView
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:layout_width="30dp"
+        app:pallv_color="#196CC7"
+        app:pallv_line_width="1.5dp"
+        app:pallv_style="fill" />
+
+      <com.zh.cavas.sample.widget.FourRotateDotView
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:layout_width="30dp" />
+
+      <com.zh.cavas.sample.widget.DownloadProgressView
+        android:id="@+id/download_progress"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true">
+        app:dpv_bg="#E6EAFB"
+        app:dpv_control_mode="touch"
+        app:dpv_max_progress="100"
+        app:dpv_percentage_text_color2="@color/white"
+        app:dpv_percentage_text_size="14sp"
+        app:dpv_progress="0"
+        app:dpv_progress_bg="#3548FE"
+        tools:dpv_progress="50" />
 
-        <com.google.android.flexbox.FlexboxLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:alignContent="center"
-            app:alignItems="center"
-            app:flexDirection="row"
-            app:flexWrap="wrap"
-            app:justifyContent="center">
+      <LinearLayout
+        android:background="#18181C"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
 
-            <com.zh.cavas.sample.widget.RotateDotView
-                android:id="@+id/rotate_dot_view"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_margin="10dp"
-                app:rdv_start_color="@android:color/darker_gray" />
+        <TextView
+          android:id="@+id/custom_seek_bar_progress"
+          android:layout_gravity="center"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:layout_width="wrap_content"
+          android:textColor="@color/white"
+          tools:text="40%" />
 
-            <com.zh.cavas.sample.widget.RotateDotView
-                android:id="@+id/rotate_dot_view_scale"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_margin="10dp"
-                app:rdv_dot_mode="scale"
-                app:rdv_dot_radius="2.3dp"
-                app:rdv_start_color="#488ED3" />
+        <com.zh.cavas.sample.widget.CustomSeekBar
+          android:id="@+id/custom_seek_bar"
+          android:layout_height="wrap_content"
+          android:layout_margin="10dp"
+          android:layout_width="match_parent"
+          app:csb_bg="#242227"
+          app:csb_max_progress="100"
+          app:csb_progress_bg="#FFFFFF"
+          app:csb_progress_height="2dp"
+          app:csb_thumb_color="#FFFFFF"
+          app:csb_thumb_radius="8dp"
+          tools:csb_progress="40" />
+      </LinearLayout>
 
-            <com.zh.cavas.sample.widget.RingLoadingView
-                android:id="@+id/ring_loading"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                app:rlv_auto_start="true"
-                app:rlv_end_color="@color/white"
-                app:rlv_ring_width="2.3dp"
-                app:rlv_start_color="@color/dotColor" />
+      <SeekBar
+        android:id="@+id/vivo_seek_bar"
+        style="@style/BaseSeekBar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        tools:progress="40" />
 
-            <com.zh.cavas.sample.widget.BackArrowView
-                android:id="@+id/back_arrow"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="10dp"
-                app:bav_arrow_style="wechat_design"
-                app:bav_color="@android:color/black"
-                app:bav_stroke_width="1.5dp" />
+      <FrameLayout
+        android:background="#AAA"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
 
-            <com.zh.cavas.sample.widget.BackArrowView
-                android:id="@+id/back_arrow2"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="10dp"
-                app:bav_arrow_style="material_design"
-                app:bav_color="@android:color/black"
-                app:bav_stroke_width="1.5dp" />
+        <SeekBar
+          android:id="@+id/vivo_seek_bar_gray"
+          style="@style/BaseSeekBar.Gray"
+          android:layout_height="wrap_content"
+          android:layout_width="match_parent"
+          tools:progress="40" />
+      </FrameLayout>
 
-            <com.zh.cavas.sample.widget.MoreActionView
-                android:id="@+id/more_action"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="10dp"
-                app:mav_color="@android:color/black"
-                app:mav_dot_radius="1.5dp"
-                app:mav_orientation="vertical" />
+      <LinearLayout
+        android:background="@color/white"
+        android:gravity="center"
+        android:layout_height="45dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
 
-            <com.zh.cavas.sample.widget.MoreActionView
-                android:id="@+id/more_action2"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="10dp"
-                app:mav_color="@android:color/black"
-                app:mav_dot_radius="1.5dp"
-                app:mav_orientation="horizontal" />
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+          style="@style/canvas_navigation_icon"
+          app:navic_style="stroke"
+          app:naviv_color="@color/gray"
+          app:naviv_shape="triangle" />
 
-            <com.zh.cavas.sample.widget.AndroidMenuView
-                android:id="@+id/menu_view"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="10dp"
-                app:amv_color="@android:color/black"
-                app:amv_line_height="1dp" />
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+          style="@style/canvas_navigation_icon"
+          app:navic_style="stroke"
+          app:naviv_color="@color/gray"
+          app:naviv_shape="circle" />
 
-            <com.zh.cavas.sample.widget.CloseView
-                android:id="@+id/close_view"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="10dp"
-                app:cv_circle_color="@android:color/darker_gray"
-                app:cv_circle_line_width="1dp"
-                app:cv_color="@android:color/black"
-                app:cv_line_width="1.5dp"
-                app:cv_mode="normal" />
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+          style="@style/canvas_navigation_icon"
+          app:navic_style="stroke"
+          app:naviv_color="@color/gray"
+          app:naviv_shape="square" />
+      </LinearLayout>
 
-            <com.zh.cavas.sample.widget.CloseView
-                android:id="@+id/close_view2"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="10dp"
-                app:cv_circle_color="@android:color/darker_gray"
-                app:cv_circle_line_width="1dp"
-                app:cv_color="@android:color/darker_gray"
-                app:cv_line_width="1.5dp"
-                app:cv_mode="circle" />
+      <LinearLayout
+        android:background="@color/black"
+        android:gravity="center"
+        android:layout_height="45dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
 
-            <com.zh.cavas.sample.widget.AddView
-                android:id="@+id/add_view"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_margin="10dp"
-                app:av_circle_color="@android:color/black"
-                app:av_circle_line_width="1dp"
-                app:av_color="@android:color/black"
-                app:av_line_width="0.8dp"
-                app:av_mode="circle" />
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+          style="@style/canvas_navigation_icon"
+          app:navic_style="stroke"
+          app:naviv_color="@color/white"
+          app:naviv_shape="triangle" />
 
-            <com.zh.cavas.sample.widget.AddView
-                android:id="@+id/add_view2"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                app:av_circle_color="@android:color/black"
-                app:av_circle_line_width="1dp"
-                app:av_color="@android:color/black"
-                app:av_line_width="0.8dp"
-                app:av_mode="normal" />
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+          style="@style/canvas_navigation_icon"
+          app:navic_style="stroke"
+          app:naviv_color="@color/white"
+          app:naviv_shape="circle" />
 
-            <com.zh.cavas.sample.widget.AndroidSearchView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="10dp"
-                app:asv_color="@android:color/black"
-                app:asv_line_width="1.5dp" />
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+          style="@style/canvas_navigation_icon"
+          app:navic_style="stroke"
+          app:naviv_color="@color/white"
+          app:naviv_shape="square" />
+      </LinearLayout>
 
-            <com.zh.cavas.sample.widget.DownloadEntryView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="10dp"
-                app:dev_color="@android:color/black"
-                app:dev_line_width="1.5dp" />
+      <LinearLayout
+        android:background="@color/black"
+        android:gravity="center"
+        android:layout_height="45dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
 
-            <com.zh.cavas.sample.widget.CloudMusicLoadingView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_margin="10dp"
-                android:paddingBottom="2dp"
-                app:cmlv_rail_color="#FB0006" />
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+          style="@style/canvas_navigation_icon"
+          app:naviv_color="@color/white"
+          app:naviv_shape="triangle" />
 
-            <com.zh.cavas.sample.widget.CloudMusicLoadingView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_margin="10dp"
-                android:background="#FB0006"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                app:cmlv_rail_color="#FFFFFF" />
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+          style="@style/canvas_navigation_icon"
+          app:naviv_color="@color/white"
+          app:naviv_shape="circle" />
 
-            <com.zh.cavas.sample.widget.RestartView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="10dp"
-                app:rtv_bg_circle_color="#286E91"
-                app:rtv_line_color="#FFFFFF"
-                app:rtv_line_count="8"
-                app:rtv_line_width="1dp" />
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+          style="@style/canvas_navigation_icon"
+          app:naviv_color="@color/white"
+          app:naviv_shape="square" />
+      </LinearLayout>
 
-            <com.zh.cavas.sample.widget.ShutdownView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="10dp"
-                app:sdv_line_color="#FFFFFF"
-                app:sdv_line_width="1dp" />
+      <LinearLayout
+        android:background="@color/black"
+        android:gravity="center"
+        android:layout_height="45dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
 
-            <com.zh.cavas.sample.widget.ShareView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:sv_color="@android:color/black"
-                app:sv_line_width="1dp"
-                app:sv_small_circle_solid_color="@android:color/white" />
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+          android:id="@+id/nav_back"
+          style="@style/canvas_navigation_icon"
+          app:naviv_color="@color/white"
+          app:naviv_shape="triangle" />
 
-            <com.zh.cavas.sample.widget.PolygonLoadingView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="10dp"
-                app:plv_end_color="#4361EF"
-                app:plv_layer_count="3"
-                app:plv_num="6"
-                app:plv_start_color="#FFFFFF" />
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+          android:id="@+id/nav_home"
+          style="@style/canvas_navigation_icon"
+          app:naviv_color="@color/white"
+          app:naviv_shape="nested_circle" />
 
-            <com.zh.cavas.sample.widget.AlipayRingLoadingView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                app:arlv_arc_color="#196CC7" />
-
-            <com.zh.cavas.sample.widget.StarsView
-                android:id="@+id/stars"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                app:stv_color="#0000FF"
-                app:stv_edge_line_width="1dp"
-                app:stv_num="5"
-                app:stv_style="stroke" />
-
-            <com.zh.cavas.sample.widget.StarsView
-                android:id="@+id/stars2"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                app:stv_color="#0000FF"
-                app:stv_edge_line_width="1dp"
-                app:stv_num="5"
-                app:stv_style="fill" />
-
-            <com.zh.cavas.sample.widget.PolygonSettingView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                app:psv_color="@android:color/black"
-                app:psv_line_width="1.5dp"
-                app:psv_num="6" />
-
-            <com.zh.cavas.sample.widget.HookCheckBox
-                android:id="@+id/hook_checkbox"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                app:hcb_is_check="false" />
-
-            <com.zh.cavas.sample.widget.HookCheckBox
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                app:hcb_is_check="true" />
-
-            <com.zh.cavas.sample.widget.HookCheckBox
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                app:hcb_check_circle_color="#6576D5"
-                app:hcb_is_check="false"
-                app:hcb_line_width="1dp"
-                app:hcb_style="hollow_out"
-                app:hcb_uncheck_circle_color="#818181" />
-
-            <com.zh.cavas.sample.widget.HookCheckBox
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                app:hcb_check_circle_color="#6576D5"
-                app:hcb_is_check="true"
-                app:hcb_line_width="1dp"
-                app:hcb_style="hollow_out"
-                app:hcb_uncheck_circle_color="#818181" />
-
-            <ImageView
-                android:id="@+id/vivo_loading_progress"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/vigour_progress_anim" />
-
-            <ImageView
-                android:id="@+id/vivo_polygon_loading"
-                android:layout_width="30dp"
-                android:layout_height="35dp"
-                android:layout_margin="10dp"
-                tools:src="@drawable/vivo_polygon_loading" />
-
-            <com.zh.cavas.sample.widget.TIMServiceNoView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="10dp" />
-
-            <com.zh.cavas.sample.widget.ParallelogramView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                app:pallv_color="#196CC7"
-                app:pallv_line_width="1.5dp"
-                app:pallv_style="fill" />
-
-            <com.zh.cavas.sample.widget.FourRotateDotView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp" />
-
-            <com.zh.cavas.sample.widget.DownloadProgressView
-                android:id="@+id/download_progress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                app:dpv_bg="#E6EAFB"
-                app:dpv_control_mode="touch"
-                app:dpv_max_progress="100"
-                app:dpv_percentage_text_color2="@color/white"
-                app:dpv_percentage_text_size="14sp"
-                app:dpv_progress="0"
-                app:dpv_progress_bg="#3548FE"
-                tools:dpv_progress="50" />
-
-            <SeekBar
-                android:id="@+id/vivo_seek_bar"
-                style="@style/BaseSeekBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:progress="40" />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#AAA">
-
-                <SeekBar
-                    android:id="@+id/vivo_seek_bar_gray"
-                    style="@style/BaseSeekBar.Gray"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:progress="40" />
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@color/white"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.zh.cavas.sample.widget.NavigationBarIconView
-                    style="@style/canvas_navigation_icon"
-                    app:navic_style="stroke"
-                    app:naviv_color="@color/gray"
-                    app:naviv_shape="triangle" />
-
-                <com.zh.cavas.sample.widget.NavigationBarIconView
-                    style="@style/canvas_navigation_icon"
-                    app:navic_style="stroke"
-                    app:naviv_color="@color/gray"
-                    app:naviv_shape="circle" />
-
-                <com.zh.cavas.sample.widget.NavigationBarIconView
-                    style="@style/canvas_navigation_icon"
-                    app:navic_style="stroke"
-                    app:naviv_color="@color/gray"
-                    app:naviv_shape="square" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@color/black"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.zh.cavas.sample.widget.NavigationBarIconView
-                    style="@style/canvas_navigation_icon"
-                    app:navic_style="stroke"
-                    app:naviv_color="@color/white"
-                    app:naviv_shape="triangle" />
-
-                <com.zh.cavas.sample.widget.NavigationBarIconView
-                    style="@style/canvas_navigation_icon"
-                    app:navic_style="stroke"
-                    app:naviv_color="@color/white"
-                    app:naviv_shape="circle" />
-
-                <com.zh.cavas.sample.widget.NavigationBarIconView
-                    style="@style/canvas_navigation_icon"
-                    app:navic_style="stroke"
-                    app:naviv_color="@color/white"
-                    app:naviv_shape="square" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@color/black"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.zh.cavas.sample.widget.NavigationBarIconView
-                    style="@style/canvas_navigation_icon"
-                    app:naviv_color="@color/white"
-                    app:naviv_shape="triangle" />
-
-                <com.zh.cavas.sample.widget.NavigationBarIconView
-                    style="@style/canvas_navigation_icon"
-                    app:naviv_color="@color/white"
-                    app:naviv_shape="circle" />
-
-                <com.zh.cavas.sample.widget.NavigationBarIconView
-                    style="@style/canvas_navigation_icon"
-                    app:naviv_color="@color/white"
-                    app:naviv_shape="square" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@color/black"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.zh.cavas.sample.widget.NavigationBarIconView
-                    android:id="@+id/nav_back"
-                    style="@style/canvas_navigation_icon"
-                    app:naviv_color="@color/white"
-                    app:naviv_shape="triangle" />
-
-                <com.zh.cavas.sample.widget.NavigationBarIconView
-                    android:id="@+id/nav_home"
-                    style="@style/canvas_navigation_icon"
-                    app:naviv_color="@color/white"
-                    app:naviv_shape="nested_circle" />
-
-                <com.zh.cavas.sample.widget.NavigationBarIconView
-                    android:id="@+id/nav_task"
-                    style="@style/canvas_navigation_icon"
-                    app:naviv_color="@color/white"
-                    app:naviv_shape="square" />
-            </LinearLayout>
-        </com.google.android.flexbox.FlexboxLayout>
-    </ScrollView>
+        <com.zh.cavas.sample.widget.NavigationBarIconView
+          android:id="@+id/nav_task"
+          style="@style/canvas_navigation_icon"
+          app:naviv_color="@color/white"
+          app:naviv_shape="square" />
+      </LinearLayout>
+    </com.google.android.flexbox.FlexboxLayout>
+  </ScrollView>
 </LinearLayout>
