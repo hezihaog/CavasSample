@@ -315,22 +315,34 @@
         android:layout_width="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/indicator"
+            android:ellipsize="none"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:singleLine="true"
+            android:layout_marginStart="5dp"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            android:layout_marginBottom="5dp"
+            tools:text="1分钟" />
+
         <com.zh.cavas.sample.widget.CustomSeekBar
           android:id="@+id/custom_seek_bar"
           android:layout_height="wrap_content"
           android:layout_width="match_parent"
-          android:layout_marginStart="20dp"
-          android:layout_marginEnd="20dp"
           app:csb_bg="#33242227"
           app:csb_max_progress="100"
           app:csb_min_progress="0"
           app:csb_progress_bg="#161731"
           app:csb_progress_height="2dp"
+          android:layout_marginStart="15dp"
+          android:layout_marginEnd="15dp"
           app:csb_progress_text_color="#161731"
           app:csb_progress_text_size="12sp"
           app:csb_thumb_color="#161731"
           app:csb_thumb_radius="8dp"
-          tools:csb_progress="10" />
+          tools:csb_progress="0" />
       </LinearLayout>
 
       <SeekBar

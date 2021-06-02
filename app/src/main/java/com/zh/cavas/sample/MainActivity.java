@@ -1,13 +1,17 @@
 package com.zh.cavas.sample;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -37,6 +41,7 @@ public class MainActivity extends BaseActivity {
     private MoreActionView vMoreActionView;
     private DownloadProgressView vDownloadProgressView;
     private BackArrowView vBackArrowView;
+    private TextView vIndicator;
     private CustomSeekBar vCustomSeekBar;
     private SeekBar vVivoSeekBar;
     private SeekBar vVivoSeekBarGray;
@@ -69,6 +74,7 @@ public class MainActivity extends BaseActivity {
         vToolbar = view.findViewById(R.id.toolbar);
         vMoreActionView = view.findViewById(R.id.more_action);
         vBackArrowView = view.findViewById(R.id.back_arrow);
+        vIndicator = view.findViewById(R.id.indicator);
         vCustomSeekBar = view.findViewById(R.id.custom_seek_bar);
         vDownloadProgressView = view.findViewById(R.id.download_progress);
         vVivoSeekBar = view.findViewById(R.id.vivo_seek_bar);
@@ -114,8 +120,11 @@ public class MainActivity extends BaseActivity {
         };
         //自定义SeekBar
         vCustomSeekBar.setOnProgressUpdateListener(new CustomSeekBar.OnProgressUpdateListener() {
-            @Override public void onProgressUpdate(int progress) {
-                vDownloadProgressView.setProgress(progress);
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onProgressUpdate(int progress) {
+                vIndicator.setText(progress + "分钟");
+                moveIndicator();
             }
         });
         vVivoSeekBar.setOnSeekBarChangeListener(seekBarChangeListener);
@@ -125,6 +134,7 @@ public class MainActivity extends BaseActivity {
             public void onProgressUpdate(int progress) {
                 vVivoSeekBar.setProgress(progress);
                 vVivoSeekBarGray.setProgress(progress);
+                vCustomSeekBar.setProgress(progress);
             }
         });
         vDownloadProgressView.setProgress(0);
@@ -204,6 +214,33 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
+     * 移动当前时间的提示
+     */
+    private void moveIndicator() {
+        //进度比值
+        float progressRatio = vCustomSeekBar.getProgressRatio();
+        //指示器的宽度
+        float indicatorWidth = getTextWidth(vIndicator);
+        //滑块的宽度
+        int thumbWidth = vCustomSeekBar.getThumbRadius();
+        //计算公式：总宽度 * 进度百分比 -（指示器宽度 - 滑块宽度）/ 2 - 滑块宽度 * 进度百分比
+        float indicatorOffset = vCustomSeekBar.getWidth() * progressRatio
+                - (indicatorWidth - thumbWidth) / 2f
+                - thumbWidth * progressRatio;
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) vIndicator.getLayoutParams();
+        layoutParams.leftMargin = Math.round(indicatorOffset) + dip2px(getApplicationContext(), 15f);
+        vIndicator.setLayoutParams(layoutParams);
+    }
+
+    /**
+     * 获取TextView的文本宽度
+     */
+    public float getTextWidth(TextView textView) {
+        TextPaint paint = textView.getPaint();
+        return paint.measureText(textView.getText().toString());
+    }
+
+    /**
      * 隐藏虚拟键
      */
     private void hideNavigationBar() {
@@ -218,5 +255,10 @@ public class MainActivity extends BaseActivity {
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
             decorView.setSystemUiVisibility(uiOptions);
         }
+    }
+
+    public static int dip2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
     }
 }
