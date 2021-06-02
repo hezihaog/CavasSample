@@ -3,6 +3,7 @@ package com.zh.cavas.sample;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -12,8 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +44,7 @@ public class MainActivity extends BaseActivity {
     private MoreActionView vMoreActionView;
     private DownloadProgressView vDownloadProgressView;
     private BackArrowView vBackArrowView;
+    private Switch vCustomSeekBarSwitch;
     private TextView vIndicator;
     private CustomSeekBar vCustomSeekBar;
     private SeekBar vVivoSeekBar;
@@ -74,6 +78,7 @@ public class MainActivity extends BaseActivity {
         vToolbar = view.findViewById(R.id.toolbar);
         vMoreActionView = view.findViewById(R.id.more_action);
         vBackArrowView = view.findViewById(R.id.back_arrow);
+        vCustomSeekBarSwitch = view.findViewById(R.id.custom_seek_bar_switch);
         vIndicator = view.findViewById(R.id.indicator);
         vCustomSeekBar = view.findViewById(R.id.custom_seek_bar);
         vDownloadProgressView = view.findViewById(R.id.download_progress);
@@ -118,6 +123,22 @@ public class MainActivity extends BaseActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         };
+        vCustomSeekBarSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    //切换为启用样式
+                    vCustomSeekBar.setBgColor(Color.parseColor("#F6F7FC"));
+                    vCustomSeekBar.setProgressBgColor(Color.parseColor("#161731"));
+                    vCustomSeekBar.setThumbColor(Color.parseColor("#161731"));
+                } else {
+                    //切换为禁用样式
+                    vCustomSeekBar.setBgColor(Color.parseColor("#F6F7FC"));
+                    vCustomSeekBar.setProgressBgColor(Color.parseColor("#A3A3AD"));
+                    vCustomSeekBar.setThumbColor(Color.parseColor("#A3A3AD"));
+                }
+            }
+        });
         //自定义SeekBar
         vCustomSeekBar.setOnProgressUpdateListener(new CustomSeekBar.OnProgressUpdateListener() {
             @SuppressLint("SetTextI18n")

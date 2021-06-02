@@ -149,10 +149,15 @@ public class CustomSeekBar extends View {
         mDefaultWidth = dip2px(context, 180f);
         if (hasProgressText) {
             //有文字，计算公式：高度 = 文字高度 + 间隔距离 + 滑块高度
-            mDefaultHeight = (int) ((mThumbRadius * 2) + getPaintTextHeight(mTextPaint, "1分钟") + mProgressTextDistance);
+            mDefaultHeight = (int) ((mThumbRadius * 2)
+                    + getPaintTextHeight(mTextPaint, "1分钟")
+                    + mProgressTextDistance
+                    + getPaddingTop()
+                    + getPaddingBottom()
+            );
         } else {
             //没有文字，计算公式：滑块高度
-            mDefaultHeight = mThumbRadius * 2;
+            mDefaultHeight = (mThumbRadius * 2) + getPaddingTop() + getPaddingBottom();
         }
     }
 
@@ -229,7 +234,9 @@ public class CustomSeekBar extends View {
         //画滑块
         drawThumb(canvas);
         //画文字
-        drawText(canvas);
+        if (hasProgressText) {
+            drawText(canvas);
+        }
     }
 
     //------------ getFrameXxx()方法都是处理padding ------------
@@ -359,6 +366,41 @@ public class CustomSeekBar extends View {
             }
         }
         return result;
+    }
+
+    /**
+     * 设置进度背景颜色
+     */
+    public void setBgColor(int bgColor) {
+        this.mBgColor = bgColor;
+        mBgPaint.setColor(bgColor);
+        invalidate();
+    }
+
+    /**
+     * 设置已有进度的背景颜色
+     */
+    public void setProgressBgColor(int progressBgColor) {
+        this.mProgressBgColor = progressBgColor;
+        mProgressPaint.setColor(progressBgColor);
+        invalidate();
+    }
+
+    /**
+     * 设置滑块的颜色
+     */
+    public void setThumbColor(int thumbColor) {
+        this.mThumbColor = thumbColor;
+        mThumbPaint.setColor(thumbColor);
+        invalidate();
+    }
+
+    /**
+     * 设置滑块的半径
+     */
+    public void setThumbRadius(int thumbRadius) {
+        this.mThumbRadius = thumbRadius;
+        invalidate();
     }
 
     /**
