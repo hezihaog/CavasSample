@@ -319,7 +319,6 @@ public class CustomSeekBar extends View {
         //拦截事件，然后让父类不进行拦截
         if (action == MotionEvent.ACTION_DOWN) {
             getParent().requestDisallowInterceptTouchEvent(true);
-            mTouchDownX = event.getX();
             if (mOnProgressUpdateListener != null) {
                 mOnProgressUpdateListener.onStartTrackingTouch(this);
             }
@@ -333,6 +332,7 @@ public class CustomSeekBar extends View {
         int action = event.getAction();
         //保存Down事件时的x坐标
         if (action == MotionEvent.ACTION_DOWN) {
+            mTouchDownX = event.getX();
             return true;
         } else if (action == MotionEvent.ACTION_MOVE || action == MotionEvent.ACTION_UP) {
             //Move或Up的时候，计算拽托进度
