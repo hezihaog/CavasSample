@@ -141,11 +141,21 @@ public class MainActivity extends BaseActivity {
         });
         //自定义SeekBar
         vCustomSeekBar.setOnProgressUpdateListener(new CustomSeekBar.OnProgressUpdateListener() {
+            @Override
+            public void onStartTrackingTouch(CustomSeekBar seekBar) {
+                Toast.makeText(getApplicationContext(), "按下进度条", Toast.LENGTH_SHORT).show();
+            }
+
             @SuppressLint("SetTextI18n")
             @Override
-            public void onProgressUpdate(int progress) {
+            public void onProgressUpdate(CustomSeekBar seekBar, int progress, boolean fromUser) {
                 vIndicator.setText(progress + "分钟");
                 moveIndicator();
+            }
+
+            @Override
+            public void onStopTrackingTouch(CustomSeekBar seekBar) {
+                Toast.makeText(getApplicationContext(), "松开进度条", Toast.LENGTH_SHORT).show();
             }
         });
         vVivoSeekBar.setOnSeekBarChangeListener(seekBarChangeListener);

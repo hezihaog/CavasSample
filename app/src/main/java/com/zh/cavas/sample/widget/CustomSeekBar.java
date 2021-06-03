@@ -319,6 +319,10 @@ public class CustomSeekBar extends View {
         //拦截事件，然后让父类不进行拦截
         if (action == MotionEvent.ACTION_DOWN) {
             getParent().requestDisallowInterceptTouchEvent(true);
+            mTouchDownX = event.getX();
+            if (mOnProgressUpdateListener != null) {
+                mOnProgressUpdateListener.onStartTrackingTouch(this);
+            }
             return true;
         }
         return super.dispatchTouchEvent(event);
@@ -327,9 +331,8 @@ public class CustomSeekBar extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
-        //包裹Down事件时的x坐标
+        //保存Down事件时的x坐标
         if (action == MotionEvent.ACTION_DOWN) {
-            mTouchDownX = event.getX();
             return true;
         } else if (action == MotionEvent.ACTION_MOVE || action == MotionEvent.ACTION_UP) {
             //Move或Up的时候，计算拽托进度
@@ -339,7 +342,12 @@ public class CustomSeekBar extends View {
             float ratio = (distanceX * 1.0f) / (getFrameRight() - getFrameLeft());
             //计算百分比应该有的进度：进度 = 总进度 * 进度百分比值
             float progress = mMax * ratio;
-            setProgress((int) progress);
+            setProgress((int) progress, true);
+            if (action == MotionEvent.ACTION_UP) {
+                if (mOnProgressUpdateListener != null) {
+                    mOnProgressUpdateListener.onStopTrackingTouch(this);
+                }
+            }
             return true;
         }
         return super.onTouchEvent(event);
@@ -407,11 +415,20 @@ public class CustomSeekBar extends View {
      * 设置进度
      */
     public void setProgress(int progress) {
+        setProgress(progress, false);
+    }
+
+    /**
+     * 设置进度
+     *
+     * @param fromUser 是否是用户触摸发生的改变
+     */
+    public void setProgress(int progress, boolean fromUser) {
         if (progress >= mMin && progress <= mMax) {
             mProgress = progress;
             invalidate();
             if (mOnProgressUpdateListener != null) {
-                mOnProgressUpdateListener.onProgressUpdate(progress);
+                mOnProgressUpdateListener.onProgressUpdate(this, progress, fromUser);
             }
         }
     }
@@ -457,11 +474,19 @@ public class CustomSeekBar extends View {
 
     public interface OnProgressUpdateListener {
         /**
+         * 按下时回调
+         */
+        void onStartTrackingTouch(CustomSeekBar seekBar);
+
+        /**
          * 进度更新时回调
          *
          * @param progress 当前进度
+         * @param fromUser 是否是用户改变的
          */
-        void onProgressUpdate(int progress);
+        void onProgressUpdate(CustomSeekBar seekBar, int progress, boolean fromUser);
+
+        void onStopTrackingTouch(CustomSeekBar seekBar);
     }
 
     public void setOnProgressUpdateListener(
