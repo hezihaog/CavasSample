@@ -200,11 +200,17 @@ public class VerticalSeekBar extends View {
      * 画进度
      */
     private void drawProgress(Canvas canvas) {
+        //旋转画布，让进度条反转
+        canvas.rotate(180, mViewWidth / 2f, mViewHeight / 2f);
+        //保存画布
+        canvas.save();
         RectF rect = new RectF(getFrameLeft(),
-                mViewHeight * getProgressRatio(),
+                getFrameTop(),
                 getFrameRight(),
-                getFrameBottom());
+                getFrameBottom() * getProgressRatio());
         canvas.drawRect(rect, mProgressPaint);
+        //恢复画布
+        canvas.restore();
     }
 
     @Override
@@ -240,7 +246,7 @@ public class VerticalSeekBar extends View {
             float endY = event.getY();
             //计算公式：百分比值 = 移动距离 / 总长度
             float distanceY = Math.abs(endY - mTouchDownY);
-            float ratio = (distanceY * 1.0f) / (getFrameBottom() - getFrameTop());
+            float ratio = 1 - ((distanceY * 1.0f) / (getFrameBottom() - getFrameTop()));
             //计算百分比应该有的进度：进度 = 总进度 * 进度百分比值
             float progress = mMax * ratio;
             setProgress((int) progress, true);
