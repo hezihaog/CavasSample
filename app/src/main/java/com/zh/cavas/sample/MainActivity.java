@@ -38,12 +38,15 @@ import com.zh.cavas.sample.widget.DownloadProgressView;
 import com.zh.cavas.sample.widget.HookCheckBox;
 import com.zh.cavas.sample.widget.MoreActionView;
 import com.zh.cavas.sample.widget.NavigationBarIconView;
+import com.zh.cavas.sample.widget.VerticalSeekBar;
 
 public class MainActivity extends BaseActivity {
     private Toolbar vToolbar;
     private MoreActionView vMoreActionView;
     private DownloadProgressView vDownloadProgressView;
     private BackArrowView vBackArrowView;
+    private VerticalSeekBar vVerticalSeekBar;
+    private TextView vVerticalSeekBarProgress;
     private Switch vCustomSeekBarSwitch;
     private TextView vIndicator;
     private CustomSeekBar vCustomSeekBar;
@@ -78,7 +81,9 @@ public class MainActivity extends BaseActivity {
         vToolbar = view.findViewById(R.id.toolbar);
         vMoreActionView = view.findViewById(R.id.more_action);
         vBackArrowView = view.findViewById(R.id.back_arrow);
+        vVerticalSeekBar = view.findViewById(R.id.vertical_seek_bar);
         vCustomSeekBarSwitch = view.findViewById(R.id.custom_seek_bar_switch);
+        vVerticalSeekBarProgress = view.findViewById(R.id.vertical_seek_bar_progress);
         vIndicator = view.findViewById(R.id.indicator);
         vCustomSeekBar = view.findViewById(R.id.custom_seek_bar);
         vDownloadProgressView = view.findViewById(R.id.download_progress);
@@ -123,6 +128,23 @@ public class MainActivity extends BaseActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         };
+        vVerticalSeekBar.setOnProgressUpdateListener(new VerticalSeekBar.OnProgressUpdateListener() {
+            @Override
+            public void onStartTrackingTouch(VerticalSeekBar seekBar) {
+            }
+
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onProgressUpdate(VerticalSeekBar seekBar, int progress, boolean fromUser) {
+                float value = progress / 100f;
+                vVerticalSeekBarProgress.setText(value + " x");
+            }
+
+            @Override
+            public void onStopTrackingTouch(VerticalSeekBar seekBar) {
+            }
+        });
+        vVerticalSeekBar.setProgress(10);
         vCustomSeekBarSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

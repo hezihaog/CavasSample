@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="VerticalSeekBar">
+        <!-- 背景进度颜色 -->
+        <attr name="vsb_bg" format="color" />
+        <!-- 已有进度颜色 -->
+        <attr name="vsb_progress_bg" format="color" />
+        <!-- 进度条圆角半径 -->
+        <attr name="vsb_bg_radius" format="integer|float|dimension" />
+        <!-- 当前进度值 -->
+        <attr name="vsb_progress" format="integer" />
+        <!-- 最小进度值 -->
+        <attr name="vsb_min_progress" format="integer" />
+        <!-- 最大进度值 -->
+        <attr name="vsb_max_progress" format="integer" />
+    </declare-styleable>
+</resources>
