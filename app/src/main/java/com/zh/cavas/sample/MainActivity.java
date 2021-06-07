@@ -40,6 +40,8 @@ import com.zh.cavas.sample.widget.MoreActionView;
 import com.zh.cavas.sample.widget.NavigationBarIconView;
 import com.zh.cavas.sample.widget.VerticalSeekBar;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -47,8 +49,9 @@ public class MainActivity extends BaseActivity {
     private MoreActionView vMoreActionView;
     private DownloadProgressView vDownloadProgressView;
     private BackArrowView vBackArrowView;
-    private VerticalSeekBar vVerticalSeekBar;
-    private TextView vVerticalSeekBarProgress;
+    private VerticalSeekBar vVerticalVolumeSeekBar;
+    private VerticalSeekBar vVerticalSpeedSeekBar;
+    private TextView vVerticalSpeedSeekBarProgress;
     private Switch vCustomSeekBarSwitch;
     private TextView vIndicator;
     private CustomSeekBar vCustomSeekBar;
@@ -83,9 +86,10 @@ public class MainActivity extends BaseActivity {
         vToolbar = view.findViewById(R.id.toolbar);
         vMoreActionView = view.findViewById(R.id.more_action);
         vBackArrowView = view.findViewById(R.id.back_arrow);
-        vVerticalSeekBar = view.findViewById(R.id.vertical_seek_bar);
+        vVerticalVolumeSeekBar = view.findViewById(R.id.vertical_volume_seek_bar);
+        vVerticalSpeedSeekBar = view.findViewById(R.id.vertical_speed_seek_bar);
+        vVerticalSpeedSeekBarProgress = view.findViewById(R.id.vertical_speed_seek_bar_progress);
         vCustomSeekBarSwitch = view.findViewById(R.id.custom_seek_bar_switch);
-        vVerticalSeekBarProgress = view.findViewById(R.id.vertical_seek_bar_progress);
         vIndicator = view.findViewById(R.id.indicator);
         vCustomSeekBar = view.findViewById(R.id.custom_seek_bar);
         vDownloadProgressView = view.findViewById(R.id.download_progress);
@@ -131,27 +135,7 @@ public class MainActivity extends BaseActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         };
-        //垂直进度条
-        vVerticalSeekBar.setOnProgressUpdateListener(new VerticalSeekBar.OnProgressUpdateListener() {
-            @Override
-            public void onStartTrackingTouch(VerticalSeekBar seekBar) {
-            }
-
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onProgressUpdate(VerticalSeekBar seekBar, int progress, boolean fromUser) {
-                Log.d(TAG, "VerticalSeekBar onProgressUpdate => progress：" + progress);
-                float value = progress / 100f;
-                vVerticalSeekBarProgress.setText(value + " x");
-            }
-
-            @Override
-            public void onStopTrackingTouch(VerticalSeekBar seekBar) {
-            }
-        });
-        vVerticalSeekBar.setMin(0);
-        vVerticalSeekBar.setMax(3);
-        vVerticalSeekBar.setProgress(0);
+        setupVerticalSeekBar();
         vCustomSeekBarSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -232,6 +216,52 @@ public class MainActivity extends BaseActivity {
         setupNavigationIcon();
     }
 
+    /**
+     * 垂直进度条
+     */
+    private void setupVerticalSeekBar() {
+        //垂直音量控制条
+        vVerticalVolumeSeekBar.setOnProgressUpdateListener(new VerticalSeekBar.OnProgressUpdateListener() {
+            @Override
+            public void onStartTrackingTouch(VerticalSeekBar seekBar) {
+            }
+
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onProgressUpdate(VerticalSeekBar seekBar, float progress, boolean fromUser) {
+                //设置音量
+            }
+
+            @Override
+            public void onStopTrackingTouch(VerticalSeekBar seekBar) {
+            }
+        });
+        vVerticalVolumeSeekBar.setMin(0f);
+        vVerticalVolumeSeekBar.setMax(1f);
+        vVerticalVolumeSeekBar.setProgress(0f);
+        //倍数
+        vVerticalSpeedSeekBar.setOnProgressUpdateListener(new VerticalSeekBar.OnProgressUpdateListener() {
+            @Override
+            public void onStartTrackingTouch(VerticalSeekBar seekBar) {
+            }
+
+            @Override
+            public void onProgressUpdate(VerticalSeekBar seekBar, float progress, boolean fromUser) {
+                //设置倍数
+                float result = floatValueRetain2Location(progress);
+                Log.d(TAG, "VerticalSeekBar onProgressUpdate => progress = " + progress + "，result = " + result);
+                vVerticalSpeedSeekBarProgress.setText(result + " x");
+            }
+
+            @Override
+            public void onStopTrackingTouch(VerticalSeekBar seekBar) {
+            }
+        });
+        vVerticalVolumeSeekBar.setMin(0f);
+        vVerticalVolumeSeekBar.setMax(1f);
+        vVerticalVolumeSeekBar.setProgress(0f);
+    }
+
     private void setupNavigationIcon() {
         vNavBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -297,6 +327,15 @@ public class MainActivity extends BaseActivity {
     public float getTextWidth(TextView textView) {
         TextPaint paint = textView.getPaint();
         return paint.measureText(textView.getText().toString());
+    }
+
+    /**
+     * Float值保留2位小数
+     */
+    private float floatValueRetain2Location(float value) {
+        DecimalFormat format = new DecimalFormat("0.##");
+        String resultValue = format.format(value);
+        return Float.parseFloat(resultValue);
     }
 
     public static int dip2px(Context context, float dipValue) {

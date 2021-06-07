@@ -7,6 +7,8 @@
         <attr name="vsb_progress_bg" format="color" />
         <!-- 进度条圆角半径 -->
         <attr name="vsb_bg_radius" format="integer|float|dimension" />
+        <!-- 映射缩放等级 -->
+        <attr name="vsb_mapper_scale" format="float" />
         <!-- 当前进度值 -->
         <attr name="vsb_progress" format="integer" />
         <!-- 最小进度值 -->
