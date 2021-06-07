@@ -358,9 +358,9 @@
               android:id="@+id/vertical_speed_seek_bar"
               android:layout_width="36dp"
               android:layout_height="114dp"
-              tools:vsb_progress="50"
-              app:vsb_min_progress="1"
-              app:vsb_max_progress="100"
+              tools:vsb_progress="65"
+              app:vsb_min_progress="0.5"
+              app:vsb_max_progress="1.5"
               app:vsb_bg="#EDF0FA"
               app:vsb_progress_bg="#6D79FE"
               app:vsb_bg_radius="8dp" />
@@ -373,6 +373,52 @@
               android:layout_marginBottom="3dp"
               android:layout_gravity="bottom|center_horizontal"
               tools:text="1.0 x"
+              android:layout_height="wrap_content"/>
+        </FrameLayout>
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="11dp"
+          android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textColor="#161731"
+            android:textSize="15sp"
+            android:text="音调"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="14dp"/>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+          <com.zh.cavas.sample.widget.VerticalSeekBar
+              android:id="@+id/vertical_pitch_seek_bar"
+              android:layout_width="36dp"
+              android:layout_height="114dp"
+              tools:vsb_progress="80"
+              app:vsb_min_progress="-3"
+              app:vsb_max_progress="3"
+              app:vsb_bg="#EDF0FA"
+              app:vsb_progress_bg="#FFCA72"
+              app:vsb_bg_radius="8dp" />
+
+          <TextView
+              android:id="@+id/vertical_pitch_seek_bar_progress"
+              android:layout_width="wrap_content"
+              android:textColor="#FFFFFF"
+              android:textSize="9sp"
+              android:layout_marginBottom="3dp"
+              android:layout_gravity="bottom|center_horizontal"
+              tools:text="2.0 x"
               android:layout_height="wrap_content"/>
         </FrameLayout>
       </LinearLayout>

@@ -335,7 +335,7 @@ public class VerticalSeekBar extends View {
 //        Log.d(getClass().getSimpleName(), "setProgress => value = " + value);
         invalidate();
         if (mOnProgressUpdateListener != null) {
-            mOnProgressUpdateListener.onProgressUpdate(this, progress, fromUser);
+            mOnProgressUpdateListener.onProgressUpdate(this, progress / mMapperScale, fromUser);
         }
     }
 
@@ -394,6 +394,20 @@ public class VerticalSeekBar extends View {
          * 松手时回调
          */
         void onStopTrackingTouch(VerticalSeekBar seekBar);
+    }
+
+    public static class SimpleProgressUpdateListener implements OnProgressUpdateListener {
+        @Override
+        public void onStartTrackingTouch(VerticalSeekBar seekBar) {
+        }
+
+        @Override
+        public void onProgressUpdate(VerticalSeekBar seekBar, float progress, boolean fromUser) {
+        }
+
+        @Override
+        public void onStopTrackingTouch(VerticalSeekBar seekBar) {
+        }
     }
 
     public void setOnProgressUpdateListener(

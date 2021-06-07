@@ -10,10 +10,10 @@
         <!-- 映射缩放等级 -->
         <attr name="vsb_mapper_scale" format="float" />
         <!-- 当前进度值 -->
-        <attr name="vsb_progress" format="integer" />
+        <attr name="vsb_progress" format="float" />
         <!-- 最小进度值 -->
-        <attr name="vsb_min_progress" format="integer" />
+        <attr name="vsb_min_progress" format="float" />
         <!-- 最大进度值 -->
-        <attr name="vsb_max_progress" format="integer" />
+        <attr name="vsb_max_progress" format="float" />
     </declare-styleable>
 </resources>
