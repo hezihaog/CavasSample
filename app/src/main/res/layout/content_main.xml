@@ -303,7 +303,7 @@
         <com.zh.cavas.sample.widget.VerticalSeekBar
             android:id="@+id/vertical_seek_bar"
             android:layout_width="wrap_content"
-            app:vsb_progress="10"
+            tools:vsb_progress="10"
             app:vsb_min_progress="1"
             app:vsb_max_progress="100"
             app:vsb_bg="#EDF0FA"

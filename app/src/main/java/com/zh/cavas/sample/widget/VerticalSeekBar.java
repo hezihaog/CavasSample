@@ -204,6 +204,7 @@ public class VerticalSeekBar extends View {
         canvas.rotate(180, mViewWidth / 2f, mViewHeight / 2f);
         //保存画布
         canvas.save();
+        //画是从上画到下，但因为旋转了画布，显示是从下往上
         RectF rect = new RectF(getFrameLeft(),
                 getFrameTop(),
                 getFrameRight(),
@@ -241,21 +242,20 @@ public class VerticalSeekBar extends View {
         if (action == MotionEvent.ACTION_DOWN) {
             mTouchDownY = event.getY();
             return true;
-        } else if (action == MotionEvent.ACTION_MOVE || action == MotionEvent.ACTION_UP) {
+        } else if (action == MotionEvent.ACTION_MOVE) {
             //Move或Up的时候，计算拽托进度
             float endY = event.getY();
             //计算公式：百分比值 = 移动距离 / 总长度
             float distanceY = Math.abs(endY - mTouchDownY);
-            float ratio = 1 - ((distanceY * 1.0f) / (getFrameBottom() - getFrameTop()));
+            float ratio = 1 - (distanceY / (getFrameBottom() - getFrameTop()));
             //计算百分比应该有的进度：进度 = 总进度 * 进度百分比值
             float progress = mMax * ratio;
-            setProgress((int) progress, true);
-            if (action == MotionEvent.ACTION_UP) {
-                if (mOnProgressUpdateListener != null) {
-                    mOnProgressUpdateListener.onStopTrackingTouch(this);
-                }
-            }
+            setProgress(Math.round(progress), true);
             return true;
+        } else if (action == MotionEvent.ACTION_UP) {
+            if (mOnProgressUpdateListener != null) {
+                mOnProgressUpdateListener.onStopTrackingTouch(this);
+            }
         }
         return super.onTouchEvent(event);
     }

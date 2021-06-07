@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextPaint;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +41,8 @@ import com.zh.cavas.sample.widget.NavigationBarIconView;
 import com.zh.cavas.sample.widget.VerticalSeekBar;
 
 public class MainActivity extends BaseActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
+
     private Toolbar vToolbar;
     private MoreActionView vMoreActionView;
     private DownloadProgressView vDownloadProgressView;
@@ -106,6 +108,7 @@ public class MainActivity extends BaseActivity {
             }
         });
         vMoreActionView.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("RestrictedApi")
             @Override
             public void onClick(View v) {
                 ActionBar actionBar = getSupportActionBar();
@@ -128,6 +131,7 @@ public class MainActivity extends BaseActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         };
+        //垂直进度条
         vVerticalSeekBar.setOnProgressUpdateListener(new VerticalSeekBar.OnProgressUpdateListener() {
             @Override
             public void onStartTrackingTouch(VerticalSeekBar seekBar) {
@@ -136,6 +140,7 @@ public class MainActivity extends BaseActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onProgressUpdate(VerticalSeekBar seekBar, int progress, boolean fromUser) {
+                Log.d(TAG, "VerticalSeekBar onProgressUpdate => progress：" + progress);
                 float value = progress / 100f;
                 vVerticalSeekBarProgress.setText(value + " x");
             }
@@ -144,7 +149,9 @@ public class MainActivity extends BaseActivity {
             public void onStopTrackingTouch(VerticalSeekBar seekBar) {
             }
         });
-        vVerticalSeekBar.setProgress(10);
+        vVerticalSeekBar.setMin(0);
+        vVerticalSeekBar.setMax(3);
+        vVerticalSeekBar.setProgress(0);
         vCustomSeekBarSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -190,7 +197,6 @@ public class MainActivity extends BaseActivity {
                 vCustomSeekBar.setProgress(progress);
             }
         });
-        vDownloadProgressView.setProgress(0);
         vHookCheckBox.setOnCheckChangeListener(new HookCheckBox.OnCheckChangeListener() {
             @Override
             public void onCheckChange(boolean isCheck) {
