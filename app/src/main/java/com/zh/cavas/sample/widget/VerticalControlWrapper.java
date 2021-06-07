@@ -13,8 +13,6 @@ import androidx.annotation.Nullable;
 
 import com.zh.cavas.sample.R;
 
-import java.text.DecimalFormat;
-
 /**
  * 垂直控制包裹View，包含进度控制和显示文本，因为进度需求有0 ~ 1，0.5 ~ 1.5，-3 ~ 3，这3种，而VerticalSeekBar只是一个正数区间的控制
  * 需要支持以上3种区间，就要做特殊处理，进度值需要做转换，因不想特殊的进度需求，改动到这个View，所以才有这个包裹类，进行进度换算的控制
@@ -41,13 +39,13 @@ public class VerticalControlWrapper extends FrameLayout {
      */
     private TextView vProgressText;
     /**
-     * 进度文本的后缀
-     */
-    private String mSuffixText = " X";
-    /**
      * 进度回调
      */
     private OnProgressChangeListener mOnProgressChangeListener;
+    /**
+     * 进度渲染文本
+     */
+    private ProgressTextRender mProgressTextRender;
 
     public VerticalControlWrapper(@NonNull Context context) {
         this(context, null);
@@ -115,8 +113,11 @@ public class VerticalControlWrapper extends FrameLayout {
         //设置进度
         vSeekBar.setProgress(Math.round(currentPercent * 500f + 500));
         //设置进度文本
-        float currentValue = (mMax - mZero) * currentPercent + mZero;
-        vProgressText.setText(floatValueRetain2Location(currentValue) + mSuffixText);
+        if (mProgressTextRender != null) {
+            float currentValue = (mMax - mZero) * currentPercent + mZero;
+            String text = mProgressTextRender.onRenderProgressText(currentValue);
+            vProgressText.setText(text);
+        }
         //回调外部
         if (mOnProgressChangeListener != null) {
             mOnProgressChangeListener.onProgress((mMax - mZero) * currentPercent + mZero, fromUser);
@@ -142,13 +143,6 @@ public class VerticalControlWrapper extends FrameLayout {
      */
     public void setMax(float max) {
         this.mMax = max;
-    }
-
-    /**
-     * 设置进度文本的后缀
-     */
-    public void setSuffixText(String suffixText) {
-        this.mSuffixText = suffixText;
     }
 
     /**
@@ -186,12 +180,17 @@ public class VerticalControlWrapper extends FrameLayout {
         this.mOnProgressChangeListener = onProgressChangeListener;
     }
 
-    /**
-     * Float值保留2位小数
-     */
-    private float floatValueRetain2Location(float value) {
-        DecimalFormat format = new DecimalFormat("0.##");
-        String resultValue = format.format(value);
-        return Float.parseFloat(resultValue);
+    public interface ProgressTextRender {
+        /**
+         * 进度渲染回调
+         *
+         * @param currentValue 当前值
+         * @return 要渲染的文本
+         */
+        String onRenderProgressText(float currentValue);
+    }
+
+    public void setProgressTextRender(ProgressTextRender progressTextRender) {
+        mProgressTextRender = progressTextRender;
     }
 }

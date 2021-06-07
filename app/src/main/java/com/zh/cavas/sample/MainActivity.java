@@ -50,6 +50,7 @@ public class MainActivity extends BaseActivity {
     private MoreActionView vMoreActionView;
     private DownloadProgressView vDownloadProgressView;
     private BackArrowView vBackArrowView;
+    private Switch vAdjustBrainSwitch;
     private VerticalSeekBar vVolumeSeekBar;
     private VerticalControlWrapper vSpeedSeekBar;
     private VerticalControlWrapper vPitchSeekBar;
@@ -87,6 +88,7 @@ public class MainActivity extends BaseActivity {
         vToolbar = view.findViewById(R.id.toolbar);
         vMoreActionView = view.findViewById(R.id.more_action);
         vBackArrowView = view.findViewById(R.id.back_arrow);
+        vAdjustBrainSwitch = view.findViewById(R.id.adjust_brain_switch);
         //音量
         vVolumeSeekBar = view.findViewById(R.id.volume_seek_bar);
         //倍速
@@ -224,7 +226,16 @@ public class MainActivity extends BaseActivity {
      * 垂直进度条
      */
     private void setupVerticalSeekBar() {
-        //垂直音量控制条
+        //第一次渲染
+        changeVerticalSeekBarTheme(isDarkTheme());
+        //夜间模式切换
+        vAdjustBrainSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                changeVerticalSeekBarTheme(isChecked);
+            }
+        });
+        //音量
         vVolumeSeekBar.setOnProgressUpdateListener(new VerticalSeekBar.SimpleProgressUpdateListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -235,17 +246,26 @@ public class MainActivity extends BaseActivity {
         });
         vVolumeSeekBar.setMin(0f);
         vVolumeSeekBar.setMax(1f);
-        vVolumeSeekBar.setProgress(0f);
+        vVolumeSeekBar.setProgress(0.6f);
         //倍数
         vSpeedSeekBar.setOnProgressChangeListener(new VerticalControlWrapper.OnProgressChangeListener() {
             @Override
             public void onProgress(float progress, boolean fromUser) {
                 //设置倍数
-                float result = floatValueRetain2Location(progress);
+                String result = floatValueRetainFormat(2, progress);
                 Log.d(TAG, "SpeedSeekBar onProgressUpdate => progress = " + progress + "，result = " + result);
             }
         });
-        vSpeedSeekBar.setSuffixText(" X");
+        vSpeedSeekBar.setProgressTextRender(new VerticalControlWrapper.ProgressTextRender() {
+            @Override
+            public String onRenderProgressText(float currentValue) {
+                String text = floatValueRetainFormat(2, currentValue);
+                if (Float.parseFloat(text) >= 0) {
+                    text = text.replace("-", "");
+                }
+                return text + " X";
+            }
+        });
         vSpeedSeekBar.setZero(1f);
         vSpeedSeekBar.setMax(1.5f);
         //音调
@@ -253,15 +273,58 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onProgress(float progress, boolean fromUser) {
                 //设置音调
-                float result = floatValueRetain2Location(progress);
+                String result = floatValueRetainFormat(1, progress);
                 Log.d(TAG, "PitchSeekBar onProgressUpdate => progress = " + progress + "，result = " + result);
             }
         });
-        vPitchSeekBar.setBgColor(Color.parseColor("#EDF0FA"));
-        vPitchSeekBar.setProgressBgColor(Color.parseColor("#FFCA72"));
-        vPitchSeekBar.setSuffixText(" K");
+        vPitchSeekBar.setProgressTextRender(new VerticalControlWrapper.ProgressTextRender() {
+            @Override
+            public String onRenderProgressText(float currentValue) {
+                String text = floatValueRetainFormat(1, currentValue) + "";
+                if (Float.parseFloat(text) >= 0) {
+                    text = text.replace("-", "");
+                }
+                return text + " K";
+            }
+        });
         vPitchSeekBar.setMax(3f);
         vPitchSeekBar.setZero(0f);
+    }
+
+    /**
+     * 设置垂直进度条的主题样式
+     *
+     * @param isDark 是否夜间模式
+     */
+    private void changeVerticalSeekBarTheme(boolean isDark) {
+        //音量
+        if (isDark) {
+            vVolumeSeekBar.setBgColor(Color.parseColor("#242227"));
+        } else {
+            vVolumeSeekBar.setBgColor(Color.parseColor("#EDF0FA"));
+        }
+        vVolumeSeekBar.setProgressBgColor(Color.parseColor("#3DDA9B"));
+        //倍速
+        if (isDark) {
+            vSpeedSeekBar.setBgColor(Color.parseColor("#242227"));
+        } else {
+            vSpeedSeekBar.setBgColor(Color.parseColor("#EDF0FA"));
+        }
+        vSpeedSeekBar.setProgressBgColor(Color.parseColor("#6D79FE"));
+        //音调
+        if (isDark) {
+            vPitchSeekBar.setBgColor(Color.parseColor("#242227"));
+        } else {
+            vPitchSeekBar.setBgColor(Color.parseColor("#EDF0FA"));
+        }
+        vPitchSeekBar.setProgressBgColor(Color.parseColor("#FFCA72"));
+    }
+
+    /**
+     * 是否是夜间主题
+     */
+    private boolean isDarkTheme() {
+        return vAdjustBrainSwitch.isChecked();
     }
 
     private void setupNavigationIcon() {
@@ -332,12 +395,18 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * Float值保留2位小数
+     * Float值保留几位小数，返回字符串
+     *
+     * @param digits 保留几位
+     * @param value  要格式化的值
      */
-    private float floatValueRetain2Location(float value) {
-        DecimalFormat format = new DecimalFormat("0.##");
-        String resultValue = format.format(value);
-        return Float.parseFloat(resultValue);
+    private String floatValueRetainFormat(int digits, float value) {
+        StringBuilder builder = new StringBuilder("0.");
+        for (int i = 0; i < digits; i++) {
+            builder.append("#");
+        }
+        DecimalFormat format = new DecimalFormat(builder.toString());
+        return format.format(value);
     }
 
     public static int dip2px(Context context, float dipValue) {
