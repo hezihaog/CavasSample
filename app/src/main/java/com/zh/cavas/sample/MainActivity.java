@@ -38,6 +38,7 @@ import com.zh.cavas.sample.widget.DownloadProgressView;
 import com.zh.cavas.sample.widget.HookCheckBox;
 import com.zh.cavas.sample.widget.MoreActionView;
 import com.zh.cavas.sample.widget.NavigationBarIconView;
+import com.zh.cavas.sample.widget.VerticalControlWrapper;
 import com.zh.cavas.sample.widget.VerticalSeekBar;
 
 import java.text.DecimalFormat;
@@ -50,10 +51,8 @@ public class MainActivity extends BaseActivity {
     private DownloadProgressView vDownloadProgressView;
     private BackArrowView vBackArrowView;
     private VerticalSeekBar vVolumeSeekBar;
-    private VerticalSeekBar vSpeedSeekBar;
-    private TextView vSpeedSeekBarProgress;
-    private VerticalSeekBar vPitchSeekBar;
-    private TextView vPitchSeekBarProgress;
+    private VerticalControlWrapper vSpeedSeekBar;
+    private VerticalControlWrapper vPitchSeekBar;
     private Switch vCustomSeekBarSwitch;
     private TextView vIndicator;
     private CustomSeekBar vCustomSeekBar;
@@ -92,10 +91,8 @@ public class MainActivity extends BaseActivity {
         vVolumeSeekBar = view.findViewById(R.id.volume_seek_bar);
         //倍速
         vSpeedSeekBar = view.findViewById(R.id.speed_seek_bar);
-        vSpeedSeekBarProgress = view.findViewById(R.id.speed_seek_bar_progress);
         //音调
         vPitchSeekBar = view.findViewById(R.id.pitch_seek_bar);
-        vPitchSeekBarProgress = view.findViewById(R.id.pitch_seek_bar_progress);
         vCustomSeekBarSwitch = view.findViewById(R.id.custom_seek_bar_switch);
         vIndicator = view.findViewById(R.id.indicator);
         vCustomSeekBar = view.findViewById(R.id.custom_seek_bar);
@@ -240,33 +237,31 @@ public class MainActivity extends BaseActivity {
         vVolumeSeekBar.setMax(1f);
         vVolumeSeekBar.setProgress(0f);
         //倍数
-        vSpeedSeekBar.setOnProgressUpdateListener(new VerticalSeekBar.SimpleProgressUpdateListener() {
-            @SuppressLint("SetTextI18n")
+        vSpeedSeekBar.setOnProgressChangeListener(new VerticalControlWrapper.OnProgressChangeListener() {
             @Override
-            public void onProgressUpdate(VerticalSeekBar seekBar, float progress, boolean fromUser) {
+            public void onProgress(float progress, boolean fromUser) {
                 //设置倍数
                 float result = floatValueRetain2Location(progress);
                 Log.d(TAG, "SpeedSeekBar onProgressUpdate => progress = " + progress + "，result = " + result);
-                vSpeedSeekBarProgress.setText(result + " x");
             }
         });
-        vSpeedSeekBar.setMin(0.5f);
+        vSpeedSeekBar.setSuffixText(" X");
+        vSpeedSeekBar.setZero(1f);
         vSpeedSeekBar.setMax(1.5f);
-        vSpeedSeekBar.setProgress(1f);
         //音调
-        vPitchSeekBar.setOnProgressUpdateListener(new VerticalSeekBar.SimpleProgressUpdateListener() {
-            @SuppressLint("SetTextI18n")
+        vPitchSeekBar.setOnProgressChangeListener(new VerticalControlWrapper.OnProgressChangeListener() {
             @Override
-            public void onProgressUpdate(VerticalSeekBar seekBar, float progress, boolean fromUser) {
+            public void onProgress(float progress, boolean fromUser) {
                 //设置音调
                 float result = floatValueRetain2Location(progress);
-                Log.d(TAG, "SpeedSeekBar onProgressUpdate => progress = " + progress + "，result = " + result);
-                vPitchSeekBarProgress.setText(result + " k");
+                Log.d(TAG, "PitchSeekBar onProgressUpdate => progress = " + progress + "，result = " + result);
             }
         });
-        vPitchSeekBar.setMin(-3f);
+        vPitchSeekBar.setBgColor(Color.parseColor("#EDF0FA"));
+        vPitchSeekBar.setProgressBgColor(Color.parseColor("#FFCA72"));
+        vPitchSeekBar.setSuffixText(" K");
         vPitchSeekBar.setMax(3f);
-        vPitchSeekBar.setProgress(1f);
+        vPitchSeekBar.setZero(0f);
     }
 
     private void setupNavigationIcon() {

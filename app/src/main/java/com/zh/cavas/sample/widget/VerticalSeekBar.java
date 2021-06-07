@@ -15,8 +15,6 @@ import androidx.annotation.Nullable;
 
 import com.zh.cavas.sample.R;
 
-import java.text.DecimalFormat;
-
 /**
  * 垂直拽托进度条
  */
@@ -73,10 +71,6 @@ public class VerticalSeekBar extends View {
      * 进度更新监听
      */
     private VerticalSeekBar.OnProgressUpdateListener mOnProgressUpdateListener;
-    /**
-     * 映射缩放等级，因为要支持小数，但计算时是要转换为整形来计算的，所以才有这个属性
-     */
-    private final float mMapperScale = 1f;
 
     public VerticalSeekBar(Context context) {
         this(context, null);
@@ -126,11 +120,11 @@ public class VerticalSeekBar extends View {
             //进度条的圆角
             mBgRadius = array.getDimensionPixelSize(R.styleable.VerticalSeekBar_vsb_bg_radius, defaultBgRadius);
             //当前进度值
-            mProgress = array.getFloat(R.styleable.VerticalSeekBar_vsb_progress, defaultProgress) * mMapperScale;
+            mProgress = array.getFloat(R.styleable.VerticalSeekBar_vsb_progress, defaultProgress);
             //最小进度值
-            mMin = array.getFloat(R.styleable.VerticalSeekBar_vsb_min_progress, defaultMinProgress) * mMapperScale;
+            mMin = array.getFloat(R.styleable.VerticalSeekBar_vsb_min_progress, defaultMinProgress);
             //最大进度值
-            mMax = array.getFloat(R.styleable.VerticalSeekBar_vsb_max_progress, defaultMaxProgress) * mMapperScale;
+            mMax = array.getFloat(R.styleable.VerticalSeekBar_vsb_max_progress, defaultMaxProgress);
             array.recycle();
         } else {
             mBgColor = defaultBgColor;
@@ -256,7 +250,7 @@ public class VerticalSeekBar extends View {
             float ratio = distanceY / contentHeight;
             //计算百分比应该有的进度：进度 = 总进度 * 进度百分比值
             float progress = mMax * ratio;
-            setProgress(floatValueRetain2Location(progress), true);
+            setProgress(progress, true);
             if (action == MotionEvent.ACTION_UP) {
                 if (mOnProgressUpdateListener != null) {
                     mOnProgressUpdateListener.onStopTrackingTouch(this);
@@ -291,15 +285,6 @@ public class VerticalSeekBar extends View {
     }
 
     /**
-     * Float值保留2位小数
-     */
-    private float floatValueRetain2Location(float value) {
-        DecimalFormat format = new DecimalFormat("0.##");
-        String resultValue = format.format(value);
-        return Float.parseFloat(resultValue);
-    }
-
-    /**
      * 设置进度背景颜色
      */
     public void setBgColor(int bgColor) {
@@ -330,12 +315,14 @@ public class VerticalSeekBar extends View {
      * @param fromUser 是否是用户触摸发生的改变
      */
     public void setProgress(float progress, boolean fromUser) {
-        float value = progress * mMapperScale;
-        if (value < mMax || value > mMin) {
-            mProgress = progress * mMapperScale;
+        if (mProgress == progress) {
+            return;
+        }
+        if (progress < mMax || progress > mMin) {
+            mProgress = progress;
             invalidate();
             if (mOnProgressUpdateListener != null) {
-                mOnProgressUpdateListener.onProgressUpdate(this, progress / mMapperScale, fromUser);
+                mOnProgressUpdateListener.onProgressUpdate(this, progress, fromUser);
             }
         }
     }
@@ -344,14 +331,14 @@ public class VerticalSeekBar extends View {
      * 获取当前进度
      */
     public float getProgress() {
-        return mProgress / mMapperScale;
+        return mProgress;
     }
 
     /**
      * 设置进度最小值
      */
     public void setMin(float min) {
-        this.mMin = min * mMapperScale;
+        this.mMin = min;
         invalidate();
     }
 
@@ -359,14 +346,14 @@ public class VerticalSeekBar extends View {
      * 获取最小进度
      */
     public float getMin() {
-        return mMin / mMapperScale;
+        return mMin;
     }
 
     /**
      * 设置进度最大值
      */
     public void setMax(float max) {
-        this.mMax = max * mMapperScale;
+        this.mMax = max;
         invalidate();
     }
 
@@ -374,7 +361,7 @@ public class VerticalSeekBar extends View {
      * 获取最大进度
      */
     public float getMax() {
-        return mMax / mMapperScale;
+        return mMax;
     }
 
     public interface OnProgressUpdateListener {
@@ -420,7 +407,7 @@ public class VerticalSeekBar extends View {
      * 获取当前进度值比值
      */
     public float getProgressRatio() {
-        return (mProgress / (mMax * 1.0f)) / mMapperScale;
+        return mProgress / (mMax * 1.0f);
     }
 
     public static int sp2px(Context context, float spValue) {
