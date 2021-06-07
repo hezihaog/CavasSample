@@ -319,7 +319,7 @@
             android:layout_height="wrap_content">
 
           <com.zh.cavas.sample.widget.VerticalSeekBar
-              android:id="@+id/vertical_volume_seek_bar"
+              android:id="@+id/volume_seek_bar"
               android:layout_width="36dp"
               android:layout_height="114dp"
               tools:vsb_progress="50"
@@ -355,7 +355,7 @@
             android:layout_height="wrap_content">
 
           <com.zh.cavas.sample.widget.VerticalSeekBar
-              android:id="@+id/vertical_speed_seek_bar"
+              android:id="@+id/speed_seek_bar"
               android:layout_width="36dp"
               android:layout_height="114dp"
               tools:vsb_progress="65"
@@ -366,7 +366,7 @@
               app:vsb_bg_radius="8dp" />
 
           <TextView
-              android:id="@+id/vertical_speed_seek_bar_progress"
+              android:id="@+id/speed_seek_bar_progress"
               android:layout_width="wrap_content"
               android:textColor="#FFFFFF"
               android:textSize="9sp"
@@ -401,7 +401,7 @@
             android:layout_height="wrap_content">
 
           <com.zh.cavas.sample.widget.VerticalSeekBar
-              android:id="@+id/vertical_pitch_seek_bar"
+              android:id="@+id/pitch_seek_bar"
               android:layout_width="36dp"
               android:layout_height="114dp"
               tools:vsb_progress="80"
@@ -412,7 +412,7 @@
               app:vsb_bg_radius="8dp" />
 
           <TextView
-              android:id="@+id/vertical_pitch_seek_bar_progress"
+              android:id="@+id/pitch_seek_bar_progress"
               android:layout_width="wrap_content"
               android:textColor="#FFFFFF"
               android:textSize="9sp"

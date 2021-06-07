@@ -330,12 +330,13 @@ public class VerticalSeekBar extends View {
      * @param fromUser 是否是用户触摸发生的改变
      */
     public void setProgress(float progress, boolean fromUser) {
-        mProgress = progress * mMapperScale;
-//        float value = ((mMin / mMax) * (progress / mMapperScale));
-//        Log.d(getClass().getSimpleName(), "setProgress => value = " + value);
-        invalidate();
-        if (mOnProgressUpdateListener != null) {
-            mOnProgressUpdateListener.onProgressUpdate(this, progress / mMapperScale, fromUser);
+        float value = progress * mMapperScale;
+        if (value < mMax || value > mMin) {
+            mProgress = progress * mMapperScale;
+            invalidate();
+            if (mOnProgressUpdateListener != null) {
+                mOnProgressUpdateListener.onProgressUpdate(this, progress / mMapperScale, fromUser);
+            }
         }
     }
 

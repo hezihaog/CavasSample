@@ -49,11 +49,11 @@ public class MainActivity extends BaseActivity {
     private MoreActionView vMoreActionView;
     private DownloadProgressView vDownloadProgressView;
     private BackArrowView vBackArrowView;
-    private VerticalSeekBar vVerticalVolumeSeekBar;
-    private VerticalSeekBar vVerticalSpeedSeekBar;
-    private TextView vVerticalSpeedSeekBarProgress;
-    private VerticalSeekBar vVerticalPitchSeekBar;
-    private TextView vVerticalPitchSeekBarProgress;
+    private VerticalSeekBar vVolumeSeekBar;
+    private VerticalSeekBar vSpeedSeekBar;
+    private TextView vSpeedSeekBarProgress;
+    private VerticalSeekBar vPitchSeekBar;
+    private TextView vPitchSeekBarProgress;
     private Switch vCustomSeekBarSwitch;
     private TextView vIndicator;
     private CustomSeekBar vCustomSeekBar;
@@ -89,13 +89,13 @@ public class MainActivity extends BaseActivity {
         vMoreActionView = view.findViewById(R.id.more_action);
         vBackArrowView = view.findViewById(R.id.back_arrow);
         //音量
-        vVerticalVolumeSeekBar = view.findViewById(R.id.vertical_volume_seek_bar);
+        vVolumeSeekBar = view.findViewById(R.id.volume_seek_bar);
         //倍速
-        vVerticalSpeedSeekBar = view.findViewById(R.id.vertical_speed_seek_bar);
-        vVerticalSpeedSeekBarProgress = view.findViewById(R.id.vertical_speed_seek_bar_progress);
+        vSpeedSeekBar = view.findViewById(R.id.speed_seek_bar);
+        vSpeedSeekBarProgress = view.findViewById(R.id.speed_seek_bar_progress);
         //音调
-        vVerticalPitchSeekBar = view.findViewById(R.id.vertical_pitch_seek_bar);
-        vVerticalPitchSeekBarProgress = view.findViewById(R.id.vertical_pitch_seek_bar_progress);
+        vPitchSeekBar = view.findViewById(R.id.pitch_seek_bar);
+        vPitchSeekBarProgress = view.findViewById(R.id.pitch_seek_bar_progress);
         vCustomSeekBarSwitch = view.findViewById(R.id.custom_seek_bar_switch);
         vIndicator = view.findViewById(R.id.indicator);
         vCustomSeekBar = view.findViewById(R.id.custom_seek_bar);
@@ -228,7 +228,7 @@ public class MainActivity extends BaseActivity {
      */
     private void setupVerticalSeekBar() {
         //垂直音量控制条
-        vVerticalVolumeSeekBar.setOnProgressUpdateListener(new VerticalSeekBar.SimpleProgressUpdateListener() {
+        vVolumeSeekBar.setOnProgressUpdateListener(new VerticalSeekBar.SimpleProgressUpdateListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onProgressUpdate(VerticalSeekBar seekBar, float progress, boolean fromUser) {
@@ -236,37 +236,37 @@ public class MainActivity extends BaseActivity {
                 Log.d(TAG, "VolumeSeekBar onProgressUpdate => progress = " + progress);
             }
         });
-        vVerticalVolumeSeekBar.setMin(0f);
-        vVerticalVolumeSeekBar.setMax(1f);
-        vVerticalVolumeSeekBar.setProgress(0f);
+        vVolumeSeekBar.setMin(0f);
+        vVolumeSeekBar.setMax(1f);
+        vVolumeSeekBar.setProgress(0f);
         //倍数
-        vVerticalSpeedSeekBar.setOnProgressUpdateListener(new VerticalSeekBar.SimpleProgressUpdateListener() {
+        vSpeedSeekBar.setOnProgressUpdateListener(new VerticalSeekBar.SimpleProgressUpdateListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onProgressUpdate(VerticalSeekBar seekBar, float progress, boolean fromUser) {
                 //设置倍数
                 float result = floatValueRetain2Location(progress);
                 Log.d(TAG, "SpeedSeekBar onProgressUpdate => progress = " + progress + "，result = " + result);
-                vVerticalSpeedSeekBarProgress.setText(result + " x");
+                vSpeedSeekBarProgress.setText(result + " x");
             }
         });
-        vVerticalVolumeSeekBar.setMin(0.5f);
-        vVerticalVolumeSeekBar.setMax(1.5f);
-        vVerticalVolumeSeekBar.setProgress(1f);
+        vSpeedSeekBar.setMin(0.5f);
+        vSpeedSeekBar.setMax(1.5f);
+        vSpeedSeekBar.setProgress(1f);
         //音调
-        vVerticalPitchSeekBar.setOnProgressUpdateListener(new VerticalSeekBar.SimpleProgressUpdateListener() {
+        vPitchSeekBar.setOnProgressUpdateListener(new VerticalSeekBar.SimpleProgressUpdateListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onProgressUpdate(VerticalSeekBar seekBar, float progress, boolean fromUser) {
                 //设置音调
                 float result = floatValueRetain2Location(progress);
                 Log.d(TAG, "SpeedSeekBar onProgressUpdate => progress = " + progress + "，result = " + result);
-                vVerticalPitchSeekBarProgress.setText(result + " k");
+                vPitchSeekBarProgress.setText(result + " k");
             }
         });
-        vVerticalPitchSeekBar.setMin(-3f);
-        vVerticalPitchSeekBar.setMax(3f);
-        vVerticalPitchSeekBar.setProgress(1f);
+        vPitchSeekBar.setMin(-3f);
+        vPitchSeekBar.setMax(3f);
+        vPitchSeekBar.setProgress(1f);
     }
 
     private void setupNavigationIcon() {
