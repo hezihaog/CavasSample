@@ -1,6 +1,5 @@
 package com.zh.cavas.sample.widget;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -72,7 +71,6 @@ public class VerticalControlWrapper extends FrameLayout {
     }
 
     private void bindView() {
-        setMax(mMax);
         vSeekBar.setMax(1000);
         vSeekBar.setOnProgressUpdateListener(new VerticalSeekBar.SimpleProgressUpdateListener() {
             @Override
@@ -81,6 +79,12 @@ public class VerticalControlWrapper extends FrameLayout {
                 //同步进度百分比
                 mCurrentPercent = (progress - 500) / 500f;
                 setCurrentPercent((progress - 500) / 500f, fromUser);
+                //移动到一半的进度
+                if (progress > 497 && progress < 503 && fromUser) {
+                    if (mOnProgressChangeListener != null) {
+                        mOnProgressChangeListener.onProgressMiddle(fromUser);
+                    }
+                }
             }
 
             @Override
@@ -91,7 +95,6 @@ public class VerticalControlWrapper extends FrameLayout {
                 }
             }
         });
-        vSeekBar.setProgress(500);
     }
 
     /**
@@ -105,10 +108,18 @@ public class VerticalControlWrapper extends FrameLayout {
      * 设置当前百分比值
      *
      * @param currentPercent 百分比值
+     */
+    public void setCurrentPercent(float currentPercent) {
+        setCurrentPercent(currentPercent, false);
+    }
+
+    /**
+     * 设置当前百分比值
+     *
+     * @param currentPercent 百分比值
      * @param fromUser       是否用户拖拽触发
      */
-    @SuppressLint("SetTextI18n")
-    private void setCurrentPercent(float currentPercent, boolean fromUser) {
+    public void setCurrentPercent(float currentPercent, boolean fromUser) {
         this.mCurrentPercent = currentPercent;
         //设置进度
         vSeekBar.setProgress(Math.round(currentPercent * 500f + 500));
@@ -117,6 +128,8 @@ public class VerticalControlWrapper extends FrameLayout {
             float currentValue = (mMax - mZero) * currentPercent + mZero;
             String text = mProgressTextRender.onRenderProgressText(currentValue);
             vProgressText.setText(text);
+        } else {
+            vProgressText.setText("");
         }
         //回调外部
         if (mOnProgressChangeListener != null) {
@@ -164,9 +177,15 @@ public class VerticalControlWrapper extends FrameLayout {
          * 进度更新时回调
          *
          * @param progress 进度值
-         * @param fromUser 是否是因为用户拽托发生改变≈
+         * @param fromUser 是否是因为用户拽托发生改变
          */
         public void onProgress(float progress, boolean fromUser) {
+        }
+
+        /**
+         * 进度更新到一半
+         */
+        public void onProgressMiddle(boolean fromUser) {
         }
 
         /**

@@ -44,7 +44,7 @@ public class VerticalSeekBar extends View {
      */
     private int mProgressBgColor;
     /**
-     * 进度条的圆角
+     * 进度条的圆角半径
      */
     private int mBgRadius;
     /**
@@ -197,7 +197,13 @@ public class VerticalSeekBar extends View {
     private void drawProgress(Canvas canvas) {
         float contentHeight = mViewHeight - getPaddingTop() - getPaddingBottom();
         //计算出当前进度应该有个top值，因为进度是从小往上，所以百分比要被1减去
-        float top = contentHeight * (1 - getProgressRatio());
+        float progressRatio = getProgressRatio();
+        float top;
+        if (progressRatio == 0) {
+            top = contentHeight;
+        } else {
+            top = contentHeight * (1 - progressRatio);
+        }
         //画进度矩形
         RectF rect = new RectF(getFrameLeft(),
                 top,
@@ -229,14 +235,13 @@ public class VerticalSeekBar extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int contentHeight = mViewHeight - getPaddingTop() - getPaddingBottom();
         int action = event.getAction();
+        int contentHeight = mViewHeight - getPaddingTop() - getPaddingBottom();
         if (action == MotionEvent.ACTION_DOWN) {
             return true;
         } else if (action == MotionEvent.ACTION_MOVE || action == MotionEvent.ACTION_UP) {
             //Move或Up的时候，计算拽托进度
             float endY = event.getY();
-            //Log.d(getClass().getSimpleName(), "endY = " + endY);
             //限制拉到顶
             if (endY < 0) {
                 endY = 0;
@@ -288,6 +293,10 @@ public class VerticalSeekBar extends View {
      * 设置进度背景颜色
      */
     public void setBgColor(int bgColor) {
+        //没有变化，不重绘
+        if (bgColor == mBgColor) {
+            return;
+        }
         this.mBgColor = bgColor;
         mBgPaint.setColor(bgColor);
         invalidate();
@@ -297,6 +306,10 @@ public class VerticalSeekBar extends View {
      * 设置已有进度的背景颜色
      */
     public void setProgressBgColor(int progressBgColor) {
+        //没有变化，不重绘
+        if (progressBgColor == mProgressBgColor) {
+            return;
+        }
         this.mProgressBgColor = progressBgColor;
         mProgressPaint.setColor(progressBgColor);
         invalidate();
@@ -315,15 +328,16 @@ public class VerticalSeekBar extends View {
      * @param fromUser 是否是用户触摸发生的改变
      */
     public void setProgress(float progress, boolean fromUser) {
+        //忽略相同进度的设置
         if (mProgress == progress) {
             return;
         }
-        if (progress < mMax || progress > mMin) {
-            mProgress = progress;
-            invalidate();
-            if (mOnProgressUpdateListener != null) {
-                mOnProgressUpdateListener.onProgressUpdate(this, progress, fromUser);
-            }
+//        if (progress > mMin && progress < mMax) {
+//        }
+        this.mProgress = progress;
+        invalidate();
+        if (mOnProgressUpdateListener != null) {
+            mOnProgressUpdateListener.onProgressUpdate(this, progress, fromUser);
         }
     }
 
