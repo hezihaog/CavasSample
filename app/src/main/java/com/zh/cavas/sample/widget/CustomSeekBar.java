@@ -24,10 +24,6 @@ public class CustomSeekBar extends View {
      */
     private int mDefaultHeight;
     /**
-     * 文字和进度条之间的距离
-     */
-    private float mProgressTextDistance;
-    /**
      * 控件宽
      */
     private int mViewWidth;
@@ -56,14 +52,6 @@ public class CustomSeekBar extends View {
      */
     private int mThumbRadius;
     /**
-     * 进度的文字颜色
-     */
-    private int mProgressTextColor;
-    /**
-     * 进度的文字大小
-     */
-    private float mProgressTextSize;
-    /**
      * 当前进度
      */
     private int mProgress;
@@ -76,10 +64,6 @@ public class CustomSeekBar extends View {
      */
     private int mMax;
     /**
-     * 是否有进度文字
-     */
-    private boolean hasProgressText;
-    /**
      * 背景画笔
      */
     private Paint mBgPaint;
@@ -91,10 +75,6 @@ public class CustomSeekBar extends View {
      * 滑块画笔
      */
     private Paint mThumbPaint;
-    /**
-     * 文字画笔
-     */
-    private Paint mTextPaint;
     /**
      * 进度更新监听
      */
@@ -137,28 +117,10 @@ public class CustomSeekBar extends View {
         mThumbPaint.setAntiAlias(true);
         mThumbPaint.setColor(mThumbColor);
         mThumbPaint.setStyle(Paint.Style.FILL);
-        //文字画笔
-        mTextPaint = new Paint();
-        mTextPaint.setAntiAlias(true);
-        mTextPaint.setColor(mProgressTextColor);
-        mTextPaint.setTextSize(mProgressTextSize);
-        mTextPaint.setTextAlign(Paint.Align.CENTER);
-        //文字和进度条之间的距离
-        mProgressTextDistance = dip2px(getContext(), 13f);
         //计算默认宽、高
         mDefaultWidth = dip2px(context, 180f);
-        if (hasProgressText) {
-            //有文字，计算公式：高度 = 文字高度 + 间隔距离 + 滑块高度
-            mDefaultHeight = (int) ((mThumbRadius * 2)
-                    + getPaintTextHeight(mTextPaint, "1分钟")
-                    + mProgressTextDistance
-                    + getPaddingTop()
-                    + getPaddingBottom()
-            );
-        } else {
-            //没有文字，计算公式：滑块高度
-            mDefaultHeight = (mThumbRadius * 2) + getPaddingTop() + getPaddingBottom();
-        }
+        //计算公式：滑块高度
+        mDefaultHeight = (mThumbRadius * 2) + getPaddingTop() + getPaddingBottom();
     }
 
     private void initAttr(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -167,8 +129,6 @@ public class CustomSeekBar extends View {
         int defaultProgressHeight = dip2px(context, 2f);
         int defaultThumbColor = Color.WHITE;
         int defaultThumbRadius = dip2px(context, 7f);
-        int defaultProgressTextColor = Color.BLACK;
-        int defaultProgressTextSize = sp2px(context, 12f);
         int defaultProgress = 0;
         int defaultMinProgress = 0;
         int defaultMaxProgress = 100;
@@ -189,20 +149,12 @@ public class CustomSeekBar extends View {
             //滑块圆的半径
             mThumbRadius = array.getDimensionPixelSize(R.styleable.CustomSeekBar_csb_thumb_radius,
                     defaultThumbRadius);
-            //进度的文字颜色
-            mProgressTextColor = array.getColor(R.styleable.CustomSeekBar_csb_progress_text_color,
-                    defaultProgressTextColor);
-            //进度的文字大小
-            mProgressTextSize = array.getDimension(R.styleable.CustomSeekBar_csb_progress_text_size,
-                    defaultProgressTextSize);
             //当前进度值
             mProgress = array.getInteger(R.styleable.CustomSeekBar_csb_progress, defaultProgress);
             //最小进度值
             mMin = array.getInteger(R.styleable.CustomSeekBar_csb_min_progress, defaultMinProgress);
             //最大进度值
             mMax = array.getInteger(R.styleable.CustomSeekBar_csb_max_progress, defaultMaxProgress);
-            //是否有进度文字
-            hasProgressText = array.getBoolean(R.styleable.CustomSeekBar_csb_has_progress_text, false);
             array.recycle();
         } else {
             mBgColor = defaultBgColor;
@@ -213,7 +165,6 @@ public class CustomSeekBar extends View {
             mProgress = defaultProgress;
             mMin = defaultMinProgress;
             mMax = defaultMaxProgress;
-            hasProgressText = false;
         }
     }
 
@@ -233,10 +184,6 @@ public class CustomSeekBar extends View {
         drawProgress(canvas);
         //画滑块
         drawThumb(canvas);
-        //画文字
-        if (hasProgressText) {
-            drawText(canvas);
-        }
     }
 
     //------------ getFrameXxx()方法都是处理padding ------------
@@ -290,20 +237,6 @@ public class CustomSeekBar extends View {
         float x = (getFrameLeft() + mThumbRadius) + ((getFrameRight() - (mThumbRadius * 2)) * getProgressRatio());
         canvas.drawCircle(x, halfViewHeight, mThumbRadius,
                 mThumbPaint);
-    }
-
-    /**
-     * 画文字
-     */
-    private void drawText(Canvas canvas) {
-        //创建文字图层
-        String textContent = mProgress + "分钟";
-        //计算文字X轴坐标
-        float x = getFrameRight() * getProgressRatio();
-        //计算文字Y轴坐标，一半的高度 - 滑块的半径 - 间隔距离的一半
-        float textY = (mViewHeight / 2f) - mThumbRadius - (mProgressTextDistance / 2f);
-        //绘字
-        canvas.drawText(textContent, x, textY, mTextPaint);
     }
 
     @Override

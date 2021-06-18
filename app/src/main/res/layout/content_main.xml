@@ -451,8 +451,6 @@
           app:csb_progress_height="2dp"
           android:layout_marginStart="15dp"
           android:layout_marginEnd="15dp"
-          app:csb_progress_text_color="#161731"
-          app:csb_progress_text_size="12sp"
           app:csb_thumb_color="#A3A3AD"
           app:csb_thumb_radius="8dp"
           tools:csb_progress="0" />
